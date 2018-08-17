@@ -1,0 +1,22 @@
+Implementacao do CRUD e interfaces base (usando template)
+
+Cardoso
+Tipo pessoa
+tipo descisao
+
+advogado
+Juiz
+
+
+Aisha
+especie_processo
+estado_processo
+Requente
+Requerio
+
+Frei
+
+Provincia
+Municipio
+Processo
+
