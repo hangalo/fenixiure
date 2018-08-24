@@ -5,8 +5,8 @@
  */
 package fenix.iure.dao;
 
-
-import fenix.iure.modelo.Provincia;
+import fenix.iure.modelo.Advogado;
+import fenix.iure.modelo.Juiz;
 import fenix.iure.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,30 +17,35 @@ import java.util.List;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
-public class ProvinciaDAO implements GenericoDAO<Provincia> {
+public class AdvogadoDAO implements GenericoDAO<Advogado>{
+    
+    private static final String INSERIR ="INSERT INTO advogado(nome_advogado,sobrenome_advogado,data_nascimento_advogado,data_inicio_funcoes ) VALUES (?,?,?,?)";
+    private static final String ACTUALIZAR ="UPDATE advogado set nome_advogado=?, sobrenome_advogado=?,data_nascimento_advogado=?, data_inicio_funcoes=? WHERE id_advogado=?";
+    private static final String ELIMINAR ="DELETE FROM advogado WHERE id_advogado=?";
+    private static final String BUSCAR_POR_CODIGO ="SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado WHERE id_advogado = ?";
+    private static final String LISTAR_TUDO ="SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado ORDER BY nome_advogado ASC;";
 
-    private static final String INSERIR = "INSERT INTO Provincia(nome_provincia) VALUES (?)";
-    private static final String ACTUALIZAR = "UPDATE provincia set nome_provincia = ? WHERE id_Provincia = ?";
-    private static final String ELIMINAR = "DELETE FROM Provincia WHERE id_Provincia = ?";
-    private static final String BUSCAR_POR_CODIGO = "SELECT id_provincia,nome_provincia FROM provincia WHERE id_Provincia = ?";
-    private static final String LISTAR_TUDO = "SELECT id_provincia,nome_provincia FROM provincia ORDER BY nome_provincia ASC;";
+    
 
     @Override
-    public boolean save(Provincia provincia) {
+    public boolean save(Advogado advogado) {
         boolean flagControlo = false;
         PreparedStatement ps = null;
         Connection conn = null;
-        if (provincia == null) {
+        if (advogado == null) {
             System.err.println("O valor oassado não pode ser nulo!");
         }
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(INSERIR);
 
-            ps.setString(1, provincia.getNomeProvincia());
-
+            ps.setString(1, advogado.getNomeAdvogado());
+            ps.setString(2, advogado.getSobreNomeAdvogado());
+            ps.setDate(3, new java.sql.Date(advogado.getDataNascimento().getTime()));
+            ps.setDate(4, new java.sql.Date(advogado.getDataInicioFuncoes().getTime()));
+            
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
                 System.out.println("Dados inseridos com sucesso: " + ps.getUpdateCount());
@@ -58,21 +63,26 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
     }
 
     @Override
-    public boolean update(Provincia provincia) {
+    public boolean update(Advogado advogado) {
         boolean flagControlo = false;
         PreparedStatement ps = null;
         Connection conn = null;
-        if (provincia == null) {
-            System.err.println("O valor passado nao pode ser nulo");
+        if (advogado == null) {
+            System.err.println("O valor oassado não pode ser nulo!");
         }
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(ACTUALIZAR);
-            ps.setString(1, provincia.getNomeProvincia());
-            ps.setInt(2, provincia.getIdProvincia());
+
+            ps.setString(1, advogado.getNomeAdvogado());
+            ps.setString(2, advogado.getSobreNomeAdvogado());
+            ps.setDate(3, new java.sql.Date(advogado.getDataNascimento().getTime()));
+            ps.setDate(4, new java.sql.Date(advogado.getDataInicioFuncoes().getTime()));
+            ps.setInt(5, advogado.getIdAdvogado());
+            
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
-                System.out.println("Dados inseridos com sucesso: " + ps.getUpdateCount());
+                System.out.println("Dados actualizar com sucesso: " + ps.getUpdateCount());
                 flagControlo = true;
             }
 
@@ -87,17 +97,17 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
     }
 
     @Override
-    public boolean delete(Provincia provincia) {
-         boolean flagControlo = false;
+    public boolean delete(Advogado advogado) {
+        boolean flagControlo = false;
         PreparedStatement ps = null;
         Connection conn = null;
-        if (provincia == null) {
+        if (advogado == null) {
             System.err.println("O valor passado nao pode ser nulo");
         }
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(ELIMINAR);
-            ps.setInt(1, provincia.getIdProvincia());
+            ps.setInt(1, advogado.getIdAdvogado());
           int retorno = ps.executeUpdate();
 
             if (retorno > 0) {
@@ -118,12 +128,11 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
     }
 
     @Override
-    public Provincia findById(Integer id) {
-
+    public Advogado findById(Integer id) {
         PreparedStatement ps = null;
         Connection conn = null;
         ResultSet rs = null;
-        Provincia provincia = new Provincia();
+        Advogado advogado = new Advogado();
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(BUSCAR_POR_CODIGO);
@@ -132,49 +141,50 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
             if (!rs.next()) {
                 System.err.println("Não foi encontrado nenhum registo com o id: " + id);
             }
-            popularComDados(provincia, rs);
+            popularComDados(advogado, rs);
         } catch (SQLException ex) {
             System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
         } finally {
             Conexao.closeConnection(conn, ps, rs);
         }
-        return provincia;
+        return advogado;
     }
 
     @Override
-    public List<Provincia> findAll() {
+    public List<Advogado> findAll() {
         PreparedStatement ps = null;
         Connection conn = null;
         ResultSet rs = null;
-        List<Provincia> provincias = new ArrayList<>();
+        List<Advogado> advogados = new ArrayList<>();
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(LISTAR_TUDO);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Provincia provincia = new Provincia();
-                popularComDados(provincia, rs);
-                provincias.add(provincia);
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
             }
         } catch (SQLException ex) {
             System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
         } finally {
             Conexao.closeConnection(conn);
         }
-        return provincias;
+        return advogados;
     }
 
     @Override
-    public void popularComDados(Provincia provincia, ResultSet rs) {
-
+    public void popularComDados(Advogado advogado, ResultSet rs) {
         try {
-            provincia.setIdProvincia(rs.getInt("id_provincia"));
-            provincia.setNomeProvincia(rs.getString("nome_provincia"));
+            advogado.setIdAdvogado(rs.getInt("id_advogado"));
+            advogado.setNomeAdvogado(rs.getString("nome_advogado"));
+            advogado.setSobreNomeAdvogado(rs.getString("sobrenome_advogado"));
+            advogado.setDataNascimento(rs.getDate("data_nascimento_advogado"));
+            advogado.setDataInicioFuncoes(rs.getDate("data_inicio_funcoes"));
 
         } catch (SQLException ex) {
             System.err.println("Erro ao carregar dados: " + ex.getLocalizedMessage());
         }
-
     }
-
+    
 }

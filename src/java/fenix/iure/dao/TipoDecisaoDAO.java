@@ -5,8 +5,8 @@
  */
 package fenix.iure.dao;
 
-
-import fenix.iure.modelo.Provincia;
+import fenix.iure.modelo.TipoDecisao;
+import fenix.iure.modelo.TipoPessoa;
 import fenix.iure.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,38 +17,39 @@ import java.util.List;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
-public class ProvinciaDAO implements GenericoDAO<Provincia> {
+public class TipoDecisaoDAO implements GenericoDAO<TipoDecisao>{
+    private static final String INSERIR ="INSERT INTO tipo_decisao(tipo_decisao) VALUES (?)";
+    private static final String ACTUALIZAR ="UPDATE tipo_decisao set tipo_decisao = ? WHERE id_tipo_decisao = ?";
+    private static final String ELIMINAR ="DELETE FROM tipo_decisao WHERE id_tipo_decisao = ?";
+    private static final String BUSCAR_POR_CODIGO ="SELECT id_tipo_decisao,tipo_decisao FROM tipo_decisao WHERE id_tipo_decisao = ?";
+    private static final String LISTAR_TUDO ="SELECT id_tipo_decisao,tipo_decisao FROM tipo_decisao ORDER BY tipo_decisao ASC;";
 
-    private static final String INSERIR = "INSERT INTO Provincia(nome_provincia) VALUES (?)";
-    private static final String ACTUALIZAR = "UPDATE provincia set nome_provincia = ? WHERE id_Provincia = ?";
-    private static final String ELIMINAR = "DELETE FROM Provincia WHERE id_Provincia = ?";
-    private static final String BUSCAR_POR_CODIGO = "SELECT id_provincia,nome_provincia FROM provincia WHERE id_Provincia = ?";
-    private static final String LISTAR_TUDO = "SELECT id_provincia,nome_provincia FROM provincia ORDER BY nome_provincia ASC;";
-
+    boolean flagControlo = false;
+    PreparedStatement ps = null;
+    Connection conn = null;
+    
+    
     @Override
-    public boolean save(Provincia provincia) {
-        boolean flagControlo = false;
-        PreparedStatement ps = null;
-        Connection conn = null;
-        if (provincia == null) {
+    public boolean save(TipoDecisao tipoDecisao) {
+        if (tipoDecisao == null) {
             System.err.println("O valor oassado não pode ser nulo!");
         }
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(INSERIR);
-
-            ps.setString(1, provincia.getNomeProvincia());
-
+            
+            ps.setString(1, tipoDecisao.getTipoDecisao());
+            
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
                 System.out.println("Dados inseridos com sucesso: " + ps.getUpdateCount());
                 flagControlo = true;
             }
-
             return flagControlo;
-
+            
+            
         } catch (SQLException e) {
             System.out.println("Erro ao inserir dados: " + e.getMessage());
             return false;
@@ -58,28 +59,27 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
     }
 
     @Override
-    public boolean update(Provincia provincia) {
-        boolean flagControlo = false;
-        PreparedStatement ps = null;
-        Connection conn = null;
-        if (provincia == null) {
-            System.err.println("O valor passado nao pode ser nulo");
+    public boolean update(TipoDecisao tipoDecisao) {
+        if (tipoDecisao == null) {
+            System.err.println("O valor oassado não pode ser nulo!");
         }
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(ACTUALIZAR);
-            ps.setString(1, provincia.getNomeProvincia());
-            ps.setInt(2, provincia.getIdProvincia());
+            
+            ps.setString(1, tipoDecisao.getTipoDecisao());
+            ps.setInt(2, tipoDecisao.getIdTipoDecisao());
+            
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
                 System.out.println("Dados inseridos com sucesso: " + ps.getUpdateCount());
                 flagControlo = true;
             }
-
             return flagControlo;
-
+            
+            
         } catch (SQLException e) {
-            System.out.println("Erro ao inserir dados: " + e.getMessage());
+            System.out.println("Erro ao actualizar dados: " + e.getMessage());
             return false;
         } finally {
             Conexao.closeConnection(conn, ps);
@@ -87,25 +87,25 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
     }
 
     @Override
-    public boolean delete(Provincia provincia) {
+    public boolean delete(TipoDecisao tipoDecisao) {
          boolean flagControlo = false;
         PreparedStatement ps = null;
         Connection conn = null;
-        if (provincia == null) {
+        if (tipoDecisao == null) {
             System.err.println("O valor passado nao pode ser nulo");
         }
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(ELIMINAR);
-            ps.setInt(1, provincia.getIdProvincia());
-          int retorno = ps.executeUpdate();
+            ps.setInt(1, tipoDecisao.getIdTipoDecisao());
+            int retorno = ps.executeUpdate();
 
-            if (retorno > 0) {
-                System.out.println("Dados eliminados com sucesso: " + ps.getUpdateCount());
-                flagControlo = true;
-            }
+              if (retorno > 0) {
+                  System.out.println("Dados eliminados com sucesso: " + ps.getUpdateCount());
+                  flagControlo = true;
+              }
 
-            return flagControlo;
+              return flagControlo;
 
         } catch (Exception ex) {
             System.err.println("Erro ao eliminar dados: " + ex.getLocalizedMessage());
@@ -113,17 +113,16 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
         } finally {
             Conexao.closeConnection(conn, ps);
             {
-            }
-        }
+            }   
+    }
     }
 
     @Override
-    public Provincia findById(Integer id) {
-
+    public TipoDecisao findById(Integer id) {
         PreparedStatement ps = null;
         Connection conn = null;
         ResultSet rs = null;
-        Provincia provincia = new Provincia();
+        TipoDecisao tipoDecisao = new TipoDecisao();
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(BUSCAR_POR_CODIGO);
@@ -132,49 +131,47 @@ public class ProvinciaDAO implements GenericoDAO<Provincia> {
             if (!rs.next()) {
                 System.err.println("Não foi encontrado nenhum registo com o id: " + id);
             }
-            popularComDados(provincia, rs);
+            popularComDados(tipoDecisao, rs);
         } catch (SQLException ex) {
             System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
         } finally {
             Conexao.closeConnection(conn, ps, rs);
         }
-        return provincia;
+        return tipoDecisao;
     }
 
     @Override
-    public List<Provincia> findAll() {
+    public List<TipoDecisao> findAll() {
         PreparedStatement ps = null;
         Connection conn = null;
         ResultSet rs = null;
-        List<Provincia> provincias = new ArrayList<>();
+        List<TipoDecisao> tipos = new ArrayList<>();
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(LISTAR_TUDO);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Provincia provincia = new Provincia();
-                popularComDados(provincia, rs);
-                provincias.add(provincia);
+                TipoDecisao tipoDecisao = new TipoDecisao();
+                popularComDados(tipoDecisao, rs);
+                tipos.add(tipoDecisao);
             }
         } catch (SQLException ex) {
             System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
         } finally {
             Conexao.closeConnection(conn);
         }
-        return provincias;
+        return tipos;
     }
 
     @Override
-    public void popularComDados(Provincia provincia, ResultSet rs) {
-
+    public void popularComDados(TipoDecisao tipoDecisao, ResultSet rs) {
         try {
-            provincia.setIdProvincia(rs.getInt("id_provincia"));
-            provincia.setNomeProvincia(rs.getString("nome_provincia"));
+            tipoDecisao.setIdTipoDecisao(rs.getInt("id_tipo_decisao"));
+            tipoDecisao.setTipoDecisao(rs.getString("tipo_decisao"));
 
         } catch (SQLException ex) {
             System.err.println("Erro ao carregar dados: " + ex.getLocalizedMessage());
         }
-
     }
-
+    
 }
