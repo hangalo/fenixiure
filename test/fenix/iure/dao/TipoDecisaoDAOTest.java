@@ -93,10 +93,26 @@ public class TipoDecisaoDAOTest {
      */
     @Test
     public void testFindAll() {
-        /*System.out.println("findAll");
+        System.out.println("findAll");
         TipoDecisaoDAO instance = new TipoDecisaoDAO();
         List<TipoDecisao> expResult = null;
         List<TipoDecisao> result = instance.findAll();
+        assertTrue(result.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (TipoDecisao tipoDecisao : result) {
+            System.out.println("Id: " + tipoDecisao.getIdTipoDecisao());
+            System.out.println("Tipo: " + tipoDecisao.getTipoDecisao());
+            System.out.println("---------------------------------");
+        }
+    }
+     @Test
+    public void testFindByTipo() {
+        /*System.out.println("findAll");
+        String tipo = "00";
+        TipoDecisaoDAO instance = new TipoDecisaoDAO();
+        List<TipoDecisao> expResult = null;
+        List<TipoDecisao> result = instance.findByTipoDecisao(tipo);
         assertTrue(result.size() > 0);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

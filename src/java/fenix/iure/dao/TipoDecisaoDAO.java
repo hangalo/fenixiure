@@ -25,7 +25,8 @@ public class TipoDecisaoDAO implements GenericoDAO<TipoDecisao>{
     private static final String ELIMINAR ="DELETE FROM tipo_decisao WHERE id_tipo_decisao = ?";
     private static final String BUSCAR_POR_CODIGO ="SELECT id_tipo_decisao,tipo_decisao FROM tipo_decisao WHERE id_tipo_decisao = ?";
     private static final String LISTAR_TUDO ="SELECT id_tipo_decisao,tipo_decisao FROM tipo_decisao ORDER BY tipo_decisao ASC;";
-
+    //private static final String BUSCAR_POR_TIPO ="SELECT id_tipo_decisao,tipo_decisao FROM tipo_decisao WHERE tipo_decisao LIKE ?";
+    
     boolean flagControlo = false;
     PreparedStatement ps = null;
     Connection conn = null;
@@ -162,6 +163,29 @@ public class TipoDecisaoDAO implements GenericoDAO<TipoDecisao>{
         }
         return tipos;
     }
+    
+    /*public List<TipoDecisao> findByTipoDecisao(String tipo) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<TipoDecisao> tipos = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(BUSCAR_POR_TIPO);
+            ps.setString(1, tipo + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                TipoDecisao tipoDecisao = new TipoDecisao();
+                popularComDados(tipoDecisao, rs);
+                tipos.add(tipoDecisao);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return  tipos;
+    }*/
 
     @Override
     public void popularComDados(TipoDecisao tipoDecisao, ResultSet rs) {

@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
+
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <f:view>
+                    <b:panel title="Tipos de Decisões" collapsible="false" look="">
+                        <h:form>
+                            <!-- Data Table-->
+                            
+                            <p:dataTable value="#{TipoDecisaoMBean.tipos}"  var="tipoDecisao" rows="10" paginator="true" cellSeparator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginatorPosition="bottom">
+                                <p:column style="width: 55px; text-align: center">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Código"/>
+                                    </f:facet>
+                                    <h:outputText value="#{tipoDecisao.idTipoDecisao}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Tipo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{tipoDecisao.tipoDecisao}"/>
+                                </p:column>
+                                <p:column style="width: 120px; text-align: center">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Operações"/>
+                                    </f:facet>
+                                    <p:commandButton  action="#{tipoDecisaoMBean.delete}" icon="ui-icon-trash ">
+                                        <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{tipoDecisao}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-pencil" update=":formEditar:editar" oncomplete="PF('dialogoAlterar').show();" >
+                                        <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{categoria}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-zoomin"  update=":ver" oncomplete="PF('dlgVerTipoDecisao').show();" >
+                                        <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{tipoDecisao}"/>
+                                    </p:commandButton>
+                                </p:column>
+
+                                <f:facet name="footer">  
+                                    N.º Tipos #{(tipoDecisaoMBean.tipos.size())}.  
+                                </f:facet> 
+                            </p:dataTable>
+
+                        </h:form>
+
+                        <!-- Fim Data Table-->
+
+                        <!-- Formulario auxiliar-->
+
+                        <h:form id="operacoes">
+                            <p:commandButton value="+ Novo Tipo" type="button" onclick="PF('dlgNovoTipoDecisao').show();" />
+                            <p:commandButton value="Fechar" action="/index" ajax="false" immediate="true" />
+                        </h:form>
+
+                        <!-- Fim Formulario auxiliar-->
+
+                        <!-- Dialogo Guardar-->
+                        <p:dialog header="Novo Tipo Decisão" widgetVar="dlgNovoTipoDecisao"  showEffect="explode" hideEffect="bounce" width="400" height="100">
+                            <h:form>
+
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Tipo"/>
+                                    <p:inputText value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                </h:panelGrid>
+                                <p:commandButton value="Guardar" actionListener="#{tipoDecisaoMBean.guardar(evt)}"/>
+
+                            </h:form>
+
+                        </p:dialog>
+
+                        <!-- Fim Dialogo Guardar-->
+
+                        <!-- Dialogo Editar-->
+
+                        <h:form id="formEditar">
+                            <p:growl id="growl" showDetail="true" sticky="true"/>
+                            <p:dialog header="Alterar dados de Tipo Decisão" id="editar" width="400" height="100" widgetVar="dialogoAlterar" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+
+                                <h:inputHidden value="#{tipoDecisaoMBean.tipoDecisao.idTipoDecisao}"/>
+                                <h:panelGrid columns="2" title="Editar ">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="Tipo"/>
+                                        <p:inputText value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                    </h:panelGrid>
+
+                                </h:panelGrid>
+
+                                <p:commandButton actionListener="#{tipoDecisaoMBean.edit(event)}" value="Guardar"  update="growl" ajax="false"/>
+
+
+                            </p:dialog>
+                        </h:form>
+
+                        <!-- Fim Dialogo Editar-->
+
+                        <!-- Inicio Dialogo Ver detalhes do candidato-->
+
+                        <p:dialog header="Detalhes do Candidato" id="ver" widgetVar="dlgVerTipoDecisao" showEffect="explode" hideEffect="bounce"  height="450" width="900">
+                            <h:form id="formVer">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Código"/>
+                                    <p:outputLabel value="#{tipoDecisaoMBean.tipoDecisao.idTipoDecisao}"/>
+                                    <p:outputLabel value="Tipo"/>
+                                    <p:outputLabel value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                </h:panelGrid>
+                            </h:form>
+                        </p:dialog>
+
+                        <!-- Fim Dialogo Ver detalhes do candidato-->
+
+
+
+
+                    </b:panel>
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
