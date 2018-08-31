@@ -5,8 +5,8 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.TipoDecisaoDAO;
-import fenix.iure.modelo.TipoDecisao;
+import fenix.iure.dao.TipoPessoaDAO;
+import fenix.iure.modelo.TipoPessoa;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -23,31 +23,48 @@ import javax.faces.context.FacesContext;
  *
  * @author Elísio Kavaimunwa
  */
-@Named(value = "tipoDecisaoMBean")
+@Named(value = "tipoPessoaMBean")
 @SessionScoped
-public class TipoDecisaoMBean implements Serializable {
+public class TipoPessoaMBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private TipoDecisao tipoDecisao;
-    private TipoDecisaoDAO tipoDecisaoDAO;
-    private List<TipoDecisao> tipos;
+    private TipoPessoa tipoPessoa;
+    private TipoPessoaDAO tipoPessoaDAO;
+    private List<TipoPessoa> tipoPessoas;
      
     
     
-    public TipoDecisaoMBean() {
+    public TipoPessoaMBean() {
     }
     @PostConstruct
     public void inicializar() {
-        tipoDecisao = new TipoDecisao();
-        tipoDecisaoDAO = new TipoDecisaoDAO();
+        tipoPessoa = new TipoPessoa();
+        tipoPessoaDAO = new TipoPessoaDAO();
         
     }
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+
+    public List<TipoPessoa> getTipoPessoas() {
+        tipoPessoas = tipoPessoaDAO.findAll();
+        return tipoPessoas;
+    }
     
+    public String newSave() {
+        tipoPessoa = new TipoPessoa();
+        return "tipo_pessoa_listar?faces-redirect=true";
+    }
     
     public void guardar(ActionEvent evt) {
-        if (tipoDecisaoDAO.save(tipoDecisao)){
-            tipoDecisao = new TipoDecisao();
+        if (tipoPessoaDAO.save(tipoPessoa)){
+            tipoPessoa = new TipoPessoa();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
@@ -55,16 +72,16 @@ public class TipoDecisaoMBean implements Serializable {
     }
     
     public String startEdit() {
-        return "tipo_decisao_listar?faces-redirect=true";
+        return "tipo_pessoa_listar?faces-redirect=true";
     }
     
     public void edit(javafx.event.ActionEvent event) {
-        if (tipoDecisaoDAO.update(tipoDecisao)) {
+        if (tipoPessoaDAO.update(tipoPessoa)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            tipos = null;
+            tipoPessoas = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("tipo_decisao_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("tipo_pessoa_listar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -76,27 +93,14 @@ public class TipoDecisaoMBean implements Serializable {
     }
     
     public String delete() {
-        if (tipoDecisaoDAO.delete(tipoDecisao)) {
+        if (tipoPessoaDAO.delete(tipoPessoa)) {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-             tipos = null;
-             return "tipo_decisao_listar?faces-redirect=true";
+             tipoPessoas = null;
+             return "tipo_pessoa_listar?faces-redirect=true";
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
         }      
-    }
-
-    public TipoDecisao getTipoDecisao() {
-        return tipoDecisao;
-    }
-
-    public void setTipoDecisao(TipoDecisao tipoDecisao) {
-        this.tipoDecisao = tipoDecisao;
-    }
-
-    public List<TipoDecisao> getTipos() {
-        tipos = tipoDecisaoDAO.findAll();
-        return tipos;
     }
     
     

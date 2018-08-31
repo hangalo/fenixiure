@@ -14,40 +14,40 @@
             <ui:define name="content">
                 <p:growl autoUpdate="true" showDetail="true"/>
                 <f:view>
-                    <b:panel title="Lista - Tipo Decisão" collapsible="false" look="normal">
+                    <b:panel title="Lista - Tipo Pessoa" collapsible="false" look="normal">
                         <h:form>
                             <!--inicio Datatable-->
-                            <p:dataTable value="#{tipoDecisaoMBean.tipos}" var="tipoDecisao" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <p:dataTable value="#{tipoPessoaMBean.tipoPessoas}" var="tipoPessoa" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Código"/>
                                     </f:facet>
-                                    <h:outputText value="#{tipoDecisao.idTipoDecisao}"/>
+                                    <h:outputText value="#{tipoPessoa.idTipoPessoa}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Tipo: "/>
                                     </f:facet>
-                                    <h:outputText value="#{tipoDecisao.tipoDecisao}"/>
+                                    <h:outputText value="#{tipoPessoa.nomeTipoPessoa}"/>
                                 </p:column>
                                 <p:column style="width: 100px; text-align: center" width="160">
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
                                     </f:facet>
-                                    <p:commandButton  icon="ui-icon-trash" action="#{tipoDecisaoMBean.delete()}">
-                                        <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{tipoDecisao}"/>
+                                    <p:commandButton  icon="ui-icon-trash" action="#{tipoPessoaMBean.delete()}">
+                                        <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{tipoPessoa}"/>
                                     </p:commandButton>
                                     <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
-                                        <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{tipoDecisao}"/>
+                                        <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{tipoPessoa}"/>
                                     </p:commandButton>
                                     <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
-                                        <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{tipoDecisao}"/>
+                                        <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{tipoPessoa}"/>
                                     </p:commandButton>
 
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total de Tipos de Pessoas  (#{tipoDecisaoMBean.tipos.size()})
+                                    Total de Tipos de Pessoas  (#{tipoPessoaMBean.tipoPessoas.size()})
                                 </f:facet>                           
                             </p:dataTable>
 
@@ -69,10 +69,10 @@
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Tipo: "/>
-                                <p:inputText size="30" value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipoPessoa}"/>
                             </h:panelGrid>
                             <br></br>
-                            <p:commandButton value="Guardar" action="#{tipoDecisaoMBean.guardar(evt)}" ajax="false"/>
+                            <p:commandButton value="Guardar" action="#{tipoPessoaMBean.guardar(evt)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
 
@@ -82,13 +82,13 @@
 
                     <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
                         <h:form enctype="multipart/form-data">
-                            <h:inputHidden value="#{tipoDecisaoMBean.tipoDecisao.idTipoDecisao}"/>
+                            <h:inputHidden value="#{tipoPessoaMBean.tipoPessoa.idTipoPessoa}"/>
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Tipo: "/>
-                                <p:inputText size="30" value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipoPessoa}"/>
                             </h:panelGrid>
                             <br></br>
-                            <p:commandButton value="Alterar" action="#{tipoDecisaoMBean.edit(event)}" ajax="false"/>
+                            <p:commandButton value="Alterar" action="#{tipoPessoaMBean.edit(event)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
                     <!--fim do dialogo editar-->
@@ -98,9 +98,9 @@
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{tipoDecisaoMBean.tipoDecisao.idTipoDecisao}"/>
+                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.idTipoPessoa}"/>
                                 <p:outputLabel value="Tipo: "/>
-                                <h:outputText value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.nomeTipoPessoa}"/>
                             </p:panelGrid>
                         </h:form>
                     </p:dialog>
