@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package fenix.iure.dao;
-
+//ELISIO1996
 import fenix.iure.modelo.Advogado;
 import fenix.iure.modelo.Juiz;
 import fenix.iure.util.Conexao;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,21 @@ public class AdvogadoDAO implements GenericoDAO<Advogado>{
     private static final String ELIMINAR ="DELETE FROM advogado WHERE id_advogado=?";
     private static final String BUSCAR_POR_CODIGO ="SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado WHERE id_advogado = ?";
     private static final String LISTAR_TUDO ="SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado ORDER BY nome_advogado ASC;";
-
+    
+    private static final String LISTAR_POR_NOME_E_SOBRENOME = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE nome_advogado =? AND sobrenome_advogado=? ORDER BY nome_advogado ASC";
+    private static final String LISTAR_POR_NOME = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE nome_advogado=? ORDER BY nome_advogado ASC";
+    private static final String LISTAR_POR_SOBRENOME = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE sobrenome_advogado=? ORDER BY nome_advogado ASC";
+    private static final String LISTAR_POR_INTERVALO_DATA_NASCIMENTO = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE data_nascimento_advogado BETWEEN ? AND ? ORDER BY nome_advogado ASC";
+    private static final String LISTAR_POR_INTERVALO_DATA_INICIO_FUNCOES = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE data_inicio_funcoes BETWEEN ? AND ? ORDER BY nome_advogado ASC";
+    private static final String LISTAR_POR_DATA_NASCINTO = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE data_nascimento_advogado =? ORDER BY nome_advogado ASC";
+    private static final String LISTAR_POR_DATA_INICIO_FUNCAO = "SELECT id_advogado,nome_advogado,sobrenome_advogado,data_nascimento_advogado, data_inicio_funcoes FROM advogado "
+            + " WHERE data_inicio_funcoes =? ORDER BY nome_advogado ASC";
     
 
     @Override
@@ -172,6 +187,169 @@ public class AdvogadoDAO implements GenericoDAO<Advogado>{
         }
         return advogados;
     }
+    
+    public List<Advogado> findByNomeSobrenome(String nome, String sobrenome) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_NOME_E_SOBRENOME);
+            ps.setString(1, nome);
+            ps.setString(2, sobrenome);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    public List<Advogado> findByNome(String nome) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_NOME);
+            ps.setString(1, nome);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    public List<Advogado> findBySobrenome(String sobrenome) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_SOBRENOME);
+            ps.setString(1, sobrenome);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    
+    public List<Advogado> findByIntervaloDataNascimento(String dataInicio, String dataFim) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_INTERVALO_DATA_NASCIMENTO);
+            ps.setString(1, dataInicio);
+            ps.setString(2, dataFim);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    
+    public List<Advogado> findByIntervaloDataInicioFuncoes(String dataInicio, String dataFim) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_INTERVALO_DATA_INICIO_FUNCOES);
+            ps.setString(1, dataInicio);
+            ps.setString(2, dataFim);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    
+    public List<Advogado> findByDataNascimento(String dataNacimento) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_DATA_NASCINTO);
+            ps.setString(1, dataNacimento);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    
+    public List<Advogado> findByDataInicioFuncao(String dataInicioFuncao) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Advogado> advogados = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_DATA_INICIO_FUNCAO);
+            ps.setString(1, dataInicioFuncao);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Advogado advogado = new Advogado();
+                popularComDados(advogado, rs);
+                advogados.add(advogado);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return advogados;
+    }
+    
 
     @Override
     public void popularComDados(Advogado advogado, ResultSet rs) {

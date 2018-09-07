@@ -97,7 +97,7 @@ public class AdvogadoDAOTest {
      */
     @Test
     public void testFindAll() {
-        System.out.println("findAll");
+        /*System.out.println("findAll");
         AdvogadoDAO instance = new AdvogadoDAO();
         List<Advogado> expResult = null;
         List<Advogado> advogados = instance.findAll();
@@ -111,9 +111,179 @@ public class AdvogadoDAOTest {
             System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
             System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
             System.out.println("\n");
-        }
+        }*/
+    }
+    
+    @Test
+    public void testFindNomeSobrenome() {
+        /*System.out.println("findByNomeSobrenome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String nome ="Ezequiel";
+        String sobreNome ="Kavaimunwa";
+        
+        List<Advogado> advogados = instance.findByNomeSobrenome(nome, sobreNome);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }*/
     }
 
+    @Test
+    public void testFindNome() {
+        /*System.out.println("findByNome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String nome ="Ili";
+        
+        List<Advogado> advogados = instance.findByNome(nome);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }*/
+    }
+    @Test
+    public void testFindSobrenome() {
+        /*System.out.println("Sobrenome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String sobrenome ="Kavaimunwa";
+        
+        List<Advogado> advogados = instance.findBySobrenome(sobrenome);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }*/
+    }
+    @Test
+    public void testFindByIntervaloDataNascimento() {
+        /*System.out.println("Sobrenome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String dataInicio ="2018/09/01";
+        String dataFim ="2018/09/03";
+        
+        List<Advogado> advogados = instance.findByIntervaloDataNascimento(dataInicio,dataFim);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }*/
+    }
+    
+    @Test
+    public void testFindByIntervaloDataInicioFuncoes() {
+        /*System.out.println("Sobrenome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String dataInicio ="2018/09/01";
+        String dataFim ="2018/09/02";
+        
+        List<Advogado> advogados = instance.findByIntervaloDataNascimento(dataInicio,dataFim);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }*/
+    }
+    
+    @Test
+    public void testFindByDataNascimento() {
+        System.out.println("Sobrenome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String dataNascimento ="2018/09/04";
+        
+        List<Advogado> advogados = instance.findByDataNascimento(dataNascimento);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }
+    }
+    
+    @Test
+    public void testFindByDataInicioFuncao() {
+        /*System.out.println("Sobrenome");
+        AdvogadoDAO instance = new AdvogadoDAO();
+        List<Advogado> expResult = null;
+        String dataInicioFuncao ="2018/09/02";
+         
+        List<Advogado> advogados = instance.findByDataInicioFuncao(dataInicioFuncao);
+        //System.out.println("Quantidade: " + advogados.size());
+        assertTrue(advogados.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+
+        for (Advogado advogado : advogados) {
+            System.out.println("Id: " + advogado.getIdAdvogado());
+            System.out.println("Nome: " + advogado.getNomeAdvogado());
+            System.out.println("Sobrenome: " + advogado.getSobreNomeAdvogado());
+            System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
+            System.out.println("\n");
+        }*/
+    }
+    
+    
     /**
      * Test of popularComDados method, of class AdvogadoDAO.
      */

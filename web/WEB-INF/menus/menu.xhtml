@@ -57,22 +57,26 @@
                     
                     <p:submenu label="Elísio" icon="ui-icon-contact">
                         <p:submenu label="Advogado" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
+                            <p:menuitem value="+ Novo" url="/reservado/advogado/advogado_novo.jsf"/>
                             <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
+                                <p:menuitem value="Nome" url="/reservado/advogado/advogado_by_nome.jsf"/>
+                                <p:menuitem value="Sobrenome" url="/reservado/advogado/advogado_by_sobrenome.jsf"/>
+                                <p:menuitem value="Nome e Sobrenome" url="/reservado/advogado/advogado_by_nome_sobrenome.jsf"/>
+                                <p:menuitem value="Data de Nascimento" url="#"/>
+                                <p:menuitem value="Data Inicio Funções" url="#"/>
+                                <p:menuitem value="Intervalo Data Inicio Funções" url="#"/>
+                                <p:menuitem value="Intervalo de nascimento" url="#"/>
+                                <p:menuitem value="Listar Tudo" url="/reservado/advogado/advogado_listar.jsf"/>
                             </p:submenu>
                         </p:submenu>
                         
                         <p:submenu label="Juiz" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
+                            <p:menuitem value="+ Novo" url="/reservado/juiz/juiz_novo.jsf"/>
                             <p:submenu label="Buscar Por:" icon="ui-icon-document">
                                 <p:menuitem value="Parametro1" url=""/>
                                 <p:menuitem value="Parametro2" url=""/>
                                 <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
+                                <p:menuitem value="Lista" url="/reservado/juiz/juiz_listar.jsf"/>
                             </p:submenu>
                         </p:submenu>
                         
