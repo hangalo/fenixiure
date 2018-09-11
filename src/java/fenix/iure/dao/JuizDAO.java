@@ -27,6 +27,14 @@ public class JuizDAO implements GenericoDAO<Juiz>{
     private static final String BUSCAR_POR_CODIGO ="SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE id_juiz = ?";
     private static final String LISTAR_TUDO ="SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz ORDER BY nome_juiz ASC;";
 
+    private static final String LISTAR_POR_NOME_E_SOBRENOME = "SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE nome_juiz =? AND sobrenome_juiz=? ORDER BY nome_juiz ASC";
+    private static final String LISTAR_POR_NOME = "SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE nome_juiz = ? ORDER BY nome_juiz ASC";
+    private static final String LISTAR_POR_SOBRENOME = " SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE sobrenome_juiz = ? ORDER BY nome_juiz ASC";
+    private static final String LISTAR_POR_DATA_NASCIMENTO = " SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE data_nascimento_juiz = ? ORDER BY nome_juiz ASC";
+    private static final String LISTAR_POR_DATA_INICIO_FUNCOES = " SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE data_inicio_funcoes = ? ORDER BY nome_juiz ASC";
+    private static final String LISTAR_POR_INTERVAO_DATA_INICIO_FUNCOES = " SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE data_nascimento_juiz BETWEEN ? AND ? ORDER BY nome_juiz ASC";
+    private static final String LISTAR_POR_INTERVAO_DATA_NASCIMENTO = " SELECT id_juiz,nome_juiz,sobrenome_juiz,data_nascimento_juiz, data_inicio_funcoes FROM juiz WHERE data_nascimento_juiz BETWEEN ? AND ? ORDER BY nome_juiz ASC";
+    
     
     @Override
     public boolean save(Juiz juiz) {
@@ -173,6 +181,180 @@ public class JuizDAO implements GenericoDAO<Juiz>{
         return juizes;
     }
 
+   
+    
+    
+    public List<Juiz> findByNome(String nome) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_NOME);
+            ps.setString(1, nome);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    
+    public List<Juiz> findBySobrenome(String sobrenome) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_SOBRENOME);
+            ps.setString(1, sobrenome);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    public List<Juiz> findByDataNascimento(String dataNascimento) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_DATA_NASCIMENTO);
+            ps.setString(1, dataNascimento);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    
+    public List<Juiz> findByDataInicioFuncoes(String dataIniciFuncoes) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_DATA_INICIO_FUNCOES);
+            ps.setString(1, dataIniciFuncoes);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    
+    public List<Juiz> findByIntervaloDataInicioFuncoes(String dataInicio, String dataFim) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_INTERVAO_DATA_INICIO_FUNCOES);
+            ps.setString(1, dataInicio);
+            ps.setString(2, dataFim);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    
+    public List<Juiz> findByIntervaloDataNascimento(String dataInicio, String dataFim) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_INTERVAO_DATA_NASCIMENTO);
+            ps.setString(1, dataInicio);
+            ps.setString(2, dataFim);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public List<Juiz> findByNomeSobrenome(String nome, String sobrenome) {
+        PreparedStatement ps = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        List<Juiz> juizes = new ArrayList<>();
+        try {
+            conn = Conexao.getConnection();
+            ps = conn.prepareStatement(LISTAR_POR_NOME_E_SOBRENOME);
+            ps.setString(1, nome);
+            ps.setString(2, sobrenome);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Juiz juiz = new Juiz();
+                popularComDados(juiz, rs);
+                juizes.add(juiz);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler dados: " + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection(conn);
+        }
+        return juizes;
+    }
+    
     @Override
     public void popularComDados(Juiz juiz, ResultSet rs) {
         try {

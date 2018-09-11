@@ -1,7 +1,7 @@
 Duvidas:
 
 Na descrição do projecto as entidades Requerente e requerido têm alguns atribudos como:
-  data de emissão  e validade, que na base de dados nao existem.
+data de emissão  e validade, que na base de dados nao existem.
 fase 2
 01/09/2018
 ManagedBeans:
