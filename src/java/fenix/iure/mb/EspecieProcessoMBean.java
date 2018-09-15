@@ -79,7 +79,7 @@ public class EspecieProcessoMBean implements Serializable {
     }
     
     public String startEdit() {
-        return "especieProcesso_listar?faces-redirect=true";
+        return "especie_processo_listar?faces-redirect=true";
     }
     
     public void edit(javafx.event.ActionEvent event) {
@@ -88,7 +88,7 @@ public class EspecieProcessoMBean implements Serializable {
             especieProcessos = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("especieProcesso_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("especie_processo_listar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(EspecieProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -103,7 +103,7 @@ public class EspecieProcessoMBean implements Serializable {
         if (especieProcessoDAO.delete(especieProcesso)) {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              especieProcessos = null;
-             return "especieProcesso_listar?faces-redirect=true";
+             return "especie_processo_listar?faces-redirect=true";
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
