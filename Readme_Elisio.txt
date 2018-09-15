@@ -1,3 +1,25 @@
+10/09/2018
+        --->Páginas correspondentes as pesquisas parametrisadas em Juiz:
+		---> findByNome
+		---> findBySobrenome
+		---> findByNomeSobrenome
+
+------------------- Fim ----------------
+
+
+06/09/2018
+        --->Métodos parametrisados feitos em JuizDAO
+		---> findByNome
+		---> findBySobrenome
+		---> findByNomeSobrenome
+		---> findByDataNascimento
+		---> findByDataInicioFuncoes
+		---> findByIntervaloDataNascimento
+		---> findByIntervaloDataInicioFuncoes
+
+------------------- Fim ----------------
+
+
 05/09/2018
         --->Páginas correspondentes as pesquisas parametrisadas
 		---> findByNome

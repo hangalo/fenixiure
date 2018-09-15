@@ -116,6 +116,150 @@ public class JuizDAOTest {
             System.out.println("\n");
         }*/
     }
+    
+    @Test
+    public void testFindByName() {
+        /*System.out.println("findByName");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String nome = "Leia";
+        List<Juiz> juizes = instance.findByNome(nome);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        }*/
+    }
+    @Test
+    public void testFindBySobreName() {
+        /*System.out.println("findByName");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String sobrenome = "Kavaimunwa";
+        List<Juiz> juizes = instance.findBySobrenome(sobrenome);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        }*/
+    }
+    @Test
+    public void testFindByNomeSobre() {
+        /*System.out.println("findByName");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String nome = "Elisio";
+        String sobrenome = "Kavaimunwa";
+        List<Juiz> juizes = instance.findByNomeSobrenome(nome,sobrenome);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        }*/
+    }
+    
+    @Test
+    public void testFindByDataNascimento() {
+        /*System.out.println("findByDatanascimento");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String dataNascimento = "2018/09/02";
+        List<Juiz> juizes = instance.findByDataNascimento(dataNascimento);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        }*/
+    }
+    
+    @Test
+    public void testFindByDataInicioFuncoes() {
+        /*System.out.println("findByDataInicioFunções");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String dataInicioFuncoes = "2018/09/02";
+        List<Juiz> juizes = instance.findByDataInicioFuncoes(dataInicioFuncoes);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        }*/
+    }
+    
+    @Test
+    public void testFindByIntervaloDataInicioFuncoes() {
+        /*System.out.println("findByDataInicioFunções");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String dataInicio = "2018/09/01";
+        String dataFim = "2018/09/03";
+        List<Juiz> juizes = instance.findByIntervaloDataInicioFuncoes(dataInicio, dataFim);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        */
+    }
+    
+    @Test
+    public void testFindByIntervaloDataNascimento() {
+        System.out.println("findByDataInicioFunções");
+        JuizDAO instance = new JuizDAO();
+        List<Juiz> expResult = null;
+        String dataInicio = "2018/09/01";
+        String dataFim = "2018/09/03";
+        List<Juiz> juizes = instance.findByIntervaloDataNascimento(dataInicio, dataFim);
+        assertTrue(juizes.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        for (Juiz juiz : juizes) {
+            System.out.println("Id: " + juiz.getIdJuiz() );
+            System.out.println("Nome: " + juiz.getNomeJuiz() );
+            System.out.println("Sobrenome: " + juiz.getSobreNomeJuiz() );
+            System.out.println("DtaNascimento: " + DateUtil.formataData(juiz.getDataNascimento()) );
+            System.out.println("DtaInicioFunção: " + DateUtil.formataData(juiz.getDataInicioFuncoes()) );
+            System.out.println("\n");
+        }
+    }
+
+
+    
 
     /**
      * Test of popularComDados method, of class JuizDAO.
