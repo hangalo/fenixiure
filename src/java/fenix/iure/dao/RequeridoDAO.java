@@ -185,13 +185,13 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
     @Override
     public void popularComDados(Requerido requerido, ResultSet rs) {
          try {
-            requerido.setIdRequerido(rs.getInt("id_requerido"));
+           requerido.setIdRequerido(rs.getInt("id_requerido"));
            requerido.setNomeRequerido(rs.getString("nome_requerido"));
            requerido.setSobrenomeRequerido(rs.getString("sobrenome_requerido"));
            requerido.setNbiRequerido(rs.getString("n_bi_requerido"));
            requerido.setCasaRequerido(rs.getString("casa_requerido"));
            requerido.setRuaRequerido(rs.getString("rua_requerido"));
-         requerido.setBairroRequerdo(rs.getString("bairro_requerido"));
+           requerido.setBairroRequerdo(rs.getString("bairro_requerido"));
            
            
             Municipio municipio = new Municipio();

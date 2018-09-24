@@ -186,7 +186,7 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
     @Override
     public void popularComDados(Requerente requerente, ResultSet rs) {
            try {
-            requerente.setIdRequerente(rs.getInt("id_requente"));
+           requerente.setIdRequerente(rs.getInt("id_requente"));
            requerente.setNomeRequerente(rs.getString("nome_requente"));
            requerente.setSobrenomeRequerente(rs.getString("sobrenome_requerente"));
            requerente.setNbiRequerente(rs.getString("n_bi_requerente"));

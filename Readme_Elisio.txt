@@ -1,3 +1,24 @@
+
+23/09/2018
+Converteres relacionados a processo: 
+	---> EspecieProcessoConverter
+	---> RequerenteConverter
+	---> RequeridoConverter
+	---> AdvogadoConverter
+	---> JuizConverter
+	---> EstadoProcessoConverter
+	---> TipoDecisaoConverter
+
+------------------- Fim ----------------
+
+
+
+19/09/2018
+CRUD de 
+	---> Processo
+
+------------------- Fim ----------------
+
 10/09/2018
         --->Páginas correspondentes as pesquisas parametrisadas em Juiz:
 		---> findByNome

@@ -24,7 +24,7 @@ public class EspecieProcessoDAO implements GenericoDAO<EspecieProcesso> {
     private static final String UPDATE ="UPDATE especie_processo SET especie_processo WHERE id_especie_processo=?";
     private static final String DELETE ="DELETE FROM especie_procesoo WHERE id_especie_processo=?";
     private static final String SELECT_BY_ID ="SELECT id_especie_processo,especie_processo WHERE id_especie_processo = ?";
-    private static final String SELECT_ALL ="SELECT id_especie_processo,especie_processo FROM especie_processo;";
+    private static final String SELECT_ALL ="SELECT id_especie_processo,especie_processo FROM especie_processo";
 
     @Override
     public boolean save(EspecieProcesso especieProcesso) {
@@ -169,7 +169,6 @@ public class EspecieProcessoDAO implements GenericoDAO<EspecieProcesso> {
 
     @Override
     public void popularComDados(EspecieProcesso especieProcesso, ResultSet rs) {
-        
         try {
             especieProcesso.setIdEspecieProcesso(rs.getInt("id_especie_processo"));
             especieProcesso.setEspecieProcesso(rs.getString("especie_processo"));
