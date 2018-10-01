@@ -116,7 +116,7 @@ public class ProcessoDAO implements GenericoDAO<Processo>{
             ps.setInt(9, processo.getJuiz().getIdJuiz());
             ps.setInt(10, processo.getEstadoProcesso().getIdEstadoProcesso());
             ps.setInt(11, processo.getTipoDecisao().getIdTipoDecisao());
-            ps.setInt(12, processo.getCodigoProcesso());
+            ps.setInt(12, processo.getIdProcesso());
                        
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
@@ -145,7 +145,7 @@ public class ProcessoDAO implements GenericoDAO<Processo>{
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(ELIMINAR);
-            ps.setInt(1, processo.getCodigoProcesso());
+            ps.setInt(1, processo.getIdProcesso());
             int retorno = ps.executeUpdate();
 
             if (retorno > 0) {
@@ -214,7 +214,7 @@ public class ProcessoDAO implements GenericoDAO<Processo>{
     @Override
     public void popularComDados(Processo processo, ResultSet rs) {
         try { 
-            processo.setCodigoProcesso(rs.getInt("id_processo"));
+            processo.setIdProcesso(rs.getInt("id_processo"));
             processo.setNumeroProcesso(rs.getString("numero_processo"));
             processo.setDataEntrada(rs.getDate("data_entrada"));
             processo.setDataConclusao(rs.getDate("data_conclusao"));

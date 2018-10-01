@@ -3,143 +3,87 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <h:form>
             <p:menubar>
-                <p:submenu label="Fenixiure 1ª Fase" icon="ui-icon-document">
-                    <p:submenu label="Aisha" icon="ui-icon-contact">
-                        <p:submenu label="Especie Processo" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url="reservado/especie_processo/especie_processo_listar.jsf"/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Estado Processo" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url="reservado/estado_processo/estado_processo_listar.jsf"/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Requerente" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url="reservado/requerente/requerente_novo.jsf"/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Requerido" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        
+                <p:submenu label="Processo" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="/reservado/processo/processo_novo.jsf"/>
+                    <p:submenu label="Buscar Por:" icon="ui-icon-document">
+                        <p:menuitem value="Lista Geral" url="/reservado/processo/processo_listar.jsf"/>
                     </p:submenu>
-                    
-                    <p:submenu label="Elísio" icon="ui-icon-contact">
-                        <p:submenu label="Advogado" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url="/reservado/advogado/advogado_novo.jsf"/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Nome" url="/reservado/advogado/advogado_by_nome.jsf"/>
-                                <p:menuitem value="Sobrenome" url="/reservado/advogado/advogado_by_sobrenome.jsf"/>
-                                <p:menuitem value="Nome e Sobrenome" url="/reservado/advogado/advogado_by_nome_sobrenome.jsf"/>
-                                <p:menuitem value="Data de Nascimento" url="#"/>
-                                <p:menuitem value="Data Inicio Funções" url="#"/>
-                                <p:menuitem value="Intervalo Data Inicio Funções" url="#"/>
-                                <p:menuitem value="Intervalo de nascimento" url="#"/>
-                                <p:menuitem value="Listar Tudo" url="/reservado/advogado/advogado_listar.jsf"/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Juiz" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url="/reservado/juiz/juiz_novo.jsf"/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Nome" url="/reservado/juiz/juiz_by_nome.jsf"/>
-                                <p:menuitem value="Sobrenome" url="/reservado/juiz/juiz_by_sobrenome.jsf"/>
-                                <p:menuitem value="Nome e Sobrenome" url="/reservado/juiz/juiz_by_nome_sobrenome.jsf"/>
-                                <p:menuitem value="Lista" url="/reservado/juiz/juiz_listar.jsf"/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Tipo Pessoa" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Lista" url="/reservado/tipo_pessoa/tipo_pessoa_listar.jsf"/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Tipo Decisão" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url="#"/>
-                            <p:menuitem value="Lista" url="/reservado/tipo_decisao/tipo_decisao_listar.jsf"/>
-                            
-                        </p:submenu>
-                        
-                        
-                    </p:submenu>
-                    
-                    <p:submenu label="Frei" icon="ui-icon-contact">
-                        <p:submenu label="Processo" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Provincia" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        <p:submenu label="Municipio" icon="ui-icon-document">
-                            <p:menuitem value="+ Novo" url=""/>
-                            <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                                <p:menuitem value="Parametro1" url=""/>
-                                <p:menuitem value="Parametro2" url=""/>
-                                <p:menuitem value="Parametro3" url=""/>
-                                <p:menuitem value="Parametro4" url=""/>
-                            </p:submenu>
-                        </p:submenu>
-                        
-                        
-                        
-                        
-                    </p:submenu>
-                    
-                    
                 </p:submenu>
                 
+                <p:submenu label="Especie Processo" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="reservado/especie_processo/especie_processo_listar.jsf"/>
+                </p:submenu>
+
+                <p:submenu label="Estado Processo" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="reservado/estado_processo/estado_processo_listar.jsf"/>
+                </p:submenu>
+
+                <p:submenu label="Requerente" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="reservado/requerente/requerente_novo.jsf"/>
+                    <p:submenu label="Buscar Por:" icon="ui-icon-document">
+                        <p:menuitem value="Parametro1" url=""/>
+                        <p:menuitem value="Parametro2" url=""/>
+                        <p:menuitem value="Parametro3" url=""/>
+                        <p:menuitem value="Parametro4" url=""/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Requerido" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url=""/>
+                    <p:submenu label="Buscar Por:" icon="ui-icon-document">
+                        <p:menuitem value="Parametro1" url=""/>
+                        <p:menuitem value="Parametro2" url=""/>
+                        <p:menuitem value="Parametro3" url=""/>
+                        <p:menuitem value="Parametro4" url=""/>
+                    </p:submenu>
+                </p:submenu>
+                
+                <p:submenu label="Advogado" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="/reservado/advogado/advogado_novo.jsf"/>
+                    <p:submenu label="Buscar Por:" icon="ui-icon-document">
+                        <p:menuitem value="Nome" url="/reservado/advogado/advogado_by_nome.jsf"/>
+                        <p:menuitem value="Sobrenome" url="/reservado/advogado/advogado_by_sobrenome.jsf"/>
+                        <p:menuitem value="Nome e Sobrenome" url="/reservado/advogado/advogado_by_nome_sobrenome.jsf"/>
+                        <p:menuitem value="Data de Nascimento" url="#"/>
+                        <p:menuitem value="Data Inicio Funções" url="#"/>
+                        <p:menuitem value="Intervalo Data Inicio Funções" url="#"/>
+                        <p:menuitem value="Intervalo de nascimento" url="#"/>
+                        <p:menuitem value="Listar Tudo" url="/reservado/advogado/advogado_listar.jsf"/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Juiz" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="/reservado/juiz/juiz_novo.jsf"/>
+                    <p:submenu label="Buscar Por:" icon="ui-icon-document">
+                        <p:menuitem value="Nome" url="/reservado/juiz/juiz_by_nome.jsf"/>
+                        <p:menuitem value="Sobrenome" url="/reservado/juiz/juiz_by_sobrenome.jsf"/>
+                        <p:menuitem value="Nome e Sobrenome" url="/reservado/juiz/juiz_by_nome_sobrenome.jsf"/>
+                        <p:menuitem value="Lista" url="/reservado/juiz/juiz_listar.jsf"/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:submenu label="Tipo Pessoa" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="/reservado/tipo_decisao/tipo_decisao_listar.jsf"/>
+                </p:submenu>
+
+                <p:submenu label="Tipo Decisão" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="#"/>
+                    <p:menuitem value="Lista" url="/reservado/tipo_decisao/tipo_decisao_listar.jsf"/>
+                </p:submenu>
+
+                <p:submenu label="Municipio" icon="ui-icon-document">
+                    <p:menuitem value="+ Novo" url="/reservado/municipio/municipios.jsf"/>
+                </p:submenu>
+
             </p:menubar>
-            
+
         </h:form>
     </h:body>
 </html>

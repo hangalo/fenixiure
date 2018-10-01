@@ -21,8 +21,8 @@ public class Conexao {
         Connection con;
         String driver = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/fenixiure";
-        String user = "fenix";
-        String password = "fenix";
+        String user = "root";
+        String password = "Damass";
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(url, user, password);

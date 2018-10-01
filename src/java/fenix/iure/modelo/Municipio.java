@@ -1,30 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fenix.iure.modelo;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-/**
- *
- * @author Aisha Lubadika
- */
-public class Municipio implements  Serializable {
-      private static final long serialVersionUID = 1L;
-      private Integer idMunicipio;
-      private String nomeMunicipio;
-      private Provincia idProvincia;
+
+public class Municipio {
+    private Integer idMunicipio;
+    private String nomeMunicipio;
+    private Provincia provinciaMunicipio;
 
     public Municipio() {
     }
 
-    public Municipio(Integer idMunicipio, String nomeMunicipio, Provincia idProvincia) {
+    public Municipio(Integer idMunicipio, String nomeMunicipio, Provincia provinciaMunicipio) {
         this.idMunicipio = idMunicipio;
         this.nomeMunicipio = nomeMunicipio;
-        this.idProvincia = idProvincia;
+        this.provinciaMunicipio = provinciaMunicipio;
     }
 
     public Integer getIdMunicipio() {
@@ -43,18 +34,18 @@ public class Municipio implements  Serializable {
         this.nomeMunicipio = nomeMunicipio;
     }
 
-    public Provincia getIdProvincia() {
-        return idProvincia;
+    public Provincia getProvinciaMunicipio() {
+        return provinciaMunicipio;
     }
 
-    public void setIdProvincia(Provincia idProvincia) {
-        this.idProvincia = idProvincia;
+    public void setProvinciaMunicipio(Provincia provinciaMunicipio) {
+        this.provinciaMunicipio = provinciaMunicipio;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.idMunicipio);
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.idMunicipio);
         return hash;
     }
 
@@ -78,7 +69,9 @@ public class Municipio implements  Serializable {
 
     @Override
     public String toString() {
-        return "Municipio{" + "idMunicipio=" + idMunicipio + ", nomeMunicipio=" + nomeMunicipio + ", idProvincia=" + idProvincia + '}';
+        return this.nomeMunicipio;
     }
-      
+
+   
+    
 }

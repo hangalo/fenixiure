@@ -25,8 +25,8 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
     private static final String INSERT = "INSERT INTO requente(nome_requente, sobrenome_requerente, n_bi_requerente, casa_requerente, rua_requerente, bairro_requerente, id_municipio, id_tipo) VALUES (?,?,?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE requente SET nome_requente = ? , sobrenome_requerente = ? ,n_bi_requerente=?, casa_requerente=?, rua_requerente=?, bairro_requerente=?,  id_municipio=?, id_tipo=?  WHERE id_requente = ?";
     private static final String DELETE = "DELETE FROM requente WHERE id_requente = ?";
-    private static final String SELECT_BY_ID = "SELECT r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE id_requente = ?";
-    private static final String SELECT_ALL = "SELECT r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo ORDER BY nome_requente ASC;";
+    private static final String SELECT_BY_ID = "SELECT r.id_requente,r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE id_requente = ?";
+    private static final String SELECT_ALL = "SELECT r.id_requente, r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo ORDER BY nome_requente ASC;";
 
     @Override
     public boolean save(Requerente requerente) {
@@ -196,7 +196,7 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
            
            
             Municipio municipio = new Municipio();
-            municipio.setNomeMunicipio(rs.getString("nome_municpio"));
+            municipio.setNomeMunicipio(rs.getString("nome_municipio"));
             requerente.setMunicipio(municipio);
             
             TipoPessoa tipoPessoa = new TipoPessoa();

@@ -76,7 +76,8 @@ public class ProcessoDAOIT {
         boolean result = instance.save(processo);
         assertTrue(result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");*/
+        //fail("The test case is a prototype.");
+        */
     }
 
     /**
@@ -136,16 +137,16 @@ public class ProcessoDAOIT {
      */
     @Test
     public void testDelete() {
-        /*System.out.println("delete");
+        System.out.println("delete");
         Processo processo = new Processo();
-        processo.setCodigoProcesso(2);
+        processo.setIdProcesso(6);
         ProcessoDAO instance = new ProcessoDAO();
         boolean expResult = false;
         boolean result = instance.delete(processo);
         assertTrue(result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
-        */
+        
     }
 
     /**
@@ -195,7 +196,7 @@ public class ProcessoDAOIT {
         //fail("The test case is a prototype.");
         
         for (Processo processo : processos) {
-            System.out.println("Id: " +processo.getCodigoProcesso());
+            System.out.println("Id: " +processo.getIdProcesso());
             System.out.println("Numero: "+ processo.getNumeroProcesso());
             System.out.println("Data Entrada: " + DateUtil.formataData(processo.getDataEntrada()));
             System.out.println("Data Conclusão: " + DateUtil.formataData(processo.getDataConclusao()));

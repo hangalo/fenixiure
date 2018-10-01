@@ -5,44 +5,59 @@
  */
 package fenix.iure.mb;
 
+
+
+
 import fenix.iure.dao.MunicipioDAO;
+import fenix.iure.dao.ProvinciaDAO;
 import fenix.iure.modelo.Municipio;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import fenix.iure.modelo.Provincia;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIOutput;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
- * @author Aisha Lubadika
+ * @author desenvolvimento
  */
-@Named(value = "municipioMBean")
+@ManagedBean(name = "municipioBean")
 @SessionScoped
 public class MunicipioMBean implements Serializable {
 
-  
-    private static final long serialVersionUID = 1L;
-    
-    private Municipio municipio;
+    private ProvinciaDAO provinciaDAO;
     private MunicipioDAO municipioDAO;
+
+    private Municipio municipio;
+    private Provincia provincia;
     private List<Municipio> municipios;
-    
-    
+    private List<Provincia> provincias;
+
+    /**
+     * Creates a new instance of MunicipioBean
+     */
     public MunicipioMBean() {
+
     }
-      @PostConstruct
-    public void inicializar() {
+
+    @PostConstruct
+    public void init() {
+
         municipio = new Municipio();
+        provincia = new Provincia();
+        municipios = new ArrayList<>();
+        provincias = new ArrayList<>();
         municipioDAO = new MunicipioDAO();
-        
-    }    
+        provinciaDAO = new ProvinciaDAO();
+        provincias = provinciaDAO.findAll();
+    }
 
     public Municipio getMunicipio() {
         return municipio;
@@ -52,65 +67,57 @@ public class MunicipioMBean implements Serializable {
         this.municipio = municipio;
     }
 
-    public MunicipioDAO getMunicipioDAO() {
-        return municipioDAO;
+    public Provincia getProvincia() {
+        return provincia;
     }
 
-    public void setMunicipioDAO(MunicipioDAO municipioDAO) {
-        this.municipioDAO = municipioDAO;
-    }
-
-    public List<Municipio> getMunicipios() {
-        municipios= municipioDAO.findAll();
-        return municipios;
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
 
     public void setMunicipios(List<Municipio> municipios) {
         this.municipios = municipios;
     }
-    
-    
-     public void guardar(ActionEvent evt) {
-        if (municipioDAO.save(municipio)){
-            municipio = new Municipio();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
-    }
-    
-    public String startEdit() {
-        return "municipio_listar?faces-redirect=true";
-    }
-    
-    public void edit(javafx.event.ActionEvent event) {
-        if (municipioDAO.update(municipio)) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            municipios = null;
 
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("municipio_listar.jsf");
-            } catch (IOException ex) {
-                Logger.getLogger(MunicipioMBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-         else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+    /**
+     * Carregar a lista de provincias
+     *
+     * @return
+     */
+    public List<Provincia> getProvincias(){
+        return provincias;
+    }
+
+    public void loadMunicipios() {
+        municipios = municipioDAO.findByIdProvincia2(provincia);
+    }
+
+    public void carregaMunicipiosDaProvincia(ValueChangeEvent event) {
+        Provincia p = (Provincia) event.getNewValue();
+        Integer id = p.getIdProvincia();
+        System.out.print("Sigla>>>>>>" + event.getNewValue().toString());
+        municipios = municipioDAO.findByIdProvincia(id);
 
     }
-    
-    public String delete() {
-        if (municipioDAO.delete(municipio)) {
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-             municipios = null;
-             return "municipio_listar?faces-redirect=true";
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
-            return null;
-        }      
+
+    /**
+     *
+     * @param event - carrega os municipios da proncia seleccionada
+     */
+    public void listaMunicipiosDaProvincia(AjaxBehaviorEvent event) {
+
+        String dueDate = (String) ((UIOutput) event.getSource()).getValue();
+
+        System.out.println("Provincia <<<<<=====" + dueDate);
+        //municipios = municipioDAO.findByIdProvincia(provincia);
     }
-    
-    
-    
+
+    public void setProvincias(List<Provincia> provincias) {
+        this.provincias = provincias;
+    }
+
+    public List<Municipio> getMunicipios() {
+        return municipios;
+    }
+
 }

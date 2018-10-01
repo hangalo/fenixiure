@@ -12,10 +12,11 @@ import java.util.Objects;
  *
  * @author Aisha Lubadika
  */
-public class EspecieProcesso  implements Serializable {
-     private static final long serialVersionUID = 1L;
-     private Integer idEspecieProcesso;
-     private String especieProcesso;
+public class EspecieProcesso implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
+    private Integer idEspecieProcesso;
+    private String especieProcesso;
 
     public EspecieProcesso() {
     }
@@ -43,8 +44,8 @@ public class EspecieProcesso  implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.idEspecieProcesso);
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.idEspecieProcesso);
         return hash;
     }
 
@@ -68,11 +69,11 @@ public class EspecieProcesso  implements Serializable {
 
     @Override
     public String toString() {
-        return "EspecieProcesso{" + "especieProcesso=" + especieProcesso + '}';
+        return "EspecieProcesso{" + "idEspecieProcesso=" + idEspecieProcesso + ", especieProcesso=" + especieProcesso + '}';
     }
-       
+
     
-     
-     
+    
+    
     
 }

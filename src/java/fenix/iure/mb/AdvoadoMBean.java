@@ -35,6 +35,7 @@ public class AdvoadoMBean implements Serializable {
     private Advogado advogado;
     private AdvogadoDAO advogadoDAO;
     private List<Advogado> advogados;
+    
     // Listas das pesquisas paramentrizadas
     private List<Advogado> findByNome;
     private List<Advogado> findbySobrenome;

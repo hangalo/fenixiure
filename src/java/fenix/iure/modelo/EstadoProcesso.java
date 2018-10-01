@@ -43,8 +43,8 @@ public class EstadoProcesso implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 11 * hash + Objects.hashCode(this.idEstadoProcesso);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.idEstadoProcesso);
         return hash;
     }
 
@@ -68,9 +68,10 @@ public class EstadoProcesso implements Serializable{
 
     @Override
     public String toString() {
-        return "EstadoProcesso{" + "estadoProcesso=" + estadoProcesso + '}';
+        return "EstadoProcesso{" + "idEstadoProcesso=" + idEstadoProcesso + ", estadoProcesso=" + estadoProcesso + '}';
     }
     
     
     
+
 }

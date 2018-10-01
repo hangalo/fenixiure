@@ -22,7 +22,7 @@ public class EstadoProcessoDAO implements GenericoDAO<EstadoProcesso>{
      private static final String INSERT ="INSERT INTO estado_processo(estado_processo ) VALUES (?)";
     private static final String UPDATE ="UPDATE estado_processo SET especie_processo WHERE id_especie_processo=?";
     private static final String DELETE ="DELETE FROM estado_procesoo WHERE id_estado_processo=?";
-    private static final String SELECT_BY_ID ="SELECT id_estado_processo, estado_processo WHERE id_estado_processo = ?";
+    private static final String SELECT_BY_ID ="SELECT id_estado_processo, estado_processo FROM estado_processo WHERE id_estado_processo = ?";
     private static final String SELECT_ALL ="SELECT id_estado_processo, estado_processo FROM estado_processo;";
 
     @Override
