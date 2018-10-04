@@ -97,7 +97,7 @@ public class AdvogadoDAOTest {
      */
     @Test
     public void testFindAll() {
-        System.out.println("findAll");
+        /*System.out.println("findAll");
         AdvogadoDAO instance = new AdvogadoDAO();
         List<Advogado> expResult = null;
         List<Advogado> advogados = instance.findAll();
@@ -111,7 +111,7 @@ public class AdvogadoDAOTest {
             System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
             System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
             System.out.println("\n");
-        }
+        }*/
     }
     
     @Test
@@ -237,10 +237,10 @@ public class AdvogadoDAOTest {
     
     @Test
     public void testFindByDataNascimento() {
-        /*System.out.println("Sobrenome");
+        System.out.println("Sobrenome");
         AdvogadoDAO instance = new AdvogadoDAO();
         List<Advogado> expResult = null;
-        String dataNascimento ="2018/09/04";
+        String dataNascimento ="1996/05/19";
         
         List<Advogado> advogados = instance.findByDataNascimento(dataNascimento);
         //System.out.println("Quantidade: " + advogados.size());
@@ -256,7 +256,7 @@ public class AdvogadoDAOTest {
             System.out.println("DtaNascimento: " + DateUtil.formataData(advogado.getDataNascimento()));
             System.out.println("DtaInicioFunção: " + DateUtil.formataData(advogado.getDataInicioFuncoes()));
             System.out.println("\n");
-        }*/
+        }
     }
     
     @Test

@@ -89,8 +89,8 @@ public class ProcessoDAOIT {
         Processo processo = new Processo();
        
         String numeroProcesso ="0000019";
-        String dataConclusao = "1993/04/09";
-        String dataEntrada = "2018/08/21";
+        String dataConclusao = "1993/04/30";
+        String dataEntrada = "2018/09/30";
         java.util.Date dataConclusaoFormatada = DateUtil.strToDate(dataConclusao);
         java.util.Date dataEntradaFormatada = DateUtil.strToDate(dataEntrada);
         
@@ -110,10 +110,10 @@ public class ProcessoDAOIT {
         TipoDecisao tipoDecisao = new TipoDecisao();
         tipoDecisao.setIdTipoDecisao(1);
         
-        processo.setCodigoProcesso(1);
+        processo.setIdProcesso(5);
         processo.setNumeroProcesso(numeroProcesso);
-        processo.setDataEntrada(dataConclusaoFormatada);
-        processo.setDataConclusao(dataEntradaFormatada);
+        processo.setDataEntrada(dataEntradaFormatada);
+        processo.setDataConclusao(dataConclusaoFormatada);
         processo.setResumoDespacho(resumo);
         processo.setEspecieProcesso(especieProcesso);
         processo.setRequerente(requerente);
@@ -137,7 +137,7 @@ public class ProcessoDAOIT {
      */
     @Test
     public void testDelete() {
-        System.out.println("delete");
+        /*System.out.println("delete");
         Processo processo = new Processo();
         processo.setIdProcesso(6);
         ProcessoDAO instance = new ProcessoDAO();
@@ -145,7 +145,7 @@ public class ProcessoDAOIT {
         boolean result = instance.delete(processo);
         assertTrue(result);
         // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");*/
         
     }
 
@@ -187,7 +187,7 @@ public class ProcessoDAOIT {
      */
     @Test
     public void testFindAll() {
-        System.out.println("findAll");
+        /*System.out.println("findAll");
         ProcessoDAO instance = new ProcessoDAO();
         List<Processo> expResult = null;
         List<Processo> processos = instance.findAll();
@@ -209,9 +209,41 @@ public class ProcessoDAOIT {
             System.out.println("Especie: " + processo.getEspecieProcesso().getEspecieProcesso());
             System.out.println("Tipo Decisão: " + processo.getTipoDecisao().getTipoDecisao());
             System.out.println("\n");
+        }*/
+        
+    }
+    
+    @Test
+    public void testFindByEstadoProcesso() {
+        System.out.println("FindByEstadoProcesso");
+        ProcessoDAO instance = new ProcessoDAO();
+        EstadoProcesso estadoProcesso = new EstadoProcesso();
+        estadoProcesso.setIdEstadoProcesso(1);
+        List<Processo> expResult = null;
+        List<Processo> processos = instance.findByEstadoProcesso(estadoProcesso);
+        assertTrue(processos.size() > 0);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+        
+        for (Processo processo : processos) {
+            System.out.println("Id: " +processo.getIdProcesso());
+            System.out.println("Numero: "+ processo.getNumeroProcesso());
+            System.out.println("Data Entrada: " + DateUtil.formataData(processo.getDataEntrada()));
+            System.out.println("Data Conclusão: " + DateUtil.formataData(processo.getDataConclusao()));
+            System.out.println("Resumo: " + processo.getResumoDespacho());
+            System.out.println("Requerente: " + processo.getRequerente().getNomeRequerente());
+            System.out.println("Requerido: " + processo.getRequerido().getNomeRequerido());
+            System.out.println("Advogado: " + processo.getAdvogado().getNomeAdvogado());
+            System.out.println("Juiz: " + processo.getJuiz().getNomeJuiz());
+            System.out.println("Estado: " + processo.getEstadoProcesso().getIdEstadoProcesso());
+            System.out.println("Especie: " + processo.getEspecieProcesso().getEspecieProcesso());
+            System.out.println("Tipo Decisão: " + processo.getTipoDecisao().getTipoDecisao());
+            System.out.println("\n");
         }
         
     }
+    
+    
 
     /**
      * Test of popularComDados method, of class ProcessoDAO.

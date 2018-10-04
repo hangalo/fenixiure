@@ -65,12 +65,14 @@ public class ProcessoMBean implements Serializable {
     private List<TipoDecisao> tipoDecisoes;
     
     // Colocar aqui as variaveis de pesquisas parametrisadas
-    
+    private Integer idEstadoProcesso;
     
     
     
     
     // Colocar aqui as listas que retornam as pesquisas parametrizadas
+    private List<Processo> byEstadoProcessos;
+    
     
     
     public ProcessoMBean() {
@@ -96,6 +98,9 @@ public class ProcessoMBean implements Serializable {
         juizes = new ArrayList<>();
         estados = new ArrayList<>();
         tipoDecisoes = new ArrayList<>();
+        
+        // Inicializar listas das pesquisas paramentrizadas
+        byEstadoProcessos = new ArrayList<>();
         
     }
 
@@ -147,6 +152,31 @@ public class ProcessoMBean implements Serializable {
         return tipoDecisoes;
     }
     
+    
+    // SETs e GETs para os paramentros das pesquisas paramentrizadas
+    public Integer getIdEstadoProcesso() {
+        return idEstadoProcesso;
+    }
+
+    public void setIdEstadoProcesso(Integer idEstadoProcesso) {
+        this.idEstadoProcesso = idEstadoProcesso;
+    }
+    
+    
+    
+    // Fim SETs e GETs
+    
+    // Inicio GETs das listas para as pesquisas paramentrizadas
+    public List<Processo> getByEstadoProcessos() {
+        EstadoProcesso estadoProcesso = new EstadoProcesso();
+        byEstadoProcessos = processoDAO.findByEstadoProcesso(estadoProcesso);
+        return byEstadoProcessos;
+    }
+    
+    // Fim GETs
+
+    
+    
     public String newSave() {
         processo = new Processo();
         return "processo_listar?faces-redirect=true";
@@ -192,6 +222,11 @@ public class ProcessoMBean implements Serializable {
             return null;
         }
     }
+
+   
+
+    
+   
 
 
 

@@ -1,3 +1,13 @@
+03/10/2018
+	---> Pesquisas parametrisadas em processo
+		---> by_estado_processo
+
+O.B.S: Dificuldades em passar o paramétro da página de consulta para o referido MBean
+
+
+------------------- Fim ----------------
+
+
 01/10/2018
 	---> Paginas
 		---> processo_novo
