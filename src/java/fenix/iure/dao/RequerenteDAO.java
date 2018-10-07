@@ -27,7 +27,9 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
     private static final String DELETE = "DELETE FROM requente WHERE id_requente = ?";
     private static final String SELECT_BY_ID = "SELECT r.id_requente,r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE id_requente = ?";
     private static final String SELECT_ALL = "SELECT r.id_requente, r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo ORDER BY nome_requente ASC;";
-
+    private static final String SELECT_BY_NAME = "SELECT r.id_requente, r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE r.nome_requente=?;";
+    private static final String SELECT_BY_SURNAME = "SELECT r.id_requente, r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE r.sobrenome_requerente=?;";
+    private static final String SELECT_BY_NAME_AND_SURNAME= "SELECT r.id_requente, r.nome_requente, r.sobrenome_requerente, r.n_bi_requerente, r.casa_requerente, r.rua_requerente, r.bairro_requerente, m.nome_municipio, t.nome_tipo FROM requente r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE r.nome_requente AND r.sobrenome_requerente=?;";
     @Override
     public boolean save(Requerente requerente) {
         boolean flagControlo = false;
@@ -47,7 +49,7 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
             ps.setString(5, requerente.getRuaRequerente());
             ps.setString(6, requerente.getBairroRequerente());
             ps.setInt(7, requerente.getMunicipio().getIdMunicipio());
-            ps.setInt(8, requerente.getIdTipo().getIdTipoPessoa());
+            ps.setInt(8, requerente.getTipo().getIdTipoPessoa());
 
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
@@ -84,7 +86,7 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
             ps.setString(5, requerente.getRuaRequerente());
             ps.setString(6, requerente.getBairroRequerente());
             ps.setInt(7, requerente.getMunicipio().getIdMunicipio());
-            ps.setInt(8, requerente.getIdTipo().getIdTipoPessoa());
+            ps.setInt(8, requerente.getTipo().getIdTipoPessoa());
             ps.setInt(9, requerente.getIdRequerente());
            
             
@@ -201,7 +203,7 @@ public class RequerenteDAO implements GenericoDAO<Requerente> {
             
             TipoPessoa tipoPessoa = new TipoPessoa();
             tipoPessoa.setNomeTipoPessoa(rs.getString("nome_tipo"));
-            requerente.setIdTipo(tipoPessoa);
+            requerente.setTipo(tipoPessoa);
 
         } catch (SQLException ex) {
             System.err.println("Erro ao carregar dados: " + ex.getLocalizedMessage());

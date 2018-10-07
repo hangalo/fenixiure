@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fenix.iure.converter;
+package fenix.iure.converters;
 
 import fenix.iure.dao.TipoPessoaDAO;
 import fenix.iure.modelo.TipoPessoa;

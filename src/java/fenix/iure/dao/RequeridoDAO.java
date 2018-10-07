@@ -21,16 +21,19 @@ import java.util.List;
  * @author Aisha Lubadika
  */
 public class RequeridoDAO implements GenericoDAO<Requerido> {
-    
+
     private static final String INSERT = "INSERT INTO requerido(nome_requerido, sobrenome_requerido, n_bi_requerido, casa_requerido, rua_requerido, bairro_requerido, id_municipio, id_tipo) VALUES (?,?,?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE requerido SET nome_requerido = ? , sobrenome_requerido = ? ,n_bi_requerido=?, casa_requerido=?, rua_requerido=?, bairro_requerido=?,  id_municipio=?, id_tipo=?  WHERE id_requerido = ?";
     private static final String DELETE = "DELETE FROM requerido WHERE id_requerido = ?";
     private static final String SELECT_BY_ID = "SELECT r.id_requerido, r.sobrenome_requerido, r.n_bi_requerido, r.casa_requerido, r.rua_requerido, r.bairro_requerido, m.nome_municipio, t.nome_tipo FROM requerido r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE id_requerido = ?";
     private static final String SELECT_ALL = "SELECT r.id_requerido, r.nome_requerido, r.sobrenome_requerido, r.n_bi_requerido, r.casa_requerido, r.rua_requerido, r.bairro_requerido, m.nome_municipio, t.nome_tipo FROM requerido r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo ORDER BY nome_requerido ASC;";
+    private static final String SELECT_BY_NAME = "SELECT r.id_requerido, r.nome_requerido, r.sobrenome_requerido, r.n_bi_requerido, r.casa_requerido, r.rua_requerido, r.bairro_requerido, m.nome_municipio, t.nome_tipo FROM requerido r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE r.nome_requerido;";
+    private static final String SELECT_BY_SURNAME = "SELECT r.id_requerido, r.nome_requerido, r.sobrenome_requerido, r.n_bi_requerido, r.casa_requerido, r.rua_requerido, r.bairro_requerido, m.nome_municipio, t.nome_tipo FROM requerido r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo WHERE r.sobrenome_requerido;";
+    private static final String SELECT_BY_NAME_AND_SURNAME = "SELECT r.id_requerido, r.nome_requerido, r.sobrenome_requerido, r.n_bi_requerido, r.casa_requerido, r.rua_requerido, r.bairro_requerido, m.nome_municipio, t.nome_tipo FROM requerido r  INNER JOIN municipio m ON r.id_municipio= m.id_municipio INNER JOIN tipo_pessoa t ON r.id_tipo= t.id_tipo r.nome_requerido AND r.sobrenome_requerido;";
 
     @Override
     public boolean save(Requerido requerido) {
-          boolean flagControlo = false;
+        boolean flagControlo = false;
         PreparedStatement ps = null;
         Connection conn = null;
         if (requerido == null) {
@@ -46,8 +49,8 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
             ps.setString(4, requerido.getCasaRequerido());
             ps.setString(5, requerido.getRuaRequerido());
             ps.setString(6, requerido.getBairroRequerdo());
-            ps.setInt(7, requerido.getIdMunicipio().getIdMunicipio());
-            ps.setInt(8, requerido.getIdTipo().getIdTipoPessoa());
+            ps.setInt(7, requerido.getMunicipio().getIdMunicipio());
+            ps.setInt(8, requerido.getTipo().getIdTipoPessoa());
 
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
@@ -63,12 +66,12 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
         } finally {
             Conexao.closeConnection(conn, ps);
         }
-        
+
     }
 
     @Override
     public boolean update(Requerido requerido) {
-            boolean flagControlo = false;
+        boolean flagControlo = false;
         PreparedStatement ps = null;
         Connection conn = null;
         if (requerido == null) {
@@ -78,17 +81,16 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(UPDATE);
 
-             ps.setString(1, requerido.getNomeRequerido());
+            ps.setString(1, requerido.getNomeRequerido());
             ps.setString(2, requerido.getSobrenomeRequerido());
             ps.setString(3, requerido.getNbiRequerido());
             ps.setString(4, requerido.getCasaRequerido());
             ps.setString(5, requerido.getRuaRequerido());
             ps.setString(6, requerido.getBairroRequerdo());
-            ps.setInt(7, requerido.getIdMunicipio().getIdMunicipio());
-            ps.setInt(8, requerido.getIdTipo().getIdTipoPessoa());
+            ps.setInt(7, requerido.getMunicipio().getIdMunicipio());
+            ps.setInt(8, requerido.getTipo().getIdTipoPessoa());
             ps.setInt(9, requerido.getIdRequerido());
-           
-            
+
             int retorno = ps.executeUpdate();
             if (retorno > 0) {
                 System.out.println("Dados actualizar com sucesso: " + ps.getUpdateCount());
@@ -116,8 +118,8 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(DELETE);
-           ps.setInt(1, requerido.getIdRequerido());
-          int retorno = ps.executeUpdate();
+            ps.setInt(1, requerido.getIdRequerido());
+            int retorno = ps.executeUpdate();
 
             if (retorno > 0) {
                 System.out.println("Dados eliminados com sucesso: " + ps.getUpdateCount());
@@ -141,7 +143,7 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
         PreparedStatement ps = null;
         Connection conn = null;
         ResultSet rs = null;
-       Requerido requerido = new Requerido();
+        Requerido requerido = new Requerido();
         try {
             conn = Conexao.getConnection();
             ps = conn.prepareStatement(SELECT_BY_ID);
@@ -161,7 +163,7 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
 
     @Override
     public List<Requerido> findAll() {
-      PreparedStatement ps = null;
+        PreparedStatement ps = null;
         Connection conn = null;
         ResultSet rs = null;
         List<Requerido> requeridos = new ArrayList<>();
@@ -184,29 +186,27 @@ public class RequeridoDAO implements GenericoDAO<Requerido> {
 
     @Override
     public void popularComDados(Requerido requerido, ResultSet rs) {
-         try {
-           requerido.setIdRequerido(rs.getInt("id_requerido"));
-           requerido.setNomeRequerido(rs.getString("nome_requerido"));
-           requerido.setSobrenomeRequerido(rs.getString("sobrenome_requerido"));
-           requerido.setNbiRequerido(rs.getString("n_bi_requerido"));
-           requerido.setCasaRequerido(rs.getString("casa_requerido"));
-           requerido.setRuaRequerido(rs.getString("rua_requerido"));
-           requerido.setBairroRequerdo(rs.getString("bairro_requerido"));
-           
-           
+        try {
+            requerido.setIdRequerido(rs.getInt("id_requerido"));
+            requerido.setNomeRequerido(rs.getString("nome_requerido"));
+            requerido.setSobrenomeRequerido(rs.getString("sobrenome_requerido"));
+            requerido.setNbiRequerido(rs.getString("n_bi_requerido"));
+            requerido.setCasaRequerido(rs.getString("casa_requerido"));
+            requerido.setRuaRequerido(rs.getString("rua_requerido"));
+            requerido.setBairroRequerdo(rs.getString("bairro_requerido"));
+
             Municipio municipio = new Municipio();
             municipio.setNomeMunicipio(rs.getString("nome_municipio"));
-            requerido.setIdMunicipio(municipio);
-            
+            requerido.setMunicipio(municipio);
+
             TipoPessoa tipoPessoa = new TipoPessoa();
             tipoPessoa.setNomeTipoPessoa(rs.getString("nome_tipo"));
-            requerido.setIdTipo(tipoPessoa);
+            requerido.setTipo(tipoPessoa);
 
         } catch (SQLException ex) {
             System.err.println("Erro ao carregar dados: " + ex.getLocalizedMessage());
         }
-        
-        
+
     }
-    
+
 }

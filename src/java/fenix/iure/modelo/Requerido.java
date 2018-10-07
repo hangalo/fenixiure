@@ -21,13 +21,13 @@ public class Requerido implements Serializable{
       private String casaRequerido;
       private String ruaRequerido;
       private String bairroRequerdo;
-      private Municipio idMunicipio;
-      private TipoPessoa idTipo;
+      private Municipio municipio;
+      private TipoPessoa tipo;
 
     public Requerido() {
     }
 
-    public Requerido(Integer idRequerido, String nomeRequerido, String sobrenomeRequerido, String nbiRequerido, String casaRequerido, String ruaRequerido, String bairroRequerdo, Municipio idMunicipio, TipoPessoa idTipo) {
+    public Requerido(Integer idRequerido, String nomeRequerido, String sobrenomeRequerido, String nbiRequerido, String casaRequerido, String ruaRequerido, String bairroRequerdo, Municipio municipio, TipoPessoa tipo) {
         this.idRequerido = idRequerido;
         this.nomeRequerido = nomeRequerido;
         this.sobrenomeRequerido = sobrenomeRequerido;
@@ -35,9 +35,11 @@ public class Requerido implements Serializable{
         this.casaRequerido = casaRequerido;
         this.ruaRequerido = ruaRequerido;
         this.bairroRequerdo = bairroRequerdo;
-        this.idMunicipio = idMunicipio;
-        this.idTipo = idTipo;
+        this.municipio = municipio;
+        this.tipo = tipo;
     }
+
+   
 
     public Integer getIdRequerido() {
         return idRequerido;
@@ -95,21 +97,23 @@ public class Requerido implements Serializable{
         this.bairroRequerdo = bairroRequerdo;
     }
 
-    public Municipio getIdMunicipio() {
-        return idMunicipio;
+    public Municipio getMunicipio() {
+        return municipio;
     }
 
-    public void setIdMunicipio(Municipio idMunicipio) {
-        this.idMunicipio = idMunicipio;
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
     }
 
-    public TipoPessoa getIdTipo() {
-        return idTipo;
+    public TipoPessoa getTipo() {
+        return tipo;
     }
 
-    public void setIdTipo(TipoPessoa idTipo) {
-        this.idTipo = idTipo;
+    public void setTipo(TipoPessoa tipo) {
+        this.tipo = tipo;
     }
+
+ 
 
     @Override
     public int hashCode() {
@@ -138,8 +142,10 @@ public class Requerido implements Serializable{
 
     @Override
     public String toString() {
-        return "Requerido{" + "idRequerido=" + idRequerido + ", nomeRequerido=" + nomeRequerido + ", sobrenomeRequerido=" + sobrenomeRequerido + ", nbiRequerido=" + nbiRequerido + ", casaRequerido=" + casaRequerido + ", ruaRequerido=" + ruaRequerido + ", bairroRequerdo=" + bairroRequerdo + ", idMunicipio=" + idMunicipio + ", idTipo=" + idTipo + '}';
+        return "Requerido{" + "idRequerido=" + idRequerido + ", nomeRequerido=" + nomeRequerido + ", sobrenomeRequerido=" + sobrenomeRequerido + ", nbiRequerido=" + nbiRequerido + ", casaRequerido=" + casaRequerido + ", ruaRequerido=" + ruaRequerido + ", bairroRequerdo=" + bairroRequerdo + ", municipio=" + municipio + ", tipo=" + tipo + '}';
     }
+
+   
       
       
       

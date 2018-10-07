@@ -23,12 +23,12 @@ public class Requerente  implements Serializable{
     private String ruaRequerente;
     private String bairroRequerente;
     private Municipio municipio;
-    private TipoPessoa idTipo;
+    private TipoPessoa tipo;
 
     public Requerente() {
     }
 
-    public Requerente(Integer idRequerente, String nomeRequerente, String sobrenomeRequerente, String nbiRequerente, String casaRequerente, String ruaRequerente, String bairroRequerente, Municipio municipio, TipoPessoa idTipo) {
+    public Requerente(Integer idRequerente, String nomeRequerente, String sobrenomeRequerente, String nbiRequerente, String casaRequerente, String ruaRequerente, String bairroRequerente, Municipio municipio, TipoPessoa tipo) {
         this.idRequerente = idRequerente;
         this.nomeRequerente = nomeRequerente;
         this.sobrenomeRequerente = sobrenomeRequerente;
@@ -37,8 +37,9 @@ public class Requerente  implements Serializable{
         this.ruaRequerente = ruaRequerente;
         this.bairroRequerente = bairroRequerente;
         this.municipio = municipio;
-        this.idTipo = idTipo;
+        this.tipo = tipo;
     }
+
 
     public Integer getIdRequerente() {
         return idRequerente;
@@ -104,13 +105,15 @@ public class Requerente  implements Serializable{
         this.municipio = municipio;
     }
 
-    public TipoPessoa getIdTipo() {
-        return idTipo;
+    public TipoPessoa getTipo() {
+        return tipo;
     }
 
-    public void setIdTipo(TipoPessoa idTipo) {
-        this.idTipo = idTipo;
+    public void setTipo(TipoPessoa tipo) {
+        this.tipo = tipo;
     }
+
+ 
 
     @Override
     public int hashCode() {
@@ -139,8 +142,10 @@ public class Requerente  implements Serializable{
 
     @Override
     public String toString() {
-        return "Requerente{" + "idRequerente=" + idRequerente + ", nomeRequerente=" + nomeRequerente + ", sobrenomeRequerente=" + sobrenomeRequerente + ", nbiRequerente=" + nbiRequerente + ", casaRequerente=" + casaRequerente + ", ruaRequerente=" + ruaRequerente + ", bairroRequerente=" + bairroRequerente + ", municipio=" + municipio + ", idTipo=" + idTipo + '}';
+        return "Requerente{" + "idRequerente=" + idRequerente + ", nomeRequerente=" + nomeRequerente + ", sobrenomeRequerente=" + sobrenomeRequerente + ", nbiRequerente=" + nbiRequerente + ", casaRequerente=" + casaRequerente + ", ruaRequerente=" + ruaRequerente + ", bairroRequerente=" + bairroRequerente + ", municipio=" + municipio + ", tipo=" + tipo + '}';
     }
+
+    
     
     
     

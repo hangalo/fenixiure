@@ -94,7 +94,7 @@ public class RequerenteMBean {
             requerentes = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("requerentes_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_listar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -109,7 +109,7 @@ public class RequerenteMBean {
         if (requerenteDAO.delete(requerente)) {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              requerentes = null;
-             return "requerentes_listar?faces-redirect=true";
+             return "requerente_listar?faces-redirect=true";
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
