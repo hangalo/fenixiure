@@ -53,6 +53,8 @@ public class AdvoadoMBean implements Serializable {
     private List<Advogado> findbyIntervaloDataInicioFuncoes;
     
     
+    
+    
     // Variaveis para pesquisas paramentrizadas
     private String nome;
     private String sobrenome;
@@ -78,6 +80,8 @@ public class AdvoadoMBean implements Serializable {
         findbyDataInicioFuncoes = new ArrayList<>();
         findbyIntervaloDatNascimento = new ArrayList<>();
         findbyIntervaloDataInicioFuncoes = new ArrayList<>();
+        advogados=new ArrayList<>();
+        advogados= advogadoFacade.findAll();
     }
 
     public Advogado getAdvogado() {
@@ -97,6 +101,58 @@ public class AdvoadoMBean implements Serializable {
         advogado = new Advogado();
         return "advogado_listar?faces-redirect=true";
     }
+
+    public Date getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataDeNascimento(Date dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    public Date getDataInicioFuncoes() {
+        return dataInicioFuncoes;
+    }
+
+    public void setDataInicioFuncoes(Date dataInicioFuncoes) {
+        this.dataInicioFuncoes = dataInicioFuncoes;
+    }
+
+    public Date getDataInicioInicioFuncoes() {
+        return dataInicioInicioFuncoes;
+    }
+
+    public void setDataInicioInicioFuncoes(Date dataInicioInicioFuncoes) {
+        this.dataInicioInicioFuncoes = dataInicioInicioFuncoes;
+    }
+
+    public Date getDataFimInicioFuncoes() {
+        return dataFimInicioFuncoes;
+    }
+
+    public void setDataFimInicioFuncoes(Date dataFimInicioFuncoes) {
+        this.dataFimInicioFuncoes = dataFimInicioFuncoes;
+    }
+
+    public Date getDataInicioDataNascimento() {
+        return dataInicioDataNascimento;
+    }
+
+    public void setDataInicioDataNascimento(Date dataInicioDataNascimento) {
+        this.dataInicioDataNascimento = dataInicioDataNascimento;
+    }
+
+    public Date getDataFimDataNascimento() {
+        return dataFimDataNascimento;
+    }
+
+    public void setDataFimDataNascimento(Date dataFimDataNascimento) {
+        this.dataFimDataNascimento = dataFimDataNascimento;
+    }
+    
+    
+    
+    
 /*
     public void guardar(ActionEvent evt) {
         if (advogadoDAO.save(advogado)) {
