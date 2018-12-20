@@ -6,9 +6,10 @@
 package fenix.iure.mb;
 
 import fenix.iure.dao.AdvogadoDAO;
-import fenix.iure.modelo.Advogado;
+import fenix.iure.ejbs.AdvogadoFacade;
+//import fenix.iure.modelo.Advogado;
+import fenix.iure.entities.Advogado;
 import fenix.iure.util.DateUtil;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 
 /**
  *
@@ -36,6 +39,10 @@ public class AdvoadoMBean implements Serializable {
     private AdvogadoDAO advogadoDAO;
     private List<Advogado> advogados;
     
+    @Inject
+    AdvogadoFacade advogadoFacade;
+    
+    
     // Listas das pesquisas paramentrizadas
     private List<Advogado> findByNome;
     private List<Advogado> findbySobrenome;
@@ -49,12 +56,12 @@ public class AdvoadoMBean implements Serializable {
     // Variaveis para pesquisas paramentrizadas
     private String nome;
     private String sobrenome;
-    private String dataDeNascimento;
-    private String dataInicioFuncoes;
-    private String dataInicioInicioFuncoes;
-    private String dataFimInicioFuncoes;
-    private String dataInicioDataNascimento;
-    private String dataFimDataNascimento;
+    private Date dataDeNascimento;
+    private Date dataInicioFuncoes;
+    private Date dataInicioInicioFuncoes;
+    private Date dataFimInicioFuncoes;
+    private Date dataInicioDataNascimento;
+    private Date dataFimDataNascimento;
     private String controleEditar = "listartodos"; // Controla as paginas de edição
 
     public AdvoadoMBean() {
@@ -82,7 +89,7 @@ public class AdvoadoMBean implements Serializable {
     }
 
     public List<Advogado> getAdvogados() {
-        advogados = advogadoDAO.findAll();
+        advogados = advogadoFacade.findAll();
         return advogados;
     }
 
@@ -90,9 +97,22 @@ public class AdvoadoMBean implements Serializable {
         advogado = new Advogado();
         return "advogado_listar?faces-redirect=true";
     }
-
+/*
     public void guardar(ActionEvent evt) {
         if (advogadoDAO.save(advogado)) {
+            advogado = new Advogado();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
+        }
+    }
+*/
+
+
+      public void guardar(ActionEvent evt) {
+          
+          if(advogado != null){
+        advogadoFacade.create(advogado);
             advogado = new Advogado();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
         } else {
@@ -103,9 +123,11 @@ public class AdvoadoMBean implements Serializable {
     public String startEdit() {
         return "advogado_listar?faces-redirect=true";
     }
-
+/*
     
-    public void edit(javafx.event.ActionEvent event) {
+    public void edit(ActionEvent event) {
+        
+          if(advogado != null){
         if (advogadoDAO.update(advogado)) {
             if (controleEditar.equalsIgnoreCase("listartodos")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
@@ -163,10 +185,11 @@ public class AdvoadoMBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
         }
 
-    }
+    }*/
 
     public String delete() {
-        if (advogadoDAO.delete(advogado)) {
+          if(advogado != null){
+        advogadoFacade.remove(advogado);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             advogados = null;
             return "advogado_listar?faces-redirect=true";
@@ -200,66 +223,20 @@ public class AdvoadoMBean implements Serializable {
         this.sobrenome = sobrenome;
     }
 
-    public String getDataDeNascimento() {
-        return dataDeNascimento;
-    }
-
-    public void setDataDeNascimento(String dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
-    }
-
-    public String getDataInicioFuncoes() {
-        return dataInicioFuncoes;
-    }
-
-    public void setDataInicioFuncoes(String dataInicioFuncoes) {
-        this.dataInicioFuncoes = dataInicioFuncoes;
-    }
-
-    public String getDataInicioInicioFuncoes() {
-        return dataInicioInicioFuncoes;
-    }
-
-    public void setDataInicioInicioFuncoes(String dataInicioInicioFuncoes) {
-        this.dataInicioInicioFuncoes = dataInicioInicioFuncoes;
-    }
-
-    public String getDataFimInicioFuncoes() {
-        return dataFimInicioFuncoes;
-    }
-
-    public void setDataFimInicioFuncoes(String dataFimInicioFuncoes) {
-        this.dataFimInicioFuncoes = dataFimInicioFuncoes;
-    }
-
-    public String getDataInicioDataNascimento() {
-        return dataInicioDataNascimento;
-    }
-
-    public void setDataInicioDataNascimento(String dataInicioDataNascimento) {
-        this.dataInicioDataNascimento = dataInicioDataNascimento;
-    }
-
-    public String getDataFimDataNascimento() {
-        return dataFimDataNascimento;
-    }
-
-    public void setDataFimDataNascimento(String dataFimDataNascimento) {
-        this.dataFimDataNascimento = dataFimDataNascimento;
-    }
+    
 
     public List<Advogado> getByNome() {
-        findByNome = advogadoDAO.findByNome(nome);
+        findByNome = advogadoFacade.findByNome(nome);
         controleEditar = "byNome";
         return findByNome;
     }
     public List<Advogado> getBySobrenome() {
-        findbySobrenome = advogadoDAO.findBySobrenome(sobrenome);
+        findbySobrenome = advogadoFacade.findBySobrenome(sobrenome);
         controleEditar = "bySobrenome";
         return findbySobrenome;
     }
     public List<Advogado> getByDataNascimento() {
-        findbyDatNascimento = advogadoDAO.findByDataNascimento(dataDeNascimento);
+        findbyDatNascimento = advogadoFacade.findByDataNascimento(dataDeNascimento);
         controleEditar = "byDataNascimento";
         return findbyDatNascimento;
     }
@@ -269,13 +246,13 @@ public class AdvoadoMBean implements Serializable {
             return null;
 
         } else if (((getSobrenome() == null) || (getSobrenome().isEmpty())) && ((getNome() != null || !getNome().isEmpty()))) {
-            findByNome = advogadoDAO.findByNome(nome);
+            findByNome = advogadoFacade.findByNome(nome);
             return findByNome;
         } else if ((getNome() == null || getNome().isEmpty() && getSobrenome() != null)) {
-            findbySobrenome = advogadoDAO.findBySobrenome(sobrenome);
+            findbySobrenome = advogadoFacade.findBySobrenome(sobrenome);
             return findbySobrenome;
         } else if ((getNome() != null || !getNome().isEmpty()) && (getSobrenome() != null || !getSobrenome().isEmpty())) {
-            findByNomeSobrenome = advogadoDAO.findByNomeSobrenome(nome, sobrenome);
+            findByNomeSobrenome = advogadoFacade.findByNomeSobrenome(nome, sobrenome);
             return findByNomeSobrenome;
         }
         return null;
