@@ -1,3 +1,32 @@
+22/12/2018 
+Coisas Feitas:
+----> Clone da versão da Aplicacao com JPA
+----> Actualização do tema do primefaces
+----> Testes das funcionalidade do CRUD de Advogado(implementado pelo Fre, pra servir de exemplo.)
+
+
+
+
+
+------------------- Fim ----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 03/10/2018
 	---> Pesquisas parametrisadas em processo
 		---> by_estado_processo

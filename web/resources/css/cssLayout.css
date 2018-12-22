@@ -8,10 +8,12 @@
 }
 
 #bottom {
+    
     position: relative;
-    background-color: #c2dfef;
+    background-color: dimgray;
     padding: 5px;
     margin: 10px 0px 0px 0px;
+    width: 100%;
 }
 
 #left {
@@ -47,15 +49,21 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
 }
 
-
+#content{
+    background: dimgray;
+    background-image: url("../imagens/martelo.jpg");
+    background-repeat: repeat;
+    height: auto;
+    width: 100%;
+}

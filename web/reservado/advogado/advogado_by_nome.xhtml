@@ -47,7 +47,7 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Sobrenome "/>
                                     </f:facet>
-                                    <h:outputText value="#{advogado.sobreNomeAdvogado}"/>
+                                    <h:outputText value="#{advogado.sobrenomeAdvogado}"/>
                                 </p:column>
                                 
                                 
@@ -100,13 +100,13 @@
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobreNomeAdvogado}" size="20"/>
+                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{advoadoMBean.advogado.dataNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
@@ -140,13 +140,13 @@
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobreNomeAdvogado}" size="20"/>
+                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{advoadoMBean.advogado.dataNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
@@ -174,9 +174,9 @@
                                 <p:outputLabel value="Nome: "/>
                                 <h:outputText value="#{advoadoMBean.advogado.nomeAdvogado}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.sobreNomeAdvogado}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.dataNascimento}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.dataNascimentoAdvogado}"/>
                                 <p:outputLabel value="Data inicio de Função "/>
                                 <h:outputText value="#{advoadoMBean.advogado.dataInicioFuncoes}"/>
                             </p:panelGrid>

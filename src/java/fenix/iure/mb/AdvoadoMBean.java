@@ -38,11 +38,10 @@ public class AdvoadoMBean implements Serializable {
     private Advogado advogado;
     private AdvogadoDAO advogadoDAO;
     private List<Advogado> advogados;
-    
+
     @Inject
     AdvogadoFacade advogadoFacade;
-    
-    
+
     // Listas das pesquisas paramentrizadas
     private List<Advogado> findByNome;
     private List<Advogado> findbySobrenome;
@@ -51,10 +50,7 @@ public class AdvoadoMBean implements Serializable {
     private List<Advogado> findbyDataInicioFuncoes;
     private List<Advogado> findbyIntervaloDatNascimento;
     private List<Advogado> findbyIntervaloDataInicioFuncoes;
-    
-    
-    
-    
+
     // Variaveis para pesquisas paramentrizadas
     private String nome;
     private String sobrenome;
@@ -80,8 +76,8 @@ public class AdvoadoMBean implements Serializable {
         findbyDataInicioFuncoes = new ArrayList<>();
         findbyIntervaloDatNascimento = new ArrayList<>();
         findbyIntervaloDataInicioFuncoes = new ArrayList<>();
-        advogados=new ArrayList<>();
-        advogados= advogadoFacade.findAll();
+        advogados = new ArrayList<>();
+        advogados = advogadoFacade.findAll();
     }
 
     public Advogado getAdvogado() {
@@ -149,11 +145,8 @@ public class AdvoadoMBean implements Serializable {
     public void setDataFimDataNascimento(Date dataFimDataNascimento) {
         this.dataFimDataNascimento = dataFimDataNascimento;
     }
-    
-    
-    
-    
-/*
+
+    /*
     public void guardar(ActionEvent evt) {
         if (advogadoDAO.save(advogado)) {
             advogado = new Advogado();
@@ -162,13 +155,11 @@ public class AdvoadoMBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
         }
     }
-*/
+     */
+    public void guardar(ActionEvent evt) {
 
-
-      public void guardar(ActionEvent evt) {
-          
-          if(advogado != null){
-        advogadoFacade.create(advogado);
+        if (advogado != null) {
+            advogadoFacade.create(advogado);
             advogado = new Advogado();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
         } else {
@@ -179,12 +170,11 @@ public class AdvoadoMBean implements Serializable {
     public String startEdit() {
         return "advogado_listar?faces-redirect=true";
     }
-/*
-    
+
     public void edit(ActionEvent event) {
-        
-          if(advogado != null){
-        if (advogadoDAO.update(advogado)) {
+
+        if (advogado != null) {
+            advogadoFacade.edit(advogado);
             if (controleEditar.equalsIgnoreCase("listartodos")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
@@ -193,7 +183,7 @@ public class AdvoadoMBean implements Serializable {
                 } catch (IOException ex) {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if (controleEditar.equalsIgnoreCase("byNome")) {
+            } else if (controleEditar.equalsIgnoreCase("byNome")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
@@ -201,7 +191,7 @@ public class AdvoadoMBean implements Serializable {
                 } catch (IOException ex) {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if (controleEditar.equalsIgnoreCase("bySobrenome")) {
+            } else if (controleEditar.equalsIgnoreCase("bySobrenome")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
@@ -209,7 +199,7 @@ public class AdvoadoMBean implements Serializable {
                 } catch (IOException ex) {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if (controleEditar.equalsIgnoreCase("byDataNascimento")) {
+            } else if (controleEditar.equalsIgnoreCase("byDataNascimento")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
@@ -217,9 +207,7 @@ public class AdvoadoMBean implements Serializable {
                 } catch (IOException ex) {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            
-            else if (controleEditar.equalsIgnoreCase("byDataInicioFuncoes")) {
+            } else if (controleEditar.equalsIgnoreCase("byDataInicioFuncoes")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
@@ -227,7 +215,7 @@ public class AdvoadoMBean implements Serializable {
                 } catch (IOException ex) {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if (controleEditar.equalsIgnoreCase("byNomeSobrenome")) {
+            } else if (controleEditar.equalsIgnoreCase("byNomeSobrenome")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
@@ -241,11 +229,11 @@ public class AdvoadoMBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
         }
 
-    }*/
+    }
 
     public String delete() {
-          if(advogado != null){
-        advogadoFacade.remove(advogado);
+        if (advogado != null) {
+            advogadoFacade.remove(advogado);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             advogados = null;
             return "advogado_listar?faces-redirect=true";
@@ -279,24 +267,25 @@ public class AdvoadoMBean implements Serializable {
         this.sobrenome = sobrenome;
     }
 
-    
-
     public List<Advogado> getByNome() {
         findByNome = advogadoFacade.findByNome(nome);
         controleEditar = "byNome";
         return findByNome;
     }
+
     public List<Advogado> getBySobrenome() {
         findbySobrenome = advogadoFacade.findBySobrenome(sobrenome);
         controleEditar = "bySobrenome";
         return findbySobrenome;
     }
+
     public List<Advogado> getByDataNascimento() {
         findbyDatNascimento = advogadoFacade.findByDataNascimento(dataDeNascimento);
         controleEditar = "byDataNascimento";
         return findbyDatNascimento;
     }
-    public List<Advogado> getByNomeSobrenome(){
+
+    public List<Advogado> getByNomeSobrenome() {
         controleEditar = "byNomeSobrenome"; // controlo
         if ((getNome() == null || getNome().isEmpty()) && (getSobrenome() == null)) {
             return null;
@@ -313,6 +302,5 @@ public class AdvoadoMBean implements Serializable {
         }
         return null;
     }
-
 
 }
