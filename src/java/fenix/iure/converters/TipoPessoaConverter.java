@@ -6,7 +6,7 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.TipoPessoaDAO;
-import fenix.iure.modelo.TipoPessoa;
+import fenix.iure.entities.TipoPessoa;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -34,7 +34,7 @@ public class TipoPessoaConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
             TipoPessoa tipoPessoa = (TipoPessoa) value;
-            return String.valueOf(tipoPessoa.getIdTipoPessoa());
+            return String.valueOf(tipoPessoa.getIdTipo());
         }
         return null;
     }

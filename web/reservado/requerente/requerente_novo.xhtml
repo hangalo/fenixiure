@@ -1,107 +1,118 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Requerente</title>
-    </h:head>
-    <h:body>
-          <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
-              
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
+
             <ui:define name="content">
-                <f:view>
-                    <b:panel title="Ficha do requerente" collapsible="false" look="normal">
-                        <h:form  id="frmNovo"  enctype="multipart/form-data">
-                            
-                             <p:growl id="messages" showDetail="true"/>
+                <p:panel header="Cadastrar novo Requerente" closable="false" style="">
+                    <f:facet name="footer">
+                        <h:outputText value="Sistema de Gestão de Processos" />
+                    </f:facet>
+                    <hr></hr>     
+                    <h:form  id="frmNovo"  enctype="multipart/form-data">
+                        <p:growl id="messages" showDetail="true"/>
                         <h:messages showSummary="true" showDetail="true"/>
-                            <h:panelGrid columns="2" >
 
+                        <b:panel title="Dados Pessoais" collapsible="false" style="color: black">
+
+                            <h:panelGrid  columns="4">  
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel  value="Nome:"/>
-                                        <p:inputText  id="nome" value="#{requerenteMBean.requerente.nomeRequerente}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
-
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 15%" value="Sobrenome:"/>
-                                        <p:inputText style="margin-left: 15%"  id="sobrenome" value="#{requerenteMBean.requerente.sobrenomeRequerente}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
-
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel  value="Nº de Bilhete de identidade:"/>
-                                        <p:inputText   id="bilhete" value="#{requerenteMBean.requerente.nbiRequerente}" size="20"/>
-                                    </h:panelGrid>
+                                        <p:outputLabel value="NOME:"/>
+                                        <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
+                                    </h:panelGrid> 
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel  style="margin-left: 15%" value="Tipo Pessoa:"/>
-                                        <p:selectOneMenu style="width:250px; margin-left:15% " id="tipos" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.tipo}" required="true" converter="tipoPessoaConverter">
-                                            <f:selectItem itemLabel="-Seleccione o tipo de pessoa-" value="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems value="#{requerenteMBean.tipoPessoas}" var="tipoPessoa" itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.nomeTipoPessoa}"/>
+                                        <p:outputLabel style="margin-left: 20px" value="SOBRENOME:"/>
+                                        <p:inputText style="margin-left: 20px" id="sobrenome" value="#{requerenteMBean.requerente.sobrenomeRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 20px" value="BI:"/>
+                                        <p:inputText style="margin-left: 20px" id="bi" value="#{requerenteMBean.requerente.NBiRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
+                                        <p:selectOneMenu effect="slide" style="width:200px; margin-left:15% " id="tipos" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idTipo}" required="true" converter="tipoPessoaConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{requerenteMBean.tipoPessoas}" var="tipoPessoa" itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.nomeTipo}"/>
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
 
                             </h:panelGrid>
 
-                            <b:panel look="default" collapsible="false" title="Endereço" style="margin-bottom: 20px">
-                                     <h:panelGrid columns="4" >
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel  value="Nº de casa:"/>
-                                        <p:inputText  id="casa" value="#{requerenteMBean.requerente.casaRequerente}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 5%" value="Rua:"/>
-                                        <p:inputText  style="margin-left: 5%"  id="rua" value="#{requerenteMBean.requerente.ruaRequerente}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 10%" value="Bairro:"/>
-                                        <p:inputText  style="margin-left: 10%" id="bairro" value="#{requerenteMBean.requerente.bairroRequerente}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
 
-                                         
-                                         
+                        </b:panel>
+
+                        <b:panel title="Endereço" collapsible="false" style="color: black">
+                            <h:panelGrid  columns="4">
+
+
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel  style="margin-left: 15%" value="Municipio:"/>
-                                    
-                                        <p:selectOneMenu   style="width:200px; margin-left:15%" id="municipios" filter="true" filterMatchMode="startsWith" label="Municipio" value="#{requerenteMBean.requerente.municipio}" required="true" converter="municipioConverter">
-                                            <f:selectItem itemLabel="-Seleccione o municipio-" value="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems value="#{requerenteMBean.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nomeMunicipio}"/>
+                                        <p:outputLabel value="BAIRRO:"/>
+                                        <p:inputText id="bairro" value="#{requerenteMBean.requerente.bairroRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 10%" value="RUA:"/>
+                                        <p:inputText style="margin-left: 10%" id="rua" value="#{requerenteMBean.requerente.ruaRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 20%" value="CASA:"/>
+                                        <p:inputText style="margin-left: 20%" id="casa" value="#{requerenteMBean.requerente.casaRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 40%" value="MUNICIPIO:"/>
+                                        <p:selectOneMenu effect="slide" style="width:200px; margin-left:40% " id="municipios" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idTipo}" required="true" converter="municipioConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{requerenteMBean.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nomeMunicipio }"/>
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
-                                         </h:panelGrid>
+                                
+                                
+                                
+                                
+                            </h:panelGrid>
+                            
+                            
+                            
+                        </b:panel>
 
-                            </b:panel>
-                        
-                         <br></br>
+                        <br></br>
                         <h:panelGrid columns="2">
                             <p:commandButton value="Guardar" actionListener="#{requerenteMBean.guardar(evt)}" update="growl" resetValues="true" ajax="false"/>
-                            <p:commandButton value="Imprimir" action="#" ajax="false" immediate="true" />
+                            <p:commandButton value="Fechar" action="/index" ajax="false" immediate="true" />
                         </h:panelGrid>
 
-                        </h:form>
 
-                    </b:panel>
-                </f:view>
+
+                    </h:form>
+
+                </p:panel>
             </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
 
+        </ui:composition>
+
+    </body>
+</html>

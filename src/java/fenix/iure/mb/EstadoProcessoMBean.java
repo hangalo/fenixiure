@@ -6,7 +6,8 @@
 package fenix.iure.mb;
 
 import fenix.iure.dao.EstadoProcessoDAO;
-import fenix.iure.modelo.EstadoProcesso;
+import fenix.iure.ejbs.EstadoProcessoFacade;
+import fenix.iure.entities.EstadoProcesso;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -31,12 +33,15 @@ public class EstadoProcessoMBean implements Serializable {
     private EstadoProcesso estadoProcesso;
     private EstadoProcessoDAO estadoProcessoDAO;
     private List<EstadoProcesso> estadoProcessos;
-            
+    
+    
+    @Inject
+    EstadoProcessoFacade estadoProcessoFacade;
     public EstadoProcessoMBean() {
     }
     
     
-        @PostConstruct
+    @PostConstruct
     public void inicializar() {
         estadoProcesso = new EstadoProcesso();
         estadoProcessoDAO = new EstadoProcessoDAO();
@@ -60,7 +65,7 @@ public class EstadoProcessoMBean implements Serializable {
     }
 
     public List<EstadoProcesso> getEstadoProcessos() {
-        estadoProcessos= estadoProcessoDAO.findAll();
+        estadoProcessos= estadoProcessoFacade.findAll();
         return estadoProcessos;
     }
 
@@ -70,12 +75,12 @@ public class EstadoProcessoMBean implements Serializable {
     
     
       public void guardar(ActionEvent evt) {
-        if (estadoProcessoDAO.save(estadoProcesso)){
+        estadoProcessoFacade.create(estadoProcesso);
             estadoProcesso = new EstadoProcesso();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        }*/
     }
     
     public String startEdit() {
@@ -83,7 +88,7 @@ public class EstadoProcessoMBean implements Serializable {
     }
     
     public void edit(javafx.event.ActionEvent event) {
-        if (estadoProcessoDAO.update(estadoProcesso)) {
+        estadoProcessoFacade.edit(estadoProcesso);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             estadoProcessos = null;
 
@@ -93,21 +98,20 @@ public class EstadoProcessoMBean implements Serializable {
                 Logger.getLogger(EspecieProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         else {
+         /*else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+        }*/
 
-    }
+    
     
     public String delete() {
-        if (estadoProcessoDAO.delete(estadoProcesso)) {
+        estadoProcessoFacade.remove(estadoProcesso);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              estadoProcessos = null;
              return "estado_processo_listar?faces-redirect=true";
-        }else{
+        /*}else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
-        }      
+        }  */    
     }
-    
 }

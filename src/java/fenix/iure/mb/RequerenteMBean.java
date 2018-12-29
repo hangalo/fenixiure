@@ -8,9 +8,12 @@ package fenix.iure.mb;
 import fenix.iure.dao.MunicipioDAO;
 import fenix.iure.dao.RequerenteDAO;
 import fenix.iure.dao.TipoPessoaDAO;
-import fenix.iure.modelo.Municipio;
-import fenix.iure.modelo.Requerente;
-import fenix.iure.modelo.TipoPessoa;
+import fenix.iure.ejbs.MunicipioFacade;
+import fenix.iure.ejbs.RequenteFacade;
+import fenix.iure.ejbs.TipoPessoaFacade;
+import fenix.iure.entities.Municipio;
+import fenix.iure.entities.Requente;
+import fenix.iure.entities.TipoPessoa;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +24,7 @@ import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -32,31 +36,38 @@ public class RequerenteMBean {
 
     private static final long serialVersionUID = 1L;
 
-    private Requerente requerente;
+    private Requente requerente;
     private RequerenteDAO requerenteDAO;
     private TipoPessoaDAO tipoPessoaDAO;
     private MunicipioDAO municipioDAO;
-    private List<Requerente> requerentes;
+    private List<Requente> requerentes;
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
 
+    @Inject
+    RequenteFacade requenteFacade;
+    @Inject
+    MunicipioFacade municipioFacade;
+    @Inject
+    TipoPessoaFacade tipoPessoaFacade;
+    
     public RequerenteMBean() {
     }
 
     @PostConstruct
     public void inicializar() {
-        requerente = new Requerente();
+        requerente = new Requente();
         requerenteDAO = new RequerenteDAO();
         municipioDAO = new MunicipioDAO();
         tipoPessoaDAO = new TipoPessoaDAO();
 
     }
 
-    public Requerente getRequerente() {
+    public Requente getRequerente() {
         return requerente;
     }
 
-    public void setRequerente(Requerente requerente) {
+    public void setRequerente(Requente requerente) {
         this.requerente = requerente;
     }
 
@@ -69,16 +80,16 @@ public class RequerenteMBean {
     }
 
     public void guardar(ActionEvent evt) {
-        if (requerenteDAO.save(requerente)) {
-            requerente = new Requerente();
+        requenteFacade.create(requerente);
+            requerente = new Requente();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        }*/
     }
 
-    public List<Requerente> getRequerentes() {
-        requerentes = requerenteDAO.findAll();
+    public List<Requente> getRequerentes() {
+        requerentes = requenteFacade.findAll();
         return requerentes;
     }
 
@@ -89,7 +100,7 @@ public class RequerenteMBean {
     
     
        public void edit(javafx.event.ActionEvent event) {
-        if (requerenteDAO.update(requerente)) {
+        requenteFacade.edit(requerente);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             requerentes = null;
 
@@ -99,30 +110,30 @@ public class RequerenteMBean {
                 Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         else {
+         /*else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+        }*/
 
-    }
+    
     
     public String delete() {
-        if (requerenteDAO.delete(requerente)) {
+        requenteFacade.remove(requerente);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              requerentes = null;
              return "requerente_listar?faces-redirect=true";
-        }else{
+        /*}else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
-        }      
+        }  */    
     }
 
     public List<TipoPessoa> getTipoPessoas() {
-        tipoPessoas = tipoPessoaDAO.findAll();
+        tipoPessoas = tipoPessoaFacade.findAll();
         return tipoPessoas;
     }
 
     public List<Municipio> getMunicipios() {
-        municipios = municipioDAO.findAll();
+        municipios = municipioFacade.findAll();
                 return municipios;
     }
     

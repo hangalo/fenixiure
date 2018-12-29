@@ -13,14 +13,23 @@ import fenix.iure.dao.ProcessoDAO;
 import fenix.iure.dao.RequerenteDAO;
 import fenix.iure.dao.RequeridoDAO;
 import fenix.iure.dao.TipoDecisaoDAO;
-import fenix.iure.modelo.Advogado;
-import fenix.iure.modelo.EspecieProcesso;
-import fenix.iure.modelo.EstadoProcesso;
-import fenix.iure.modelo.Juiz;
-import fenix.iure.modelo.Processo;
-import fenix.iure.modelo.Requerente;
-import fenix.iure.modelo.Requerido;
-import fenix.iure.modelo.TipoDecisao;
+import fenix.iure.ejbs.AdvogadoFacade;
+import fenix.iure.ejbs.EspecieProcessoFacade;
+import fenix.iure.ejbs.EstadoProcessoFacade;
+import fenix.iure.ejbs.JuizFacade;
+import fenix.iure.ejbs.ProcessoFacade;
+import fenix.iure.ejbs.RequenteFacade;
+import fenix.iure.ejbs.RequeridoFacade;
+import fenix.iure.ejbs.TipoDecisaoFacade;
+import fenix.iure.entities.Advogado;
+import fenix.iure.entities.Requente;
+import fenix.iure.entities.EspecieProcesso;
+import fenix.iure.entities.EstadoProcesso;
+import fenix.iure.entities.Juiz;
+import fenix.iure.entities.Processo;
+import fenix.iure.entities.Requerido;
+import fenix.iure.entities.TipoDecisao;
+
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -33,6 +42,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -57,7 +67,7 @@ public class ProcessoMBean implements Serializable {
     private TipoDecisaoDAO tipoDecisaoDAO;
 
     private List<EspecieProcesso> especies;
-    private List<Requerente> requerentes;
+    private List<Requente> requerentes;
     private List<Requerido> requeridos; 
     private List<Advogado> advogados;
     private List<Juiz> juizes;
@@ -72,6 +82,19 @@ public class ProcessoMBean implements Serializable {
     
     // Colocar aqui as listas que retornam as pesquisas parametrizadas
     private List<Processo> byEstadoProcessos;
+    
+    
+    @Inject
+    ProcessoFacade processoFacade;
+    EspecieProcessoFacade especieProcessoFacade;
+    EstadoProcessoFacade estadoProcessoFacade;
+    RequenteFacade requenteFacade;
+    RequeridoFacade requeridoFacade;
+    AdvogadoFacade advogadoFacade;
+    JuizFacade juizFacade;
+    TipoDecisaoFacade tipoDecisaoFacade;
+    
+    
     
     
     
@@ -113,42 +136,42 @@ public class ProcessoMBean implements Serializable {
     }
 
     public List<Processo> getProcessos() {
-        processos = processoDAO.findAll();
+        processos = processoFacade.findAll();
         return processos;
     }
 
     public List<EspecieProcesso> getEspecies() {
-        especies = especieProcessoDAO.findAll();
+        especies = especieProcessoFacade.findAll();
         return especies;
     }
 
-    public List<Requerente> getRequerentes() {
-        requerentes = requerenteDAO.findAll();
+    public List<Requente> getRequerentes() {
+        requerentes = requenteFacade.findAll();
         return requerentes;
     }
 
     public List<Requerido> getRequeridos() {
-        requeridos = requeridoDAO.findAll();
+        requeridos = requeridoFacade.findAll();
         return requeridos;
     }
 
     public List<Advogado> getAdvogados() {
-        advogados = advogadoDAO.findAll();
+        advogados = advogadoFacade.findAll();
         return advogados;
     }
 
     public List<Juiz> getJuizes() {
-        juizes = juizDAO.findAll();
+        juizes = juizFacade.findAll();
         return juizes;
     }
 
     public List<EstadoProcesso> getEstados() {
-        estados = estadoProcessoDAO.findAll();
+        estados = estadoProcessoFacade.findAll();
         return estados;
     }
 
     public List<TipoDecisao> getTipoDecisoes() {
-        tipoDecisoes = tipoDecisaoDAO.findAll();
+        tipoDecisoes = tipoDecisaoFacade.findAll();
         return tipoDecisoes;
     }
     
@@ -169,7 +192,7 @@ public class ProcessoMBean implements Serializable {
     // Inicio GETs das listas para as pesquisas paramentrizadas
     public List<Processo> getByEstadoProcessos() {
         EstadoProcesso estadoProcesso = new EstadoProcesso();
-        byEstadoProcessos = processoDAO.findByEstadoProcesso(estadoProcesso);
+        //byEstadoProcessos = processoDAO.findByEstadoProcesso(estadoProcesso);
         return byEstadoProcessos;
     }
     
@@ -183,12 +206,12 @@ public class ProcessoMBean implements Serializable {
     }
     
     public void guardar(ActionEvent evt) {
-        if (processoDAO.save(processo)){
+        processoFacade.create(processo);
             processo = new Processo();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        }*/
     }
     
     public String startEdit() {
@@ -196,7 +219,7 @@ public class ProcessoMBean implements Serializable {
     }
     
     public void edit(javafx.event.ActionEvent event) {
-        if (processoDAO.update(processo)) {
+        processoFacade.edit(processo);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             processos = null;
 
@@ -206,21 +229,21 @@ public class ProcessoMBean implements Serializable {
                 Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         else {
+         /*else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+        }*/
 
-    }
+    
     
     public String delete() {
-        if (processoDAO.delete(processo)) {
+        processoFacade.remove(processo);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             advogados = null;
             return "processo_listar?faces-redirect=true";
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
-        }
+        }*/
     }
 
    

@@ -9,6 +9,11 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>dark-hive</param-value>
     </context-param>
+    
+    <mime-mapping>
+        <extension>xhtml</extension>
+        <mime-type>application/xml</mime-type>
+    </mime-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

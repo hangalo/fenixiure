@@ -16,10 +16,10 @@
                 <f:view>
                     <h:form id="formBusca" >
                         <h:messages/>
-                        <b:panel look="normal" collapsible="false" style="text-align: center" title="Pesquisar Advogado por nome.">
+                        <b:panel look="normal" collapsible="false" title="">
                             <h:panelGrid columns="6"  cellspacing="10%">
                                 <p:outputLabel value="Data de Nascimento:"/>
-                                <p:calendar  value="#{advoadoMBean.dataDeNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                <p:calendar effect="slide"  value="#{advoadoMBean.dataDeNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
                                 <b:commandButton style="margin-left:  10px" value="Pesquisar..." look="normal"/>
                             </h:panelGrid>
                         </b:panel>
@@ -31,12 +31,6 @@
                             <p:dataTable value="#{advoadoMBean.byDataNascimento}" var="advogado" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
-                                        <p:outputLabel value="Código"/>
-                                    </f:facet>
-                                    <h:outputText value="#{advogado.idAdvogado}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
                                     </f:facet>
                                     <h:outputText value="#{advogado.nomeAdvogado}"/>
@@ -45,7 +39,7 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Sobrenome "/>
                                     </f:facet>
-                                    <h:outputText value="#{advogado.sobreNomeAdvogado}"/>
+                                    <h:outputText value="#{advogado.sobrenomeAdvogado}"/>
                                 </p:column>
 
 
@@ -85,7 +79,7 @@
 
 
                     <!--inicio do dialogo guardar-->
-                    <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                    <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
 
@@ -98,13 +92,13 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobreNomeAdvogado}" size="20"/>
+                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="Data de Nascimento:"/>
-                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
@@ -138,13 +132,13 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobreNomeAdvogado}" size="20"/>
+                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="Data de Nascimento:"/>
-                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
@@ -164,7 +158,7 @@
                     <!--fim do dialogo editar-->
 
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="200">
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
@@ -172,9 +166,9 @@
                                 <p:outputLabel value="Nome: "/>
                                 <h:outputText value="#{advoadoMBean.advogado.nomeAdvogado}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.sobreNomeAdvogado}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.dataNascimento}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.dataNascimentoAdvogado}"/>
                                 <p:outputLabel value="Data inicio de Função "/>
                                 <h:outputText value="#{advoadoMBean.advogado.dataInicioFuncoes}"/>
                             </p:panelGrid>

@@ -6,19 +6,22 @@
 package fenix.iure.mb;
 
 import fenix.iure.dao.JuizDAO;
-import fenix.iure.modelo.Juiz;
+import fenix.iure.ejbs.JuizFacade;
+import fenix.iure.entities.Juiz;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -40,12 +43,19 @@ public class JuizMBean implements Serializable {
     private List<Juiz> findByNome;
     private List<Juiz> findbySobrenome;
     private List<Juiz> findByNomeSobrenome;
+    private List<Juiz> findByDataNascimento;
+    private List<Juiz> findByDataInicioFuncoes;
 
     // Variaveis para pesquisas paramentrizadas
     private String nome;
     private String sobrenome;
     private String controleEditar = "listartodos"; // Controla as paginas de edição
+    private Date dataDeNascimento;
+    private Date dataInicioFuncoes;
 
+    @Inject
+    JuizFacade juizFacade;
+    
     @PostConstruct
     public void inicializar() {
         juiz = new Juiz();
@@ -54,6 +64,8 @@ public class JuizMBean implements Serializable {
         findByNome = new ArrayList<>();
         findbySobrenome = new ArrayList<>();
         findByNomeSobrenome = new ArrayList<>();
+        findByDataNascimento = new ArrayList<>();
+        findByDataInicioFuncoes = new ArrayList<>();
     }
 
     public Juiz getJuiz() {
@@ -65,7 +77,7 @@ public class JuizMBean implements Serializable {
     }
 
     public List<Juiz> getJuizes() {
-        juizes = juizDAO.findAll();
+        juizes = juizFacade.findAll();
         return juizes;
     }
 
@@ -75,12 +87,12 @@ public class JuizMBean implements Serializable {
     }
 
     public void guardar(ActionEvent evt) {
-        if (juizDAO.save(juiz)) {
+        juizFacade.create(juiz);
             juiz = new Juiz();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        }*/
     }
 
     public String startEdit() {
@@ -88,9 +100,8 @@ public class JuizMBean implements Serializable {
     }
 
     public void edit(javafx.event.ActionEvent event) {
-        if (juizDAO.update(juiz)) {
+        juizFacade.edit(juiz);
             if (controleEditar.equalsIgnoreCase("listartodos")) {
-
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 juizes = null;
                 try {
@@ -149,51 +160,63 @@ public class JuizMBean implements Serializable {
 
         }
 
-    }
+    
 
     public String delete() {
-        if (juizDAO.delete(juiz)) {
+        juizFacade.remove(juiz);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             juizes = null;
             return "juiz_listar?faces-redirect=true";
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
-        }
+        }*/
     }
 
     public List<Juiz> getByNome() {
-        findByNome = juizDAO.findByNome(nome);
+        findByNome = juizFacade.findByNome(nome);
         controleEditar = "byNome";
         return findByNome;
     }
 
     public List<Juiz> getBySobrenome() {
-        findbySobrenome = juizDAO.findBySobrenome(sobrenome);
+        findbySobrenome = juizFacade.findBySobrenome(sobrenome);
         controleEditar = "bySobrenome";
 
         return findbySobrenome;
     }
 
     public List<Juiz> getByNomeSobrenome() {
-        findByNomeSobrenome = juizDAO.findByNomeSobrenome(nome, sobrenome);
+        findByNomeSobrenome = juizFacade.findByNomeSobrenome(nome, sobrenome);
         controleEditar = "byNomeSobrenome"; // controlo
 
         if ((getNome() == null || getNome().isEmpty()) && (getSobrenome() == null)) {
             return null;
 
         } else if (((getSobrenome() == null) || (getSobrenome().isEmpty())) && ((getNome() != null || !getNome().isEmpty()))) {
-            findByNome = juizDAO.findByNome(nome);
+            findByNome = juizFacade.findByNome(nome);
             return findByNome;
         } else if ((getNome() == null || getNome().isEmpty() && getSobrenome() != null)) {
-            findbySobrenome = juizDAO.findBySobrenome(sobrenome);
+            findbySobrenome = juizFacade.findBySobrenome(sobrenome);
             return findbySobrenome;
         } else if ((getNome() != null || !getNome().isEmpty()) && (getSobrenome() != null || !getSobrenome().isEmpty())) {
-            findByNomeSobrenome = juizDAO.findByNomeSobrenome(nome, sobrenome);
+            findByNomeSobrenome = juizFacade.findByNomeSobrenome(nome, sobrenome);
             return findByNomeSobrenome;
         }
         return null;
 
+    }
+    
+    public List<Juiz> getByDataNascimento() {
+        findByDataNascimento = juizFacade.findByDataNascimento(dataDeNascimento);
+        controleEditar = "byDataNascimento";
+        return findByDataNascimento;
+    }
+    
+    public List<Juiz> getByDataInicioFuncoes() {
+        findByDataInicioFuncoes = juizFacade.findByDataInicioFuncao(dataInicioFuncoes);
+        controleEditar = "byDataInicioFuncoes";
+        return findByDataInicioFuncoes;
     }
 
     public String getNome() {
@@ -211,5 +234,23 @@ public class JuizMBean implements Serializable {
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
     }
+
+    public void setDataDeNascimento(Date dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    public Date getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataInicioFuncoes(Date dataInicioFuncoes) {
+        this.dataInicioFuncoes = dataInicioFuncoes;
+    }
+
+    public Date getDataInicioFuncoes() {
+        return dataInicioFuncoes;
+    }
+    
+    
 
 }

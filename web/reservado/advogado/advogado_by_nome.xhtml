@@ -16,12 +16,12 @@
                 <f:view>
                     <h:form id="formBusca" >
                         <h:messages/>
-                        <b:panel look="normal" collapsible="false" style="text-align: center" title="Pesquisar Advogado por nome.">
+                        <b:panel look="normal" collapsible="false" title="">
 
                             <h:panelGrid columns="6"  cellspacing="10%">
                                 <h:outputLabel value="Nome:" style="margin-right: 10px"/>
                                 <p:inputText id="cognome" value="#{advoadoMBean.nome}" required="true" requiredMessage="#{msg.msg_cognome}" immediate="true"/>
-                                <b:commandButton style="margin-left:  10px" value="Pesquisar..." look="normal"/>
+                                <b:commandButton style="margin-left:  10px" value="Pesquisar..." />
                             </h:panelGrid>
 
                         </b:panel>
@@ -31,12 +31,6 @@
                         <h:form>
                             <!--inicio Datatable-->
                             <p:dataTable value="#{advoadoMBean.byNome}" var="advogado" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Código"/>
-                                    </f:facet>
-                                    <h:outputText value="#{advogado.idAdvogado}"/>
-                                </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
@@ -87,7 +81,7 @@
                     
                     
                     <!--inicio do dialogo guardar-->
-                    <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                    <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
 
@@ -166,7 +160,7 @@
                     <!--fim do dialogo editar-->
                     
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="200">
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>

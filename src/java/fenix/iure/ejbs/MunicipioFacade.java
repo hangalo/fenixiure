@@ -5,10 +5,14 @@
  */
 package fenix.iure.ejbs;
 
+import fenix.iure.entities.Advogado;
 import fenix.iure.entities.Municipio;
+import fenix.iure.entities.Provincia;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,14 @@ public class MunicipioFacade extends AbstractFacade<Municipio> {
 
     public MunicipioFacade() {
         super(Municipio.class);
+    }
+    
+    public List<Municipio> findByIdProvincia(Provincia provincia) {
+        Query query;
+        query = em.createQuery("SELECT m FROM Municipio m WHERE m.idProvincia = :idProvincia ORDER BY a.nomeMunicipio");
+        query.setParameter("idProvincia", provincia.getIdProvincia());
+        return query.getResultList();
+        
     }
     
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -32,18 +33,34 @@ public class AdvogadoFacade extends AbstractFacade<Advogado> {
     }
 
     public List<Advogado> findByNome(String nome) {
-      return null;
+        Query query;
+        query = em.createQuery("SELECT a FROM Advogado a WHERE a.nomeAdvogado like :nomeAdvogado ORDER BY a.nomeAdvogado");
+        query.setParameter("nomeAdvogado", nome+"%");
+        return query.getResultList();
+        
     }
     public List<Advogado> findBySobrenome(String sobrenome) {
-       return null;
+       Query query;
+        query = em.createQuery("SELECT a FROM Advogado a WHERE a.sobrenomeAdvogado like :sobrenomeAdvogado ORDER BY a.nomeAdvogado");
+        query.setParameter("sobrenomeAdvogado", sobrenome+"%");
+        return query.getResultList();
     }
     
      public List<Advogado> findByNomeSobrenome(String nome, String sobrenome) {
-        
-       return null; 
+        Query query;
+        query = em.createQuery("SELECT a FROM Advogado a WHERE a.nomeAdvogado = :nomeAdvogado AND a.sobrenomeAdvogado = :sobrenomeAdvogado ORDER BY a.nomeAdvogado");
+        query.setParameter("nomeAdvogado", nome);
+        query.setParameter("sobrenomeAdvogado", sobrenome);
+        return query.getResultList();
     }
     public List<Advogado> findByIntervaloDataNascimento(Date dataInicio, Date dataFim) {
-       return null; 
+        /*Query query;
+        query = em.createQuery("SELECT a FROM Advogado a WHERE a.dataNascimentoAdvogado between :? AND :? ORDER BY a.dataNascimentoAdvogado");
+        query.setParameter("?", dataInicio);
+        query.setParameter("?", dataFim);
+        
+        return query.getResultList();*/
+        return null;
     }
     
     public List<Advogado> findByIntervaloDataInicioFuncoes(Date dataInicio, Date dataFim) {
@@ -51,13 +68,21 @@ public class AdvogadoFacade extends AbstractFacade<Advogado> {
     }
     
     public List<Advogado> findByDataNascimento(Date dataNacimento) {
-       return null;
+        Query query;
+        query = em.createQuery("SELECT a FROM Advogado a WHERE a.dataNascimentoAdvogado =:dataNascimentoAdvogado ORDER BY a.dataNascimentoAdvogado");
+        query.setParameter("dataNascimentoAdvogado", dataNacimento);
+        return query.getResultList();
     }
     
+    
+    
     public List<Advogado> findByDataInicioFuncao(Date dataInicioFuncao) {
-        
-       return null; 
+        Query query;
+        query = em.createQuery("SELECT a FROM Advogado a WHERE a.dataInicioFuncoes =:dataInicioFuncoes ORDER BY a.dataInicioFuncoes");
+        query.setParameter("dataInicioFuncoes", dataInicioFuncao);
+        return query.getResultList();
     }
+    
     
     
     

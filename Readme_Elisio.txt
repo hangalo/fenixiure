@@ -1,3 +1,40 @@
+29/12/2018
+Coisas Feitas:
+----> Implementação de JPA em:
+	----> TipoPessoa;
+		----> CRUD
+
+	----> TipoDecisão;
+		----> CRUD
+
+	----> EspecieProcesso;
+		----> CRUD
+
+	----> EstadoProcesso;
+		----> CRUD
+
+	----> Advogado;
+		----> CRUD
+		----> Pesquisar por: nome, sobrenome, nome e sobrenoma, dataNascimento, dataInicioFuncoes.
+
+	----> Juiz;
+		----> CRUD
+		----> Pesquisar por: nome, sobrenome, nome e sobrenoma, dataNascimento, dataInicioFuncoes.
+
+
+Dificuldades: 
+	----> Pesquisar por intervalo de datas;
+	----> Trabalhar com Converters.
+	
+
+OBS.: Estou a trabalhar com energia privada dos visinhos, está a criar tbm alguns transtornos mas estou a contornar...
+
+
+
+
+------------------- Fim ----------------
+
+
 22/12/2018 
 Coisas Feitas:
 ----> Clone da versão da Aplicacao com JPA

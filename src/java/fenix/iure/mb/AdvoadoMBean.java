@@ -9,7 +9,6 @@ import fenix.iure.dao.AdvogadoDAO;
 import fenix.iure.ejbs.AdvogadoFacade;
 //import fenix.iure.modelo.Advogado;
 import fenix.iure.entities.Advogado;
-import fenix.iure.util.DateUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,8 +47,7 @@ public class AdvoadoMBean implements Serializable {
     private List<Advogado> findByNomeSobrenome;
     private List<Advogado> findbyDatNascimento;
     private List<Advogado> findbyDataInicioFuncoes;
-    private List<Advogado> findbyIntervaloDatNascimento;
-    private List<Advogado> findbyIntervaloDataInicioFuncoes;
+    
 
     // Variaveis para pesquisas paramentrizadas
     private String nome;
@@ -74,8 +72,6 @@ public class AdvoadoMBean implements Serializable {
         findByNomeSobrenome = new ArrayList<>();
         findbyDatNascimento = new ArrayList<>();
         findbyDataInicioFuncoes = new ArrayList<>();
-        findbyIntervaloDatNascimento = new ArrayList<>();
-        findbyIntervaloDataInicioFuncoes = new ArrayList<>();
         advogados = new ArrayList<>();
         advogados = advogadoFacade.findAll();
     }
@@ -224,7 +220,6 @@ public class AdvoadoMBean implements Serializable {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
         }
@@ -234,8 +229,9 @@ public class AdvoadoMBean implements Serializable {
     public String delete() {
         if (advogado != null) {
             advogadoFacade.remove(advogado);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             advogados = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tSucesso ao eliminar os dados"));
+            
             return "advogado_listar?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
@@ -284,6 +280,13 @@ public class AdvoadoMBean implements Serializable {
         controleEditar = "byDataNascimento";
         return findbyDatNascimento;
     }
+    public List<Advogado> getByInicioFuncoes() {
+        findbyDataInicioFuncoes = advogadoFacade.findByDataInicioFuncao(dataInicioFuncoes);
+        controleEditar = "byDataInicioFuncoes";
+        return findbyDataInicioFuncoes;
+    }
+    
+    
 
     public List<Advogado> getByNomeSobrenome() {
         controleEditar = "byNomeSobrenome"; // controlo

@@ -22,13 +22,13 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Código"/>
                                     </f:facet>
-                                    <h:outputText value="#{tipoPessoa.idTipoPessoa}"/>
+                                    <h:outputText value="#{tipoPessoa.idTipo}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Tipo: "/>
                                     </f:facet>
-                                    <h:outputText value="#{tipoPessoa.nomeTipoPessoa}"/>
+                                    <h:outputText value="#{tipoPessoa.nomeTipo}"/>
                                 </p:column>
                                 <p:column style="width: 100px; text-align: center" width="160">
                                     <f:facet name="header">
@@ -69,7 +69,7 @@
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Tipo: "/>
-                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipoPessoa}"/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
                             </h:panelGrid>
                             <br></br>
                             <p:commandButton value="Guardar" action="#{tipoPessoaMBean.guardar(evt)}" ajax="false"/>
@@ -82,10 +82,10 @@
 
                     <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
                         <h:form enctype="multipart/form-data">
-                            <h:inputHidden value="#{tipoPessoaMBean.tipoPessoa.idTipoPessoa}"/>
+                            <h:inputHidden value="#{tipoPessoaMBean.tipoPessoa.idTipo}"/>
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Tipo: "/>
-                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipoPessoa}"/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
                             </h:panelGrid>
                             <br></br>
                             <p:commandButton value="Alterar" action="#{tipoPessoaMBean.edit(event)}" ajax="false"/>
@@ -98,9 +98,9 @@
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.idTipoPessoa}"/>
+                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.idTipo}"/>
                                 <p:outputLabel value="Tipo: "/>
-                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.nomeTipoPessoa}"/>
+                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
                             </p:panelGrid>
                         </h:form>
                     </p:dialog>

@@ -10,8 +10,10 @@ package fenix.iure.mb;
 
 import fenix.iure.dao.MunicipioDAO;
 import fenix.iure.dao.ProvinciaDAO;
-import fenix.iure.modelo.Municipio;
-import fenix.iure.modelo.Provincia;
+import fenix.iure.ejbs.MunicipioFacade;
+import fenix.iure.ejbs.ProvinciaFacade;
+import fenix.iure.entities.Municipio;
+import fenix.iure.entities.Provincia;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIOutput;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 
 /**
  *
@@ -43,6 +46,12 @@ public class MunicipioMBean implements Serializable {
     /**
      * Creates a new instance of MunicipioBean
      */
+    @Inject
+    MunicipioFacade municipioFacade;
+    
+    @Inject
+    ProvinciaFacade provinciaFacade;
+    
     public MunicipioMBean() {
 
     }
@@ -56,7 +65,7 @@ public class MunicipioMBean implements Serializable {
         provincias = new ArrayList<>();
         municipioDAO = new MunicipioDAO();
         provinciaDAO = new ProvinciaDAO();
-        provincias = provinciaDAO.findAll();
+        provincias = provinciaFacade.findAll();
     }
 
     public Municipio getMunicipio() {
@@ -89,14 +98,14 @@ public class MunicipioMBean implements Serializable {
     }
 
     public void loadMunicipios() {
-        municipios = municipioDAO.findByIdProvincia2(provincia);
+        municipios = municipioFacade.findByIdProvincia(provincia);
     }
 
     public void carregaMunicipiosDaProvincia(ValueChangeEvent event) {
         Provincia p = (Provincia) event.getNewValue();
         Integer id = p.getIdProvincia();
         System.out.print("Sigla>>>>>>" + event.getNewValue().toString());
-        municipios = municipioDAO.findByIdProvincia(id);
+        municipios = municipioFacade.findByIdProvincia(provincia);
 
     }
 

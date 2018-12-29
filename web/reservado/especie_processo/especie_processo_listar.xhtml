@@ -4,21 +4,21 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
     <h:head>
-        <title>Lista Especie Processo</title>
+        <title>Estados processos</title>
     </h:head>
     <h:body>
-        <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
+         <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
             
             <ui:define name="content">
                 <f:view>
-                    <b:panel title="Lista especie processos" collapsible="false" look="normal">
+                    <b:panel title="Especie Processos" collapsible="false" look="normal">
                        
-                        <p:dataTable value="#{especieProcessoMBean.especieProcessos}" var="especieProcesso" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                             
-                            <p:column>
+                        <p:dataTable value="#{especieProcessoMBean.especieProcessos}" var="especieProcesso" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                             <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Código"/>
                                     </f:facet>
@@ -26,7 +26,7 @@
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
-                                        <p:outputLabel value="Especié processos: "/>
+                                        <p:outputLabel value="Especie processo: "/>
                                     </f:facet>
                                     <h:outputText value="#{especieProcesso.especieProcesso}"/>
                                 </p:column>
@@ -47,24 +47,25 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total de Tipos de processos  (#{especieProcessoMBean.especieProcessos.size()})
+                                    Total de Estados de Processos  (#{especieProcessoMBean.especieProcessos.size()})
                                 </f:facet> 
                             
                         </p:dataTable>
+                           
                         
                     </b:panel>
-                                        
+                    
                     
                     <h:form id="Operacoes">
-                        <p:commandButton value="+ Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
-                        <p:commandButton value="x Fechar" action="/index" ajax="false" immediate="true" />                   
+                        <p:commandButton value="Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
+                        <p:commandButton value="Fechar" action="/index" ajax="false" immediate="true" />                   
                     </h:form>
                     
                       <!--inicio do dialogo guardar-->
-                    <p:dialog  header="Novo especie processo" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
+                    <p:dialog  header="Novo estado processo" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid columns="2">
-                                <p:outputLabel value="Especié Processo: "/>
+                                <p:outputLabel value="Estado processo: "/>
                                 <p:inputText size="30" value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
                             </h:panelGrid>
                             <br></br>
@@ -80,7 +81,7 @@
                         <h:form enctype="multipart/form-data">
                             <h:inputHidden value="#{especieProcessoMBean.especieProcesso.idEspecieProcesso}"/>
                             <h:panelGrid columns="2">
-                                <p:outputLabel value="Especie Processo: "/>
+                                <p:outputLabel value="Estado Processo: "/>
                                 <p:inputText size="30" value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
                             </h:panelGrid>
                             <br></br>
@@ -95,7 +96,7 @@
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
                                 <h:outputText value="#{especieProcessoMBean.especieProcesso.idEspecieProcesso}"/>
-                                <p:outputLabel value="Especie processo: "/>
+                                <p:outputLabel value="Estado Processo: "/>
                                 <h:outputText value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
                             </p:panelGrid>
                         </h:form>

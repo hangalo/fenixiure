@@ -14,16 +14,10 @@
             <ui:define name="content">
                 <p:growl autoUpdate="true" showDetail="true"/>
                 <f:view>
-                    <b:panel title="Lista - Advogados" collapsible="false" look="normal">
+                    <b:panel title="Lista - Juizes" collapsible="false" look="normal">
                         <h:form>
                             <!--inicio Datatable-->
                             <p:dataTable value="#{juizMBean.juizes}" var="juiz" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Código"/>
-                                    </f:facet>
-                                    <h:outputText value="#{juiz.idJuiz}"/>
-                                </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
@@ -34,7 +28,7 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Sobrenome "/>
                                     </f:facet>
-                                    <h:outputText value="#{juiz.sobreNomeJuiz}"/>
+                                    <h:outputText value="#{juiz.sobrenomeJuiz}"/>
                                 </p:column>
                                 
                                 
@@ -74,7 +68,7 @@
                     
                     
                     <!--inicio do dialogo guardar-->
-                    <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                    <p:dialog  header="Novo Juiz" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
 
@@ -87,19 +81,19 @@
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobreNomeJuiz}" size="20"/>
+                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{juizMBean.juiz.dataNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt_BR" effect ="slide" />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                    <p:calendar style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt" effect="slide" />
                                 </h:panelGrid>
                             </h:panelGroup>
 
@@ -114,7 +108,7 @@
                     
                     <!--inicio do dialogo editar-->
 
-                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
+                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
                         <h:form enctype="multipart/form-data">
                             <h:inputHidden value="#{juizMBean.juiz.idJuiz}"/>
                             <h:panelGrid  columns="2" >
@@ -128,13 +122,13 @@
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobreNomeJuiz}" size="20"/>
+                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{juizMBean.juiz.dataNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
@@ -154,7 +148,7 @@
                     <!--fim do dialogo editar-->
                     
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="200">
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
@@ -162,9 +156,9 @@
                                 <p:outputLabel value="Nome: "/>
                                 <h:outputText value="#{juizMBean.juiz.nomeJuiz}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{juizMBean.juiz.sobreNomeJuiz}"/>
+                                <h:outputText value="#{juizMBean.juiz.sobrenomeJuiz}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{juizMBean.juiz.dataNascimento}"/>
+                                <h:outputText value="#{juizMBean.juiz.dataNascimentoJuiz}"/>
                                 <p:outputLabel value="Data inicio de Função "/>
                                 <h:outputText value="#{juizMBean.juiz.dataInicioFuncoes}"/>
                             </p:panelGrid>

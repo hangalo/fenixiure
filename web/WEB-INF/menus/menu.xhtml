@@ -10,6 +10,10 @@
     <h:body>
         <h:form>
             <p:menubar>
+
+                <p:menuitem value="Inicio" url="/index.jsf"/>
+
+
                 <p:submenu label="Processo">
                     <p:menuitem value="+ Novo" url="/reservado/processo/processo_novo.jsf"/>
                     <p:submenu label="Buscar Por:" icon="ui-icon-document">
@@ -17,24 +21,23 @@
                         <p:menuitem value="Lista Geral" url="/reservado/processo/processo_listar.jsf"/>
                     </p:submenu>
                 </p:submenu>
-                
+
                 <p:submenu label="Especie Processo" >
-                    <p:menuitem value="+ Novo" url="reservado/especie_processo/especie_processo_listar.jsf"/>
+                    <p:menuitem value="Lista Geral" url="/reservado/especie_processo/especie_processo_listar.jsf"/>
                 </p:submenu>
 
                 <p:submenu label="Estado Processo">
-                    <p:menuitem value="+ Novo" url="#"/>
-                    <p:menuitem value="Lista" url="/reservado/estado_processo/estado_processo_listar.jsf"/>
+                    <p:menuitem value="Lista Geral" url="/reservado/estado_processo/estado_processo_listar.jsf"/>
                 </p:submenu>
-                
+
 
                 <p:submenu label="Requerente" >
                     <p:menuitem value="+ Novo" url="reservado/requerente/requerente_novo.jsf"/>
                     <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                        <p:menuitem value="Parametro1" url=""/>
+                        <p:menuitem value="Parametro1" url="#"/>
                         <p:menuitem value="Parametro2" url=""/>
                         <p:menuitem value="Parametro3" url=""/>
-                        <p:menuitem value="Parametro4" url=""/>
+                        <p:menuitem value="Parametro4" url="reservado/requerente/requerente_listar.jsf"/>
                     </p:submenu>
                 </p:submenu>
 
@@ -47,17 +50,15 @@
                         <p:menuitem value="Parametro4" url=""/>
                     </p:submenu>
                 </p:submenu>
-                
+
                 <p:submenu label="Advogado" >
                     <p:menuitem value="+ Novo" url="/reservado/advogado/advogado_novo.jsf"/>
                     <p:submenu label="Buscar Por:" icon="ui-icon-document">
                         <p:menuitem value="Nome" url="/reservado/advogado/advogado_by_nome.jsf"/>
                         <p:menuitem value="Sobrenome" url="/reservado/advogado/advogado_by_sobrenome.jsf"/>
                         <p:menuitem value="Nome e Sobrenome" url="/reservado/advogado/advogado_by_nome_sobrenome.jsf"/>
-                        <p:menuitem value="Data de Nascimento" url="#"/>
-                        <p:menuitem value="Data Inicio Funções" url="#"/>
-                        <p:menuitem value="Intervalo Data Inicio Funções" url="#"/>
-                        <p:menuitem value="Intervalo de nascimento" url="#"/>
+                        <p:menuitem value="Data de Nascimento" url="/reservado/advogado/advogado_by_data_nascimento.jsf"/>
+                        <p:menuitem value="Data Inicio Funções" url="/reservado/advogado/advogado_by_data_inicio_funcoes.jsf"/>
                         <p:menuitem value="Listar Tudo" url="/reservado/advogado/advogado_listar.jsf"/>
                     </p:submenu>
                 </p:submenu>
@@ -68,12 +69,14 @@
                         <p:menuitem value="Nome" url="/reservado/juiz/juiz_by_nome.jsf"/>
                         <p:menuitem value="Sobrenome" url="/reservado/juiz/juiz_by_sobrenome.jsf"/>
                         <p:menuitem value="Nome e Sobrenome" url="/reservado/juiz/juiz_by_nome_sobrenome.jsf"/>
+                        <p:menuitem value="Data de Nascimento" url="/reservado/juiz/juiz_by_data_nascimento.jsf"/>
+                        <p:menuitem value="Data Inicio Funções" url="/reservado/juiz/juiz_by_data_inicio_funcoes.jsf"/>
                         <p:menuitem value="Lista" url="/reservado/juiz/juiz_listar.jsf"/>
                     </p:submenu>
                 </p:submenu>
 
                 <p:submenu label="Tipo Pessoa">
-                    <p:menuitem value="+ Novo" url="/reservado/tipo_decisao/tipo_decisao_listar.jsf"/>
+                    <p:menuitem value="+ Lista Geral" url="/reservado/tipo_pessoa/tipo_pessoa_listar.jsf"/>
                 </p:submenu>
 
                 <p:submenu label="Tipo Decisão">
@@ -81,9 +84,9 @@
                     <p:menuitem value="Lista" url="/reservado/tipo_decisao/tipo_decisao_listar.jsf"/>
                 </p:submenu>
 
-                <p:submenu label="Municipio">
-                    <p:menuitem value="+ Novo" url="/reservado/municipio/municipios.jsf"/>
-                </p:submenu>
+                
+
+
 
             </p:menubar>
 

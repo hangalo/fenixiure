@@ -17,32 +17,29 @@
                     <h:form id="formBusca" >
                         <h:messages/>
                         <b:panel look="normal" collapsible="false" title="">
-
                             <h:panelGrid columns="6"  cellspacing="10%">
-                                <h:outputLabel value="SOBRENOME: " style="margin-right: 10px"/>
-                                <p:inputText id="cognome" value="#{juizMBean.sobrenome}" required="true" requiredMessage="#{msg.msg_cognome}" immediate="true"/>
+                                <p:outputLabel value="Data de Inicio: "/>
+                                <p:calendar  value="#{advoadoMBean.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
                                 <b:commandButton style="margin-left:  10px" value="Pesquisar..." look="normal"/>
                             </h:panelGrid>
-
                         </b:panel>
                     </h:form>
-                    
-                    <b:panel title="Lista - Juizes" collapsible="false" look="normal">
+
+                    <b:panel title="Lista - Advogados" collapsible="false" look="normal">
                         <h:form>
                             <!--inicio Datatable-->
-                            <p:dataTable value="#{juizMBean.bySobrenome}" var="juiz" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-
+                            <p:dataTable value="#{advoadoMBean.byInicioFuncoes}" var="advogado" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
                                     </f:facet>
-                                    <h:outputText value="#{juiz.nomeJuiz}"/>
+                                    <h:outputText value="#{advogado.nomeAdvogado}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Sobrenome "/>
                                     </f:facet>
-                                    <h:outputText value="#{juiz.sobrenomeJuiz}"/>
+                                    <h:outputText value="#{advogado.sobrenomeAdvogado}"/>
                                 </p:column>
 
 
@@ -50,20 +47,20 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
                                     </f:facet>
-                                    <p:commandButton  icon="ui-icon-trash" action="#{juizMBean.delete()}">
-                                        <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{juiz}"/>
+                                    <p:commandButton  icon="ui-icon-trash" action="#{advoadoMBean.delete()}">
+                                        <f:setPropertyActionListener target="#{advoadoMBean.advogado}" value="#{advogado}"/>
                                     </p:commandButton>
                                     <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
-                                        <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{juiz}"/>
+                                        <f:setPropertyActionListener target="#{advoadoMBean.advogado}" value="#{advogado}"/>
                                     </p:commandButton>
                                     <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
-                                        <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{juiz}"/>
+                                        <f:setPropertyActionListener target="#{advoadoMBean.advogado}" value="#{advogado}"/>
                                     </p:commandButton>
 
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total Juizes  (#{juizMBean.byNome.size()})
+                                    Total Advogados  (#{advoadoMBean.byDataNascimento.size()})
                                 </f:facet>                           
                             </p:dataTable>
 
@@ -82,39 +79,38 @@
 
 
                     <!--inicio do dialogo guardar-->
-                    <p:dialog  header="Novo Juiz" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                    <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
 
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="Nome:"/>
-                                        <p:inputText id="nome" value="#{juizMBean.juiz.nomeJuiz}" size="20"/>
+                                        <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
+                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="Data de Nascimento:"/>
-                                        <p:calendar effect="slide"  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                        <p:calendar effect="slide" style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
 
                             </h:panelGrid>
-
                             <br></br>
-                            <p:commandButton value="Guardar" action="#{juizMBean.guardar(evt)}" ajax="false"/>
+                            <p:commandButton value="Guardar" action="#{advoadoMBean.guardar(evt)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
 
@@ -122,33 +118,33 @@
 
                     <!--inicio do dialogo editar-->
 
-                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form enctype="multipart/form-data">
-                            <h:inputHidden value="#{juizMBean.juiz.idJuiz}"/>
+                            <h:inputHidden value="#{advoadoMBean.advogado.idAdvogado}"/>
                             <h:panelGrid  columns="2" >
 
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="Nome:"/>
-                                        <p:inputText id="nome" value="#{juizMBean.juiz.nomeJuiz}" size="20"/>
+                                        <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
+                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="Data de Nascimento:"/>
-                                        <p:calendar effect="slide"  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                        <p:calendar effect="slide" style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
 
@@ -156,25 +152,25 @@
 
 
                             <br></br>
-                            <p:commandButton value="Alterar" action="#{juizMBean.edit(event)}" ajax="false"/>
+                            <p:commandButton value="Alterar" action="#{advoadoMBean.edit(event)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
                     <!--fim do dialogo editar-->
 
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{juizMBean.juiz.idJuiz}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.idAdvogado}"/>
                                 <p:outputLabel value="Nome: "/>
-                                <h:outputText value="#{juizMBean.juiz.nomeJuiz}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.nomeAdvogado}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{juizMBean.juiz.sobrenomeJuiz}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{juizMBean.juiz.dataNascimentoJuiz}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.dataNascimentoAdvogado}"/>
                                 <p:outputLabel value="Data inicio de Função "/>
-                                <h:outputText value="#{juizMBean.juiz.dataInicioFuncoes}"/>
+                                <h:outputText value="#{advoadoMBean.advogado.dataInicioFuncoes}"/>
                             </p:panelGrid>
                         </h:form>
 
@@ -182,7 +178,6 @@
 
                     <!--Fim do dialog ver-->
 
-                    
 
                 </f:view>
             </ui:define>

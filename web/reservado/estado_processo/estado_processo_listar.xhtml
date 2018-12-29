@@ -34,7 +34,7 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
                                     </f:facet>
-                                    <p:commandButton  icon="ui-icon-trash" action="#{especieProcessoMBean.delete()}">
+                                    <p:commandButton  icon="ui-icon-trash" action="#{estadoProcessoMBean.delete()}">
                                         <f:setPropertyActionListener target="#{estadoProcessoMBean.estadoProcesso}" value="#{estadoProcesso}"/>
                                     </p:commandButton>
                                     <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
@@ -47,7 +47,7 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total de Tipos de Pessoas  (#{estadoProcessoMBean.estadoProcessos.size()})
+                                    Total de Estados de Processos  (#{estadoProcessoMBean.estadoProcessos.size()})
                                 </f:facet> 
                             
                         </p:dataTable>

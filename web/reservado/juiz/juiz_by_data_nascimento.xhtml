@@ -16,22 +16,19 @@
                 <f:view>
                     <h:form id="formBusca" >
                         <h:messages/>
-                        <b:panel style="background-color: lavenderblush" look="normal" collapsible="false"  title="">
-
+                        <b:panel look="normal" collapsible="false" title="">
                             <h:panelGrid columns="6"  cellspacing="10%">
-                                <h:outputLabel value="NOME: " style="margin-right: 10px"/>
-                                <p:inputText  id="cognome" value="#{juizMBean.nome}" required="true" requiredMessage="#{msg.msg_cognome}" immediate="true"/>
+                                <p:outputLabel value="DATA DE NASCIMENTO"/>
+                                <p:calendar  value="#{juizMBean.dataDeNascimento}" pattern="dd/MM/yyyy" locale="pt"  />
                                 <b:commandButton style="margin-left:  10px" value="Pesquisar..." look="normal"/>
                             </h:panelGrid>
-
                         </b:panel>
                     </h:form>
-                    
+
                     <b:panel title="Lista - Juizes" collapsible="false" look="normal">
                         <h:form>
                             <!--inicio Datatable-->
-                            <p:dataTable value="#{juizMBean.byNome}" var="juiz" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                
+                            <p:dataTable value="#{juizMBean.byDataNascimento}" var="juiz" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
@@ -44,8 +41,8 @@
                                     </f:facet>
                                     <h:outputText value="#{juiz.sobrenomeJuiz}"/>
                                 </p:column>
-                                
-                                
+
+
                                 <p:column style="width: 100px; text-align: center" width="160">
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
@@ -63,14 +60,14 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total Juizes  (#{juizMBean.byNome.size()})
+                                    Total Juizes  (#{juizMBean.byDataNascimento.size()})
                                 </f:facet>                           
                             </p:dataTable>
 
                             <!--Fim Datatable-->                         
                         </h:form>
                     </b:panel>
-                    
+
                     <!--Inicio do dialogo guardar-->
 
                     <h:form id="Operacoes">
@@ -78,10 +75,10 @@
                         <p:commandButton value="x Fechar" action="/index" ajax="false" immediate="true" />                   
                     </h:form>
 
-                    <!--Fim do dialogo guardar-->
                     
-                    
-                    <!--inicio do dialogo guardar-->
+
+
+                     <!--inicio do dialogo guardar-->
                     <p:dialog  header="Novo Juiz" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
@@ -101,13 +98,13 @@
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar effect="slide"  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt_BR" effect ="slide" />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                    <p:calendar effect="slide" style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt" effect="slide" />
                                 </h:panelGrid>
                             </h:panelGroup>
 
@@ -142,13 +139,13 @@
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar effect="slide"  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                    <p:calendar effect="slide" style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:calendar style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
 
@@ -182,9 +179,7 @@
 
                     <!--Fim do dialog ver-->
                     
-                    
-                    
-
+                   
                 </f:view>
             </ui:define>
 

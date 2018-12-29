@@ -86,6 +86,17 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
+                                         
+                                         
+                                         <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 15%" value="Tipo Pessoa:"/>
+                                        <p:selectOneMenu style="width:250px; margin-left:15% " id="tipos" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requeridoMBean.requerido.tipo}" required="true" converter="tipoPessoaConverter">
+                                            <f:selectItem itemLabel="-Seleccione o tipo de pessoa-" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{requeridoMBean.tipoPessoas}" var="tipoPessoa" itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.nomeTipoPessoa}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
                                          </h:panelGrid>
 
                             </b:panel>

@@ -6,7 +6,8 @@
 package fenix.iure.mb;
 
 import fenix.iure.dao.TipoPessoaDAO;
-import fenix.iure.modelo.TipoPessoa;
+import fenix.iure.ejbs.TipoPessoaFacade;
+import fenix.iure.entities.TipoPessoa;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -26,22 +28,24 @@ import javax.faces.context.FacesContext;
 @Named(value = "tipoPessoaMBean")
 @SessionScoped
 public class TipoPessoaMBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private TipoPessoa tipoPessoa;
     private TipoPessoaDAO tipoPessoaDAO;
     private List<TipoPessoa> tipoPessoas;
-     
-    
-    
+
+    @Inject
+    TipoPessoaFacade tipoPessoaFacade;
+
     public TipoPessoaMBean() {
     }
+
     @PostConstruct
     public void inicializar() {
         tipoPessoa = new TipoPessoa();
         tipoPessoaDAO = new TipoPessoaDAO();
-        
+
     }
 
     public TipoPessoa getTipoPessoa() {
@@ -53,30 +57,30 @@ public class TipoPessoaMBean implements Serializable {
     }
 
     public List<TipoPessoa> getTipoPessoas() {
-        tipoPessoas = tipoPessoaDAO.findAll();
+        tipoPessoas = tipoPessoaFacade.findAll();
         return tipoPessoas;
     }
-    
+
     public String newSave() {
         tipoPessoa = new TipoPessoa();
         return "tipo_pessoa_listar?faces-redirect=true";
     }
-    
+
     public void guardar(ActionEvent evt) {
-        if (tipoPessoaDAO.save(tipoPessoa)){
-            tipoPessoa = new TipoPessoa();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
+        tipoPessoaFacade.create(tipoPessoa);
+        tipoPessoa = new TipoPessoa();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        }*/
     }
-    
+
     public String startEdit() {
         return "tipo_pessoa_listar?faces-redirect=true";
     }
-    
+
     public void edit(javafx.event.ActionEvent event) {
-        if (tipoPessoaDAO.update(tipoPessoa)) {
+        tipoPessoaFacade.edit(tipoPessoa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             tipoPessoas = null;
 
@@ -85,27 +89,21 @@ public class TipoPessoaMBean implements Serializable {
             } catch (IOException ex) {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-         else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+        }*/
 
     }
-    
+
     public String delete() {
-        if (tipoPessoaDAO.delete(tipoPessoa)) {
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-             tipoPessoas = null;
-             return "tipo_pessoa_listar?faces-redirect=true";
-        }else{
+           tipoPessoaFacade.remove(tipoPessoa);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+            tipoPessoas = null;
+            return "tipo_pessoa_listar?faces-redirect=true";
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
-        }      
+        }*/
     }
-    
-    
-    
 
-    
-    
 }

@@ -6,7 +6,8 @@
 package fenix.iure.mb;
 
 import fenix.iure.dao.TipoDecisaoDAO;
-import fenix.iure.modelo.TipoDecisao;
+import fenix.iure.ejbs.TipoDecisaoFacade;
+import fenix.iure.entities.TipoDecisao;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -32,7 +34,9 @@ public class TipoDecisaoMBean implements Serializable {
     private TipoDecisao tipoDecisao;
     private TipoDecisaoDAO tipoDecisaoDAO;
     private List<TipoDecisao> tipos;
-     
+    
+    @Inject
+    TipoDecisaoFacade tipoDecisaoFacade;
     
     
     public TipoDecisaoMBean() {
@@ -46,12 +50,12 @@ public class TipoDecisaoMBean implements Serializable {
     
     
     public void guardar(ActionEvent evt) {
-        if (tipoDecisaoDAO.save(tipoDecisao)){
+        tipoDecisaoFacade.create(tipoDecisao);
             tipoDecisao = new TipoDecisao();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
+        /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        }*/
     }
     
     public String startEdit() {
@@ -59,7 +63,7 @@ public class TipoDecisaoMBean implements Serializable {
     }
     
     public void edit(javafx.event.ActionEvent event) {
-        if (tipoDecisaoDAO.update(tipoDecisao)) {
+        tipoDecisaoFacade.edit(tipoDecisao);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             tipos = null;
 
@@ -69,21 +73,18 @@ public class TipoDecisaoMBean implements Serializable {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         else {
+         /* {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+        }*/
 
-    }
+    
     
     public String delete() {
-        if (tipoDecisaoDAO.delete(tipoDecisao)) {
+        tipoDecisaoFacade.remove(tipoDecisao);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              tipos = null;
              return "tipo_decisao_listar?faces-redirect=true";
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
-            return null;
-        }      
+             
     }
 
     public TipoDecisao getTipoDecisao() {
@@ -95,7 +96,7 @@ public class TipoDecisaoMBean implements Serializable {
     }
 
     public List<TipoDecisao> getTipos() {
-        tipos = tipoDecisaoDAO.findAll();
+        tipos = tipoDecisaoFacade.findAll();
         return tipos;
     }
     
