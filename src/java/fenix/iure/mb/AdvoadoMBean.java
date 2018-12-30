@@ -35,7 +35,7 @@ public class AdvoadoMBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Advogado advogado;
-    private AdvogadoDAO advogadoDAO;
+  //  private AdvogadoDAO advogadoDAO;
     private List<Advogado> advogados;
 
     @Inject
@@ -66,7 +66,7 @@ public class AdvoadoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         advogado = new Advogado();
-        advogadoDAO = new AdvogadoDAO();
+     //   advogadoDAO = new AdvogadoDAO();
         findByNome = new ArrayList<>();
         findbySobrenome = new ArrayList<>();
         findByNomeSobrenome = new ArrayList<>();
@@ -239,13 +239,7 @@ public class AdvoadoMBean implements Serializable {
         }
     }
 
-    public AdvogadoDAO getAdvogadoDAO() {
-        return advogadoDAO;
-    }
-
-    public void setAdvogadoDAO(AdvogadoDAO advogadoDAO) {
-        this.advogadoDAO = advogadoDAO;
-    }
+   
 
     public String getNome() {
         return nome;
