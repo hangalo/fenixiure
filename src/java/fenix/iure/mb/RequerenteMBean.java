@@ -16,12 +16,14 @@ import fenix.iure.entities.Requente;
 import fenix.iure.entities.TipoPessoa;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -31,8 +33,8 @@ import javax.inject.Inject;
  * @author Aisha Lubadika
  */
 @Named(value = "requerenteMBean")
-@Dependent
-public class RequerenteMBean {
+@SessionScoped
+public class RequerenteMBean implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -44,12 +46,30 @@ public class RequerenteMBean {
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
 
-    @Inject
-    RequenteFacade requenteFacade;
+    
     @Inject
     MunicipioFacade municipioFacade;
     @Inject
     TipoPessoaFacade tipoPessoaFacade;
+    @Inject
+    RequenteFacade requenteFacade;
+    
+  
+    // Listas das pesquisas paramentrizadas
+    private List<Requente> findByNome;
+    private List<Requente> findbySobrenome;
+    private List<Requente> findByNomeSobrenome;
+    private List<Requente> findByBilheteIdentidade;
+    private List<Requente> findByMunicipio;
+    private List<Requente> findByTipoPessoa;
+    
+    // Variaveis para pesquisas paramentrizadas
+    private String nome;
+    private String sobrenome;
+    private String bilheteIdentidade;
+    private int idMunicipio;
+    private int idTipoPessoa;
+    
     
     public RequerenteMBean() {
     }
@@ -136,6 +156,91 @@ public class RequerenteMBean {
         municipios = municipioFacade.findAll();
                 return municipios;
     }
+
+    public List<Requente> getFindByNome() {
+        findByNome = requenteFacade.findByNome(nome);
+        return findByNome;
+    }
+
+    public List<Requente> getFindbySobrenome() {
+        findbySobrenome = requenteFacade.findBySobrenome(sobrenome);
+        return findbySobrenome;
+    }
+
+    public List<Requente> getFindByNomeSobrenome() {
+        if ((getNome() == null || getNome().isEmpty()) && (getSobrenome() == null)) {
+            return null;
+
+        } else if (((getSobrenome() == null) || (getSobrenome().isEmpty())) && ((getNome() != null || !getNome().isEmpty()))) {
+            findByNome = requenteFacade.findByNome(nome);
+            return findByNome;
+        } else if ((getNome() == null || getNome().isEmpty() && getSobrenome() != null)) {
+            findbySobrenome = requenteFacade.findBySobrenome(sobrenome);
+            return findbySobrenome;
+        } else if ((getNome() != null || !getNome().isEmpty()) && (getSobrenome() != null || !getSobrenome().isEmpty())) {
+            findByNomeSobrenome = requenteFacade.findByNomeSobrenome(nome, sobrenome);
+            return findByNomeSobrenome;
+        }
+        return null;
+    }
+
+    public List<Requente> getFindByBilheteIdentidade() {
+        findByBilheteIdentidade = requenteFacade.findByBilheteIdentidade(bilheteIdentidade);
+        return findByBilheteIdentidade;
+    }
+
+    /*public List<Requente> getFindByMunicipio() {
+        findByMunicipio = requenteFacade.findByIdMunicipio(idMunicipio);
+        return findByMunicipio;
+    }*/
+
+    public List<Requente> getFindByTipoPessoa() {
+        return findByTipoPessoa;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getBilheteIdentidade() {
+        return bilheteIdentidade;
+    }
+
+    public void setBilheteIdentidade(String bilheteIdentidade) {
+        this.bilheteIdentidade = bilheteIdentidade;
+    }
+
+    public int getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(int idMunicipio) {
+        this.idMunicipio = idMunicipio;
+    }
+
+    public int getIdTipoPessoa() {
+        return idTipoPessoa;
+    }
+
+    public void setIdTipoPessoa(int idTipoPessoa) {
+        this.idTipoPessoa = idTipoPessoa;
+    }
+    
+    
+    
+    
     
     
 

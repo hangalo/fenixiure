@@ -83,7 +83,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel  style="margin-left: 40%" value="MUNICIPIO:"/>
-                                        <p:selectOneMenu effect="slide" style="width:200px; margin-left:40% " id="municipios" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idTipo}" required="true" converter="municipioConverter">
+                                        <p:selectOneMenu effect="slide" style="width:200px; margin-left:40% " id="municipios" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idMunicipio}" required="true" converter="municipioConverter">
                                             <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
                                             <f:selectItems value="#{requerenteMBean.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nomeMunicipio }"/>
                                         </p:selectOneMenu>

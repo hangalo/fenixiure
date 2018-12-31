@@ -5,10 +5,14 @@
  */
 package fenix.iure.ejbs;
 
+import fenix.iure.entities.Advogado;
+import fenix.iure.entities.Municipio;
 import fenix.iure.entities.Requente;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,42 @@ public class RequenteFacade extends AbstractFacade<Requente> {
 
     public RequenteFacade() {
         super(Requente.class);
+    }
+    
+    public List<Requente> findByNome(String nome) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requente r WHERE r.nomeRequente like :nomeRequente ORDER BY r.nomeRequente");
+        query.setParameter("nomeRequente", nome+"%");
+        return query.getResultList();
+    }
+    
+    public List<Requente> findBySobrenome(String sobrenome) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requente r WHERE r.sobrenomeRequerente like :sobrenomeRequerente ORDER BY r.sobrenomeRequerente");
+        query.setParameter("sobrenomeRequerente", sobrenome+"%");
+        return query.getResultList();
+    }
+    
+    public List<Requente> findByBilheteIdentidade(String bilhetIdentidade) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requente r WHERE r.nBiRequerente like :nBiRequerente ORDER BY r.nBiRequerente");
+        query.setParameter("nBiRequerente", bilhetIdentidade+"%");
+        return query.getResultList();
+    }
+    
+    public List<Requente> findByNomeSobrenome(String nome, String sobrenome) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requente r WHERE r.nomeRequente = :nomeRequente AND r.sobrenomeRequerente = :sobrenomeRequerente ORDER BY r.nomeRequente");
+        query.setParameter("nomeRequente", nome);
+        query.setParameter("sobrenomeRequerente", sobrenome);
+        return query.getResultList();
+    }
+    
+    public List<Requente> findByIdMunicipio(Municipio municipio) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requente r JOIN Municipio m ON r.idMunicipio = m.idMunicipio WHERE r.idMunicipio = :idMunicipio ORDER BY r.nomeRequente");
+        query.setParameter("idMunicipio", municipio.getIdMunicipio());
+        return query.getResultList();
     }
     
 }

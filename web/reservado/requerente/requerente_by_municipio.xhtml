@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
+
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <f:view>
+                    <h:form id="formBusca" >
+                        <h:messages/>
+                        <b:panel look="normal" collapsible="false" title="">
+
+                            <h:panelGrid columns="1">
+                                <p:outputLabel  style="margin-left: 40%" value="MUNICIPIO:"/>
+                                <p:selectOneMenu effect="slide" style="width:200px; margin-left:40% " id="municipios" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idMunicipio}" required="true" converter="municipioConverter">
+                                    <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{requerenteMBean.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nomeMunicipio }"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+
+                        </b:panel>
+                    </h:form>
+
+
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

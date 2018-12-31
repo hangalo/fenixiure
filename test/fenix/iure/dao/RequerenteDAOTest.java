@@ -5,11 +5,18 @@
  */
 package fenix.iure.dao;
 
+import fenix.iure.entities.Requente;
 import fenix.iure.modelo.Municipio;
 import fenix.iure.modelo.Requerente;
 import fenix.iure.modelo.TipoPessoa;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,6 +29,8 @@ import static org.junit.Assert.*;
  * @author Aisha Lubadika
  */
 public class RequerenteDAOTest {
+
+    
     
     public RequerenteDAOTest() {
     }
@@ -112,6 +121,7 @@ public class RequerenteDAOTest {
          
     }  */ 
 
+     
    @Test
    public void testFindAll() {
         System.out.println("findAll");
@@ -121,7 +131,13 @@ public class RequerenteDAOTest {
         assertTrue(result.size()>0);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+        
+        for (Requerente requerente : result) {
+           System.out.println("Id: " + requerente.getIdRequerente());
+          System.out.println("Nome: " + requerente.getNomeRequerente());
+       }
     }  
+
     
    /** 
     @Test

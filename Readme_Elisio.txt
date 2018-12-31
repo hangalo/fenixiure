@@ -1,3 +1,16 @@
+31/12/2018
+Coisas feitas:
+	----> Requerente CRUD
+	----> RequerentePor nome, sobrenome. nomeSobrenome.
+
+Dificuldades: Pesquisas paramentrisadas por Municipio e TipoPessoa.
+
+
+
+------------------------ Fim-----------------
+
+
+
 29/12/2018
 Coisas Feitas:
 ----> Implementação de JPA em:
