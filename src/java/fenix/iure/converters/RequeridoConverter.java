@@ -6,11 +6,15 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.RequeridoDAO;
-import fenix.iure.modelo.Requerido;
+import fenix.iure.ejbs.RequeridoFacade;
+import fenix.iure.entities.Requerido;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -20,25 +24,36 @@ import javax.faces.convert.FacesConverter;
 public class RequeridoConverter implements Converter{
 
     RequeridoDAO requeridoDAO = new RequeridoDAO();
+    RequeridoFacade requeridoFacade = lookupRequeridoFacade();
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Integer id = Integer.parseInt(value);
-        try {
-            return requeridoDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
+        Requerido requerido;
+        if (value != null) {
+            requerido = (Requerido)requeridoFacade.find(Integer.parseInt(value));
+            return requerido;
         }
         return null;
-
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            Requerido  requerido =(Requerido)value;
-            return String.valueOf(requerido.getIdRequerido());
+            return ((Requerido) value).getIdRequerido().toString();
         }
         return null;
+    }
+    
+    
+    private RequeridoFacade lookupRequeridoFacade() {
+         Context context = null;
+        try {
+            context = new InitialContext();
+            return (RequeridoFacade) context.lookup("java:global/fenixiure/RequeridoFacade");
+        } catch (NamingException ne) {
+            System.out.println("Erro" + ne.getMessage());
+            return null;
+        }
 
     }
     

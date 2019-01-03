@@ -6,27 +6,31 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.RequerenteDAO;
-import fenix.iure.modelo.Requerente;
+import fenix.iure.ejbs.RequenteFacade;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
+import fenix.iure.entities.Requente;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 /**
  *
  * @author Elísio Kavaimunwa
  */
-@FacesConverter(value = "requerenteConverter", forClass = Requerente.class)
+@FacesConverter(value = "requerenteConverter", forClass = Requente.class)
 public class RequerenteConverter implements Converter{
 
-    RequerenteDAO requerenteDAO = new RequerenteDAO();
+    //RequerenteDAO requerenteDAO = new RequerenteDAO();
+    RequenteFacade requenteFacade = lookupRequerenteFacade();
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Integer id = Integer.parseInt(value);
-        try {
-            return requerenteDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
+        Requente requente;
+        if (value != null) {
+            requente = (Requente)requenteFacade.find(Integer.parseInt(value));
+            return requente;
         }
         return null;
     }
@@ -34,10 +38,21 @@ public class RequerenteConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            Requerente  requerente =(Requerente)value;
-            return String.valueOf(requerente.getIdRequerente());
+            return ((Requente) value).getIdRequente().toString();
         }
         return null;
+    }
+    
+    private RequenteFacade lookupRequerenteFacade() {
+         Context context = null;
+        try {
+            context = new InitialContext();
+            return (RequenteFacade) context.lookup("java:global/fenixiure/RequenteFacade");
+        } catch (NamingException ne) {
+            System.out.println("Erro" + ne.getMessage());
+            return null;
+        }
+
     }
     
 }

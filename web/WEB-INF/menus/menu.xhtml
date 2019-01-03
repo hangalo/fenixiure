@@ -16,9 +16,13 @@
 
                 <p:submenu label="Processo">
                     <p:menuitem value="+ Novo" url="/reservado/processo/processo_novo.jsf"/>
+                                       
                     <p:submenu label="Buscar Por:" icon="ui-icon-document">
                         <p:menuitem value="Estado do Processo" url="/reservado/processo/by_estado_processo.jsf"/>
                         <p:menuitem value="Lista Geral" url="/reservado/processo/processo_listar.jsf"/>
+                        <p:menuitem value="Lista Geral2" url="/reservado/processo/processo_listar2.jsf"/>
+                  
+                    
                     </p:submenu>
                 </p:submenu>
 
@@ -39,18 +43,21 @@
                         <p:menuitem value="Nome e Sobrenome" url="reservado/requerente/requerente_by_nome_sobrenome.jsf"/>
                         <p:menuitem value="Bilhete de Identidade" url="reservado/requerente/requerente_by_num_bilhete.jsf"/>
                         <p:menuitem value="Municipio" url="#"/>
-                        <p:menuitem value="Tipo Pessoa" url="reservado/requerente/"/>
+                        <p:menuitem value="Tipo Pessoa" url="#"/>
                         <p:menuitem value="Lista Geral" url="reservado/requerente/requerente_listar.jsf"/>
                     </p:submenu>
                 </p:submenu>
 
                 <p:submenu label="Requerido" >
-                    <p:menuitem value="+ Novo" url=""/>
+                    <p:menuitem value="+ Novo" url="reservado/requerido/requerido_novo.jsf"/>
                     <p:submenu label="Buscar Por:" icon="ui-icon-document">
-                        <p:menuitem value="Parametro1" url=""/>
-                        <p:menuitem value="Parametro2" url=""/>
-                        <p:menuitem value="Parametro3" url=""/>
-                        <p:menuitem value="Parametro4" url=""/>
+                        <p:menuitem value="Nome" url="reservado/requerido/requerido_by_nome.jsf"/>
+                        <p:menuitem value="Sobrenome" url="reservado/requerido/requerido_by_sobrenome.jsf"/>
+                        <p:menuitem value="Nome e Sobrenome" url="reservado/requerido/requerido_by_nome_sobrenome.jsf"/>
+                        <p:menuitem value="Bilhete de Identidade" url="reservado/requerido/requerido_by_num_bilhete.jsf"/>
+                        <p:menuitem value="Municipio" url="#"/>
+                        <p:menuitem value="Tipo Pessoa" url="#"/>
+                        <p:menuitem value="Lista Geral" url="reservado/requerido/requerido_listar.jsf"/>
                     </p:submenu>
                 </p:submenu>
 

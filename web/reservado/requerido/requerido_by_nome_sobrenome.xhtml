@@ -14,10 +14,27 @@
             <ui:define name="content">
                 <p:growl autoUpdate="true" showDetail="true"/>
                 <f:view>
-                    <b:panel title="Lista - Requeridos" collapsible="false" look="normal">
+                    <h:form id="formBusca" >
+                        <h:messages/>
+                        <b:panel look="normal" collapsible="false" title="">
+
+                            <h:panelGrid columns="6"  cellspacing="10%">
+                                <p:outputLabel value="Sobrenome: " style="margin-right: 10px"/>
+                                <p:inputText id="cognome" value="#{requeridoMBean.sobrenome}" required="true" requiredMessage="#{msg.msg_cognome}" immediate="true"/>
+                                <p:outputLabel value="Nome: " style="margin-right: 10px; margin-left: 10%"/>
+                                <p:inputText id="nome" value="#{requeridoMBean.nome}" />
+                                <h:message for="nome"/>
+                                <b:commandButton style="margin-left: 10%"  value="Pesquisar..." look="normal"/>
+                            </h:panelGrid>
+
+
+                        </b:panel>
+                    </h:form>
+                    
+                     <b:panel title="Lista - Requeridos" collapsible="false" look="normal">
                         <h:form>
                             <!--inicio Datatable-->
-                            <p:dataTable value="#{requeridoMBean.requeridos}" var="requerido" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <p:dataTable value="#{requeridoMBean.findByNomeSobrenome}" var="requerido" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
@@ -273,7 +290,8 @@
 
                     <!--Fim do dialog ver-->
                     
-                    
+                   
+
                 </f:view>
             </ui:define>
 

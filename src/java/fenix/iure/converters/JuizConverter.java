@@ -6,12 +6,15 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.JuizDAO;
-import fenix.iure.modelo.Juiz;
-import fenix.iure.modelo.Requerente;
+import fenix.iure.ejbs.JuizFacade;
+import fenix.iure.entities.Juiz;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -21,14 +24,14 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "juizConverter", forClass = Juiz.class)
 public class JuizConverter implements Converter{
 
-    JuizDAO juizDAO = new JuizDAO();
+    JuizFacade juizFacade = lookupJuizFacade();
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Integer id = Integer.parseInt(value);
-        try {
-            return juizDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
+        Juiz juiz;
+        if (value != null) {
+            juiz = (Juiz)juizFacade.find(Integer.parseInt(value));
+            return juiz;
         }
         return null;
     }
@@ -36,10 +39,22 @@ public class JuizConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            Juiz  juiz =(Juiz)value;
-            return String.valueOf(juiz.getIdJuiz());
+            return ((Juiz) value).getIdJuiz().toString();
         }
         return null;
     }
+    
+     private JuizFacade lookupJuizFacade() {
+        Context context = null;
+        try {
+            context = new InitialContext();
+            return (JuizFacade) context.lookup("java:global/fenixiure/JuizFacade");
+        } catch (NamingException ne) {
+            System.out.println("Erro" + ne.getMessage());
+            return null;
+        }
+
+    }
+    
     
 }

@@ -27,25 +27,7 @@ public class TipoPessoaConverter implements Converter {
                  //TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO();
     
     TipoPessoaFacade tipoPessoaFacade = lookupTipoPessoaFacade();
-    /*@Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) {
-         Integer id = Integer.parseInt(value);
-        try {
-            return tipoPessoaDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
-        }
-        return null;
-    }
-
-    @Override
-    public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value != null) {
-            TipoPessoa tipoPessoa = (TipoPessoa) value;
-            return String.valueOf(tipoPessoa.getIdTipo());
-        }
-        return null;
-    }*/
+    
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

@@ -1,5 +1,18 @@
 31/12/2018
 Coisas feitas:
+----> Requerido CRUD
+	----> Requerido Por nome, sobrenome. nomeSobrenome.
+
+Dificuldades: Pesquisas paramentrisadas por Municipio e TipoPessoa.
+
+
+
+
+------------------------ Fim-------------------
+
+
+31/12/2018
+Coisas feitas:
 	----> Requerente CRUD
 	----> RequerentePor nome, sobrenome. nomeSobrenome.
 

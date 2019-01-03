@@ -8,9 +8,13 @@ package fenix.iure.mb;
 import fenix.iure.dao.MunicipioDAO;
 import fenix.iure.dao.RequeridoDAO;
 import fenix.iure.dao.TipoPessoaDAO;
-import fenix.iure.modelo.Municipio;
-import fenix.iure.modelo.Requerido;
-import fenix.iure.modelo.TipoPessoa;
+import fenix.iure.ejbs.MunicipioFacade;
+import fenix.iure.ejbs.RequeridoFacade;
+import fenix.iure.ejbs.TipoPessoaFacade;
+import fenix.iure.entities.Municipio;
+import fenix.iure.entities.Requerido;
+import fenix.iure.entities.TipoPessoa;
+
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -22,6 +26,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -40,6 +45,30 @@ public class RequeridoMBean implements Serializable {
     private List<Requerido> requeridos;
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
+    
+    
+    @Inject
+    RequeridoFacade requeridoFacade;
+    @Inject
+    TipoPessoaFacade tipoPessoaFacade;
+    @Inject
+    MunicipioFacade municipioFacade;
+    
+    // Listas das pesquisas paramentrizadas
+    private List<Requerido> findByNome;
+    private List<Requerido> findbySobrenome;
+    private List<Requerido> findByNomeSobrenome;
+    private List<Requerido> findByBilheteIdentidade;
+    private List<Requerido> findByMunicipio;
+    private List<Requerido> findByTipoPessoa;
+    
+    // Variaveis para pesquisas paramentrizadas
+    private String nome;
+    private String sobrenome;
+    private String bilheteIdentidade;
+    private int idMunicipio;
+    private int idTipoPessoa;
+    
     
     public RequeridoMBean() {
     }
@@ -61,25 +90,17 @@ public class RequeridoMBean implements Serializable {
         this.requerido = requerido;
     }
 
-    public RequeridoDAO getRequeridoDAO() {
-        return requeridoDAO;
-    }
-
-    public void setRequeridoDAO(RequeridoDAO requeridoDAO) {
-        this.requeridoDAO = requeridoDAO;
-    }
+    
     
       public void guardar(ActionEvent evt) {
-        if (requeridoDAO.save(requerido)) {
+        requeridoFacade.create(requerido);
             requerido = new Requerido();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }
+        
     }
 
     public List<Requerido> getRequeridos() {
-        requeridos = requeridoDAO.findAll();
+        requeridos = requeridoFacade.findAll();
         return requeridos;
     }
       
@@ -90,7 +111,7 @@ public class RequeridoMBean implements Serializable {
     
     
        public void edit(javafx.event.ActionEvent event) {
-        if (requeridoDAO.update(requerido)) {
+        requeridoFacade.edit(requerido);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             requerido = null;
 
@@ -100,32 +121,109 @@ public class RequeridoMBean implements Serializable {
                 Logger.getLogger(RequeridoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }
+         
 
-    }
+    
     
     public String delete() {
-        if (requeridoDAO.delete(requerido)) {
+        requeridoFacade.remove(requerido);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              requeridos = null;
              return "requerido_listar?faces-redirect=true";
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
-            return null;
-        }      
-    }
+        }     
+    
 
     public List<TipoPessoa> getTipoPessoas() {
-        tipoPessoas = tipoPessoaDAO.findAll();
+        tipoPessoas = tipoPessoaFacade.findAll();
         return tipoPessoas;
     }
 
     public List<Municipio> getMunicipios() {
-        municipios = municipioDAO.findAll();
+        municipios = municipioFacade.findAll();
                 return municipios;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getBilheteIdentidade() {
+        return bilheteIdentidade;
+    }
+
+    public void setBilheteIdentidade(String bilheteIdentidade) {
+        this.bilheteIdentidade = bilheteIdentidade;
+    }
+
+    public int getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(int idMunicipio) {
+        this.idMunicipio = idMunicipio;
+    }
+
+    public int getIdTipoPessoa() {
+        return idTipoPessoa;
+    }
+
+    public void setIdTipoPessoa(int idTipoPessoa) {
+        this.idTipoPessoa = idTipoPessoa;
+    }
+
+    public List<Requerido> getFindByNome() {
+        findByNome = requeridoFacade.findByNome(nome);
+        return findByNome;
+    }
+
+    public List<Requerido> getFindbySobrenome() {
+        findbySobrenome = requeridoFacade.findBySobrenome(sobrenome);
+        return findbySobrenome;
+    }
+
+    public List<Requerido> getFindByNomeSobrenome() {
+        if ((getNome() == null || getNome().isEmpty()) && (getSobrenome() == null)) {
+            return null;
+
+        } else if (((getSobrenome() == null) || (getSobrenome().isEmpty())) && ((getNome() != null || !getNome().isEmpty()))) {
+            findByNome = requeridoFacade.findByNome(nome);
+            return findByNome;
+        } else if ((getNome() == null || getNome().isEmpty() && getSobrenome() != null)) {
+            findbySobrenome = requeridoFacade.findBySobrenome(sobrenome);
+            return findbySobrenome;
+        } else if ((getNome() != null || !getNome().isEmpty()) && (getSobrenome() != null || !getSobrenome().isEmpty())) {
+            findByNomeSobrenome = requeridoFacade.findByNomeSobrenome(nome, sobrenome);
+            return findByNomeSobrenome;
+        }
+        return null;
+    }
+
+    public List<Requerido> getFindByBilheteIdentidade() {
+        findByBilheteIdentidade = requeridoFacade.findByBilheteIdentidade(bilheteIdentidade);
+        return findByBilheteIdentidade;
+    }
+
+    public List<Requerido> getFindByMunicipio() {
+        return findByMunicipio;
+    }
+
+    public List<Requerido> getFindByTipoPessoa() {
+        return findByTipoPessoa;
+    }
+    
+    
     
 
 }

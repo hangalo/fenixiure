@@ -6,11 +6,15 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.EstadoProcessoDAO;
-import fenix.iure.modelo.EstadoProcesso;
+import fenix.iure.ejbs.EstadoProcessoFacade;
+import fenix.iure.entities.EstadoProcesso;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -20,13 +24,14 @@ import javax.faces.convert.FacesConverter;
 public class EstadoProcessoConverter implements Converter{
 
     EstadoProcessoDAO estadoProcessoDAO = new EstadoProcessoDAO();
+    EstadoProcessoFacade estadoProcessoFacade = lookupEstadoProcessoFacade();
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Integer id = Integer.parseInt(value);
-        try {
-            return estadoProcessoDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
+        EstadoProcesso estadoProcesso;
+        if (value != null) {
+            estadoProcesso = (EstadoProcesso)estadoProcessoFacade.find(Integer.parseInt(value));
+            return estadoProcesso;
         }
         return null;
     }
@@ -34,10 +39,19 @@ public class EstadoProcessoConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            EstadoProcesso  estadoProcesso =(EstadoProcesso)value;
-            return String.valueOf(estadoProcesso.getIdEstadoProcesso());
+            return ((EstadoProcesso) value).getIdEstadoProcesso().toString();
         }
         return null;
     }
-    
+    private EstadoProcessoFacade lookupEstadoProcessoFacade() {
+         Context context = null;
+        try {
+            context = new InitialContext();
+            return (EstadoProcessoFacade) context.lookup("java:global/fenixiure/EstadoProcessoFacade");
+        } catch (NamingException ne) {
+            System.out.println("Erro" + ne.getMessage());
+            return null;
+        }
+
+    }
 }

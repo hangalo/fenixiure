@@ -6,11 +6,15 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.EspecieProcessoDAO;
-import fenix.iure.modelo.EspecieProcesso;
+import fenix.iure.ejbs.EspecieProcessoFacade;
+import fenix.iure.entities.EspecieProcesso;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -19,14 +23,14 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "especieProcesoConverter", forClass = EspecieProcesso.class)
 public class EspecieProcesoConverter implements Converter{
 
-    EspecieProcessoDAO especieProcessoDAO = new EspecieProcessoDAO();
+    //EspecieProcessoDAO especieProcessoDAO = new EspecieProcessoDAO();
+    EspecieProcessoFacade especieProcessoFacade = lookupEspecieProcessoFacade();
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Integer id = Integer.parseInt(value);
-        try {
-            return especieProcessoDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
+        EspecieProcesso especieProcesso;
+        if (value != null) {
+            especieProcesso = (EspecieProcesso)especieProcessoFacade.find(Integer.parseInt(value));
+            return especieProcesso;
         }
         return null;
     }
@@ -34,10 +38,20 @@ public class EspecieProcesoConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            EspecieProcesso  especieProcesso =(EspecieProcesso)value;
-            return String.valueOf(especieProcesso.getIdEspecieProcesso());
+            return ((EspecieProcesso) value).getIdEspecieProcesso().toString();
         }
         return null;
+    }
+    private EspecieProcessoFacade lookupEspecieProcessoFacade() {
+         Context context = null;
+        try {
+            context = new InitialContext();
+            return (EspecieProcessoFacade) context.lookup("java:global/fenixiure/EspecieProcessoFacade");
+        } catch (NamingException ne) {
+            System.out.println("Erro" + ne.getMessage());
+            return null;
+        }
+
     }
     
 }

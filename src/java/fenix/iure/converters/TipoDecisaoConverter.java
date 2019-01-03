@@ -6,11 +6,15 @@
 package fenix.iure.converters;
 
 import fenix.iure.dao.TipoDecisaoDAO;
-import fenix.iure.modelo.TipoDecisao;
+import fenix.iure.ejbs.TipoDecisaoFacade;
+import fenix.iure.entities.TipoDecisao;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -19,25 +23,37 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "tipoDecisaoConverter", forClass = TipoDecisao.class)
 public class TipoDecisaoConverter implements Converter{
 
-    TipoDecisaoDAO tipoDecisaoDAO = new TipoDecisaoDAO();
+    TipoDecisaoFacade tipoDecisaoFacade = lookupTipoDecisaoFacade();
+    
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Integer id = Integer.parseInt(value);
-        try {
-            return tipoDecisaoDAO.findById(id);
-        } catch (Exception ex) {
-            System.err.println("Erro na conversão: " + ex.getMessage());
+        TipoDecisao tipoDecisao;
+        if (value != null) {
+            tipoDecisao = (TipoDecisao)tipoDecisaoFacade.find(Integer.parseInt(value));
+            return tipoDecisao;
         }
         return null;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-         if (value != null) {
-            TipoDecisao  tipoDecisao =(TipoDecisao)value;
-            return String.valueOf(tipoDecisao.getIdTipoDecisao());
+        if (value != null) {
+            return ((TipoDecisao) value).getIdTipoDecisao().toString();
         }
         return null;
+    }
+    
+    private TipoDecisaoFacade lookupTipoDecisaoFacade() {
+        Context context = null;
+        try {
+            context = new InitialContext();
+            return (TipoDecisaoFacade) context.lookup("java:global/fenixiure/TipoDecisaoFacade");
+        } catch (NamingException ne) {
+            System.out.println("Erro" + ne.getMessage());
+            return null;
+        }
+
     }
     
 }
