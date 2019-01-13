@@ -76,10 +76,7 @@ public class RequeridoMBean implements Serializable {
        @PostConstruct
     public void inicializar() {
         requerido = new Requerido();
-        requeridoDAO = new RequeridoDAO();
-        municipioDAO = new MunicipioDAO();
-        tipoPessoaDAO = new TipoPessoaDAO();
-
+       
     }
 
     public Requerido getRequerido() {
@@ -216,10 +213,12 @@ public class RequeridoMBean implements Serializable {
     }
 
     public List<Requerido> getFindByMunicipio() {
+        findByMunicipio = requeridoFacade.findByIdMunicipio(idMunicipio);
         return findByMunicipio;
     }
 
     public List<Requerido> getFindByTipoPessoa() {
+        findByTipoPessoa = requeridoFacade.findByIdTipoPessoa(idTipoPessoa);
         return findByTipoPessoa;
     }
     

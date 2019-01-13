@@ -62,10 +62,19 @@ public class RequenteFacade extends AbstractFacade<Requente> {
         return query.getResultList();
     }
     
-    public List<Requente> findByIdMunicipio(Municipio municipio) {
+    
+    
+    public List<Requente> findByIdMunicipio(int id) {
         Query query;
-        query = em.createQuery("SELECT r FROM Requente r JOIN Municipio m ON r.idMunicipio = m.idMunicipio WHERE r.idMunicipio = :idMunicipio ORDER BY r.nomeRequente");
-        query.setParameter("idMunicipio", municipio.getIdMunicipio());
+        query = em.createQuery("SELECT r FROM Requente r INNER JOIN Municipio m ON r.idMunicipio.idMunicipio = m.idMunicipio WHERE r.idMunicipio.idMunicipio = :idMunicipio ORDER BY r.nomeRequente");
+        query.setParameter("idMunicipio", id);
+        return query.getResultList();
+    }
+    
+    public List<Requente> findByIdTipoPessoa(int id) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requente r INNER JOIN TipoPessoa t ON r.idTipo.idTipo = t.idTipo WHERE r.idTipo.idTipo = :idTipo ORDER BY r.nomeRequente");
+        query.setParameter("idTipo", id);
         return query.getResultList();
     }
     

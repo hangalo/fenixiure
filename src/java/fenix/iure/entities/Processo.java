@@ -102,6 +102,8 @@ public class Processo implements Serializable {
         this.numeroProcesso = numeroProcesso;
     }
 
+    
+
     public Date getDataEntrada() {
         return dataEntrada;
     }

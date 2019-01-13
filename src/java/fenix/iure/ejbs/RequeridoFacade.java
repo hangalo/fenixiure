@@ -61,5 +61,19 @@ public class RequeridoFacade extends AbstractFacade<Requerido> {
         return query.getResultList();
     }
     
+    public List<Requerido> findByIdMunicipio(int id) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requerido r INNER JOIN Municipio m ON r.idMunicipio.idMunicipio = m.idMunicipio WHERE r.idMunicipio.idMunicipio = :idMunicipio ORDER BY r.nomeRequerido");
+        query.setParameter("idMunicipio", id);
+        return query.getResultList();
+    }
+    
+    public List<Requerido> findByIdTipoPessoa(int id) {
+        Query query;
+        query = em.createQuery("SELECT r FROM Requerido r INNER JOIN TipoPessoa t ON r.idTipo.idTipo = t.idTipo WHERE r.idTipo.idTipo = :idTipo ORDER BY r.nomeRequerido");
+        query.setParameter("idTipo", id);
+        return query.getResultList();
+    }
+    
     
 }

@@ -20,12 +20,6 @@
                             <p:dataTable value="#{processoMBean.processos}" var="processso" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
-                                        <p:outputLabel value="Código"/>
-                                    </f:facet>
-                                    <h:outputText value="#{processso.idProcesso}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
                                         <p:outputLabel value="Numero"/>
                                     </f:facet>
                                     <h:outputText value="#{processso.numeroProcesso}"/>
@@ -48,13 +42,13 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
                                     </f:facet>
-                                    <p:commandButton  icon="ui-icon-trash" action="#{processoMBean.delete()}">
+                                    <p:commandButton  id="btDelete" icon="ui-icon-trash" action="#{processoMBean.delete()}">
                                         <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                     </p:commandButton>
-                                    <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                    <p:commandButton id="btEditar" icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                         <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                     </p:commandButton>
-                                    <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                    <p:commandButton  id="btVer" icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
                                         <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                     </p:commandButton>
                                 </p:column>
@@ -125,7 +119,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="ESPÉCIE: "/>
-                                        <p:selectOneMenu style="width:215px" id="dropespecie" value="#{processoMBean.processo.idEspecieProcesso}" converter="especieProcesoConverter">
+                                        <p:selectOneMenu effect="slide" style="width:215px" id="dropespecie" value="#{processoMBean.processo.idEspecieProcesso}" converter="especieProcesoConverter">
                                             <f:selectItem itemLabel="Selecione a especie" itemValue="#{null}" noSelectionOption="true"/>
                                             <f:selectItems value="#{processoMBean.especies}" var="especie" itemValue="#{especie}" itemLabel="#{especie.especieProcesso}" />
                                         </p:selectOneMenu>
@@ -136,7 +130,7 @@
                                 <h:panelGroup>
                                      <h:panelGrid columns="1">
                                     <p:outputLabel value="ADVOGADO: " style="margin-left: 10%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 10%" id="dropadvogado" value="#{processoMBean.processo.idAdvogado}" converter="advogadoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 10%" id="dropadvogado" value="#{processoMBean.processo.idAdvogado}" converter="advogadoConverter">
                                         <f:selectItem  itemLabel="Selecione o advogado" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{processoMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}" />
                                     </p:selectOneMenu>
@@ -146,7 +140,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                     <p:outputLabel  value="JUIZ: " style=" margin-left: 20%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 20%" id="dropjuiz" value="#{processoMBean.processo.idJuiz}" converter="juizConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 20%" id="dropjuiz" value="#{processoMBean.processo.idJuiz}" converter="juizConverter">
                                         <f:selectItem itemLabel="Selecione o juiz" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.juizes}" var="juiz" itemValue="#{juiz}" itemLabel="#{juiz.nomeJuiz}" />
                                     </p:selectOneMenu>
@@ -156,7 +150,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="ESTADO: " style="margin-left:30%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left:30%" id="dropestado" value="#{processoMBean.processo.idEstadoProcesso}" converter="estadoProcessoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left:30%" id="dropestado" value="#{processoMBean.processo.idEstadoProcesso}" converter="estadoProcessoConverter">
                                         <f:selectItem itemLabel="Selecione o estado" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.estadoProcesso}" />
                                     </p:selectOneMenu>
@@ -178,7 +172,7 @@
 
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="TIPO DECISÃO: "/>
-                                    <p:selectOneMenu style="width:215px" id="droptipodecisao" value="#{processoMBean.processo.idTipoDecisao}" converter="tipoDecisaoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px" id="droptipodecisao" value="#{processoMBean.processo.idTipoDecisao}" converter="tipoDecisaoConverter">
                                         <f:selectItem itemLabel="Selecione o tipo decisão" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.tipoDecisoes}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.tipoDecisao}" />
                                     </p:selectOneMenu>
@@ -186,7 +180,7 @@
                                 <h:panelGroup>
                                      <h:panelGrid columns="1">
                                     <p:outputLabel value="REQUERIDO: " style="margin-left:10%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 10%" id="droprequerido" value="#{processoMBean.processo.idRequerido}" converter="requeridoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 10%" id="droprequerido" value="#{processoMBean.processo.idRequerido}" converter="requeridoConverter">
                                         <f:selectItem itemLabel="Selecione o requerido" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.requeridos}" var="requerido" itemValue="#{requerido}" itemLabel="#{requerido.nomeRequerido}" />
                                     </p:selectOneMenu>
@@ -195,7 +189,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                     <p:outputLabel value="REQUERENTE: " style="margin-left:20%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 20%" id="droprequerente" value="#{processoMBean.processo.idRequente}" converter="requerenteConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 20%" id="droprequerente" value="#{processoMBean.processo.idRequente}" converter="requerenteConverter">
                                         <f:selectItem itemLabel="Selecione o requerente" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente}" itemLabel="#{requerente.nomeRequente}" />
                                     </p:selectOneMenu>
@@ -269,7 +263,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="ESPÉCIE: "/>
-                                        <p:selectOneMenu style="width:215px" id="dropespecie" value="#{processoMBean.processo.idEspecieProcesso}" converter="especieProcesoConverter">
+                                        <p:selectOneMenu effect="slide" style="width:215px" id="dropespecie" value="#{processoMBean.processo.idEspecieProcesso}" converter="especieProcesoConverter">
                                             <f:selectItem itemLabel="Selecione a especie" itemValue="#{null}" noSelectionOption="true"/>
                                             <f:selectItems value="#{processoMBean.especies}" var="especie" itemValue="#{especie}" itemLabel="#{especie.especieProcesso}" />
                                         </p:selectOneMenu>
@@ -280,7 +274,7 @@
                                 <h:panelGroup>
                                      <h:panelGrid columns="1">
                                     <p:outputLabel value="ADVOGADO: " style="margin-left: 10%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 10%" id="dropadvogado" value="#{processoMBean.processo.idAdvogado}" converter="advogadoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 10%" id="dropadvogado" value="#{processoMBean.processo.idAdvogado}" converter="advogadoConverter">
                                         <f:selectItem  itemLabel="Selecione o advogado" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{processoMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}" />
                                     </p:selectOneMenu>
@@ -290,7 +284,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                     <p:outputLabel  value="JUIZ: " style=" margin-left: 20%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 20%" id="dropjuiz" value="#{processoMBean.processo.idJuiz}" converter="juizConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 20%" id="dropjuiz" value="#{processoMBean.processo.idJuiz}" converter="juizConverter">
                                         <f:selectItem itemLabel="Selecione o juiz" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.juizes}" var="juiz" itemValue="#{juiz}" itemLabel="#{juiz.nomeJuiz}" />
                                     </p:selectOneMenu>
@@ -300,7 +294,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel value="ESTADO: " style="margin-left:30%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left:30%" id="dropestado" value="#{processoMBean.processo.idEstadoProcesso}" converter="estadoProcessoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left:30%" id="dropestado" value="#{processoMBean.processo.idEstadoProcesso}" converter="estadoProcessoConverter">
                                         <f:selectItem itemLabel="Selecione o estado" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.estadoProcesso}" />
                                     </p:selectOneMenu>
@@ -322,7 +316,7 @@
 
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="TIPO DECISÃO: "/>
-                                    <p:selectOneMenu style="width:215px" id="droptipodecisao" value="#{processoMBean.processo.idTipoDecisao}" converter="tipoDecisaoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px" id="droptipodecisao" value="#{processoMBean.processo.idTipoDecisao}" converter="tipoDecisaoConverter">
                                         <f:selectItem itemLabel="Selecione o tipo decisão" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.tipoDecisoes}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.tipoDecisao}" />
                                     </p:selectOneMenu>
@@ -330,7 +324,7 @@
                                 <h:panelGroup>
                                      <h:panelGrid columns="1">
                                     <p:outputLabel value="REQUERIDO: " style="margin-left:10%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 10%" id="droprequerido" value="#{processoMBean.processo.idRequerido}" converter="requeridoConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 10%" id="droprequerido" value="#{processoMBean.processo.idRequerido}" converter="requeridoConverter">
                                         <f:selectItem itemLabel="Selecione o requerido" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.requeridos}" var="requerido" itemValue="#{requerido}" itemLabel="#{requerido.nomeRequerido}" />
                                     </p:selectOneMenu>
@@ -339,7 +333,7 @@
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                     <p:outputLabel value="REQUERENTE: " style="margin-left:20%"/>
-                                    <p:selectOneMenu style="width:215px; margin-left: 20%" id="droprequerente" value="#{processoMBean.processo.idRequente}" converter="requerenteConverter">
+                                    <p:selectOneMenu effect="slide" style="width:215px; margin-left: 20%" id="droprequerente" value="#{processoMBean.processo.idRequente}" converter="requerenteConverter">
                                         <f:selectItem itemLabel="Selecione o requerente" itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente}" itemLabel="#{requerente.nomeRequente}" />
                                     </p:selectOneMenu>

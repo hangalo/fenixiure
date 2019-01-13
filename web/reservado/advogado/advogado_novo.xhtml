@@ -11,41 +11,47 @@
         <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
 
             <ui:define name="content">
-                <p:panel header="Cadastrar Advogado">
+                <p:panel header="NOVO ADVOGADO">
                     <hr></hr>
                     <h:form  id="frmNovo"  enctype="multipart/form-data">
                         <p:growl id="messages" showDetail="true"/>
                         <h:messages showSummary="true" showDetail="true"/>
-
-                        <h:panelGrid  columns="2" >
+                        <b:panel  collapsible="false" style="color: black">
+                            
+                            <center>
+                            
+                        <h:panelGrid  columns="4" >
 
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
-                                    <p:outputLabel value="Nome:"/>
+                                    <p:outputLabel value="NOME:"/>
                                     <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
-                                    <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
+                                    <p:outputLabel style="margin-left: 15%" value="SOBRENOME:"/>
                                     <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
-                                    <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    <p:outputLabel style="margin-left: 60px" value="DATA DE NASCIMENTO:"/>
+                                    <p:calendar style="margin-left: 60px"  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
-                                    <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
+                                    <p:outputLabel style="margin-left: 15%" value="INÍCIO FUNÇÕES:"/>
                                     <p:calendar style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
                                 </h:panelGrid>
                             </h:panelGroup>
+                            
 
                         </h:panelGrid>
-                        
+                                    
+                            </center>
+                        </b:panel>
                         <br></br>
                         <h:panelGrid columns="2">
                             <p:commandButton value="Guardar" actionListener="#{advoadoMBean.guardar(evt)}" update="growl" resetValues="true" ajax="false"/>

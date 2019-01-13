@@ -61,7 +61,7 @@ public class RequerenteMBean implements Serializable{
     private List<Requente> findByNomeSobrenome;
     private List<Requente> findByBilheteIdentidade;
     private List<Requente> findByMunicipio;
-    private List<Requente> findByTipoPessoa;
+    private List<Requente> findByTipoDecisao;
     
     // Variaveis para pesquisas paramentrizadas
     private String nome;
@@ -77,9 +77,7 @@ public class RequerenteMBean implements Serializable{
     @PostConstruct
     public void inicializar() {
         requerente = new Requente();
-        requerenteDAO = new RequerenteDAO();
-        municipioDAO = new MunicipioDAO();
-        tipoPessoaDAO = new TipoPessoaDAO();
+        
 
     }
 
@@ -189,14 +187,17 @@ public class RequerenteMBean implements Serializable{
         return findByBilheteIdentidade;
     }
 
-    /*public List<Requente> getFindByMunicipio() {
+    
+    public List<Requente> getFindByTipoPessoa() {
+        findByTipoDecisao = requenteFacade.findByIdTipoPessoa(idTipoPessoa);
+        return findByTipoDecisao;
+    }
+
+    public List<Requente> getFindByMunicipio() {
         findByMunicipio = requenteFacade.findByIdMunicipio(idMunicipio);
         return findByMunicipio;
-    }*/
-
-    public List<Requente> getFindByTipoPessoa() {
-        return findByTipoPessoa;
     }
+    
 
     public String getNome() {
         return nome;
@@ -237,6 +238,10 @@ public class RequerenteMBean implements Serializable{
     public void setIdTipoPessoa(int idTipoPessoa) {
         this.idTipoPessoa = idTipoPessoa;
     }
+
+    
+
+    
     
     
     

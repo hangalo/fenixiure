@@ -66,7 +66,6 @@ public class AdvoadoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         advogado = new Advogado();
-     //   advogadoDAO = new AdvogadoDAO();
         findByNome = new ArrayList<>();
         findbySobrenome = new ArrayList<>();
         findByNomeSobrenome = new ArrayList<>();

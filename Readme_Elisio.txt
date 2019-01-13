@@ -1,3 +1,21 @@
+
+
+
+13/01/2019
+----> Pesquisas parametrizadas por combobox
+	----> Requerido Por municipio
+	----> Requerido Por tipoPessoa
+	----> Requerente Por municipio
+	----> Requerente Por tipoPessoa
+
+
+
+O.B.S: Eliminei tudo que havia feito em processo(ManagedBean, paginas), vou refazer do zero.
+
+------------------------ Fim-------------------
+
+
+
 31/12/2018
 Coisas feitas:
 ----> Requerido CRUD
