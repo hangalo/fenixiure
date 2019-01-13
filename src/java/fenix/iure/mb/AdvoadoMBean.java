@@ -72,7 +72,7 @@ public class AdvoadoMBean implements Serializable {
         findbyDatNascimento = new ArrayList<>();
         findbyDataInicioFuncoes = new ArrayList<>();
         advogados = new ArrayList<>();
-        advogados = advogadoFacade.findAll();
+        
     }
 
     public Advogado getAdvogado() {

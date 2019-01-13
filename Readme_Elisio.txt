@@ -1,5 +1,27 @@
+13/01/2019
+Coisas feitas
+	----> CRUD de Processo
+	----> Pesquisas parametrizadas por
+		----> Numero
+		----> DataEntrada
+		----> DataConclusao
+		----> Especie
+		----> Estado
+		----> TipoDecisao
+		----> Requerente
+		----> Requerido
+		----> Advogado
+		----> Juiz
 
 
+O.B.S 1: Dificuldades em formatar as datas que vêm da Base de Dados, estão a ser mostradas num formato estranho.
+
+O.B.S 2: Está concluído a primeira fase do Plano. Os proximos passos serão considerados inicio da segunda fase da aplicação.
+
+O.B.S 3: Toda e qualquer sugestão é sempre bem vinda.
+
+O.B.S 4: Os formularios vão sendo melhorados em termos de aparencia...
+------------------------ Fim-------------------
 
 13/01/2019
 ----> Pesquisas parametrizadas por combobox
