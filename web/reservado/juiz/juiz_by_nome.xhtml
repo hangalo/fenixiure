@@ -162,24 +162,27 @@
                     <!--fim do dialogo editar-->
                     
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                   <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="220">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{juizMBean.juiz.idJuiz}"/>
+                                <p:outputLabel value="#{juizMBean.juiz.idJuiz}"/>
                                 <p:outputLabel value="Nome: "/>
-                                <h:outputText value="#{juizMBean.juiz.nomeJuiz}"/>
+                                <p:outputLabel value="#{juizMBean.juiz.nomeJuiz}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{juizMBean.juiz.sobrenomeJuiz}"/>
+                                <p:outputLabel value="#{juizMBean.juiz.sobrenomeJuiz}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{juizMBean.juiz.dataNascimentoJuiz}"/>
+                                <p:outputLabel id="data_nasc" value="#{juizMBean.juiz.dataNascimentoJuiz}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                                 <p:outputLabel value="Data inicio de Função "/>
-                                <h:outputText value="#{juizMBean.juiz.dataInicioFuncoes}"/>
+                                <p:outputLabel id="data_inic" value="#{juizMBean.juiz.dataInicioFuncoes}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                             </p:panelGrid>
                         </h:form>
-                        
-                    </p:dialog>
 
+                    </p:dialog>
                     <!--Fim do dialog ver-->
                     
                     

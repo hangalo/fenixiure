@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui">
-      
+
     <body>
 
         <ui:composition template="./../../WEB-INF/templates/template-base.xhtml">
@@ -30,8 +30,8 @@
                                     </f:facet>
                                     <h:outputText value="#{advogado.sobrenomeAdvogado}"/>
                                 </p:column>
-                                
-                                
+
+
                                 <p:column style="width: 100px; text-align: center" width="160">
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
@@ -56,7 +56,7 @@
                             <!--Fim Datatable-->                         
                         </h:form>
                     </b:panel>
-                    
+
                     <!--Inicio do dialogo guardar-->
 
                     <h:form id="Operacoes">
@@ -65,46 +65,46 @@
                     </h:form>
 
                     <!--Fim do dialogo guardar-->
-                    
-                    
+
+
                     <!--inicio do dialogo guardar-->
                     <p:dialog  header="Novo Advogado" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
 
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel value="Nome:"/>
-                                    <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
-                                </h:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
-                                </h:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar effect ="slide" value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
-                                </h:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                    <p:calendar effect ="slide" style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
-                                </h:panelGrid>
-                            </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="Nome:"/>
+                                        <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
+                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="Data de Nascimento:"/>
+                                        <p:calendar effect ="slide" value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
+                                        <p:calendar effect ="slide" style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
 
-                        </h:panelGrid>
+                            </h:panelGrid>
                             <br></br>
                             <p:commandButton value="Guardar" action="#{advoadoMBean.guardar(evt)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
 
                     <!--fim do dialogo guardar-->
-                    
+
                     <!--inicio do dialogo editar-->
 
                     <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
@@ -112,62 +112,66 @@
                             <h:inputHidden value="#{advoadoMBean.advogado.idAdvogado}"/>
                             <h:panelGrid  columns="2" >
 
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel value="Nome:"/>
-                                    <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
-                                </h:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
-                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
-                                </h:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
-                                </h:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
-                                    <p:calendar style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
-                                </h:panelGrid>
-                            </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="Nome:"/>
+                                        <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
+                                        <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="Data de Nascimento:"/>
+                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
+                                        <p:calendar style="margin-left: 15%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
 
-                        </h:panelGrid>
-                            
-                            
+                            </h:panelGrid>
+
+
                             <br></br>
                             <p:commandButton value="Alterar" action="#{advoadoMBean.edit(event)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
                     <!--fim do dialogo editar-->
-                    
+
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="200">
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="220">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.idAdvogado}"/>
+                                <p:outputLabel value="#{advoadoMBean.advogado.idAdvogado}"/>
                                 <p:outputLabel value="Nome: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.nomeAdvogado}"/>
+                                <p:outputLabel value="#{advoadoMBean.advogado.nomeAdvogado}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
+                                <p:outputLabel value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.dataNascimentoAdvogado}"/>
+                                <p:outputLabel id="data_nasc" value="#{advoadoMBean.advogado.dataNascimentoAdvogado}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                                 <p:outputLabel value="Data inicio de Função "/>
-                                <h:outputText value="#{advoadoMBean.advogado.dataInicioFuncoes}"/>
+                                <p:outputLabel id="data_inic" value="#{advoadoMBean.advogado.dataInicioFuncoes}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                             </p:panelGrid>
                         </h:form>
-                        
+
                     </p:dialog>
 
                     <!--Fim do dialog ver-->
-                    
-                    
+
+
                 </f:view>
             </ui:define>
 

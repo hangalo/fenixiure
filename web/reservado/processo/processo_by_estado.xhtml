@@ -44,13 +44,18 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="DATA ENTRADA "/>
                                     </f:facet>
-                                    <h:outputText value="#{processo.dataEntrada}"/>
+                                    <p:outputLabel id="data_entrada" value="#{processo.dataEntrada}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="DATA CONCLUSÃO "/>
                                     </f:facet>
-                                    <h:outputText value="#{processo.dataConclusao}"/>
+                                    <p:outputLabel id="data_conclusao1" value="#{processo.dataConclusao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+                                    
                                 </p:column>
 
 
@@ -307,25 +312,29 @@
 
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="CÓDIGO: "/>
-                                    <h:outputText value="#{processoMBean.processo.idProcesso}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idProcesso}"/>
                                     <p:outputLabel value="NÚMERO: "/>
-                                    <h:outputText value="#{processoMBean.processo.numeroProcesso}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.numeroProcesso}"/>                      
                                     <p:outputLabel value="DATA ENTRADA: "/>
-                                    <h:outputText value="#{processoMBean.processo.dataEntrada}"/>
+                                    <p:outputLabel id="data_entrada2" value="#{processoMBean.processo.dataEntrada}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
                                     <p:outputLabel value="DATA CONCLUSÃO: "/>
-                                    <h:outputText value="#{processoMBean.processo.dataConclusao}"/>
+                                    <p:outputLabel id="data_conclusao2" value="#{processoMBean.processo.dataConclusao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>                                    
                                     <p:outputLabel value="ESPÉCIE:"/>
-                                    <h:outputText value="#{processoMBean.processo.idEspecieProcesso.especieProcesso}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idEspecieProcesso.especieProcesso}"/>
                                     <p:outputLabel value="ESTADO:"/>
-                                    <h:outputText value="#{processoMBean.processo.idEstadoProcesso.estadoProcesso}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idEstadoProcesso.estadoProcesso}"/>
                                     <p:outputLabel value="REQUERENTE:"/>
-                                    <h:outputText value="#{processoMBean.processo.idRequente.nomeRequente}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idRequente.nomeRequente}"/>
                                     <p:outputLabel value="REQUERIDO:"/>
-                                    <h:outputText value="#{processoMBean.processo.idRequerido.nomeRequerido}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idRequerido.nomeRequerido}"/>
                                     <p:outputLabel value="ADVOGADO:"/>
-                                    <h:outputText value="#{processoMBean.processo.idAdvogado.nomeAdvogado}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idAdvogado.nomeAdvogado}"/>
                                     <p:outputLabel value="JUIZ:"/>
-                                    <h:outputText value="#{processoMBean.processo.idJuiz.nomeJuiz}"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idJuiz.nomeJuiz}"/>
                                 </p:panelGrid>
                             </center>
                         </h:form>

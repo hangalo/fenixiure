@@ -32,10 +32,6 @@
     <welcome-file-list>
         <welcome-file>index.jsf</welcome-file>
     </welcome-file-list>
-    <!-- Registrando a tag lib que criamos -->
-    <context-param>
-        <param-name>facelets.LIBRARIES</param-name>
-        <param-value>/WEB-INF/LocalDateTimeConverter-taglib.xml</param-value>
-    </context-param>
+    
     
 </web-app>

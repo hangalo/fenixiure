@@ -158,19 +158,23 @@
                     <!--fim do dialogo editar-->
 
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" width="510" height="200" resizable="false">
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="220">
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.idAdvogado}"/>
+                                <p:outputLabel value="#{advoadoMBean.advogado.idAdvogado}"/>
                                 <p:outputLabel value="Nome: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.nomeAdvogado}"/>
+                                <p:outputLabel value="#{advoadoMBean.advogado.nomeAdvogado}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
+                                <p:outputLabel value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
                                 <p:outputLabel value="Data de Nascimento: "/>
-                                <h:outputText value="#{advoadoMBean.advogado.dataNascimentoAdvogado}"/>
+                                <p:outputLabel id="data_nasc" value="#{advoadoMBean.advogado.dataNascimentoAdvogado}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                                 <p:outputLabel value="Data inicio de Função "/>
-                                <h:outputText value="#{advoadoMBean.advogado.dataInicioFuncoes}"/>
+                                <p:outputLabel id="data_inic" value="#{advoadoMBean.advogado.dataInicioFuncoes}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                             </p:panelGrid>
                         </h:form>
 
