@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>conteudo</title>
+        <link href="resources/css/default.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <!-- Custom CSS estilisa a barra superior-->
+        <link href="resources/css/sb-admin-2.min.css" rel="stylesheet" type="text/css"/>
+
+
+    </h:head>
+    <h:body>
+
+
+        <center>
+            <h:form>
+
+                <h:dataTable value="#">
+                    <p:column>
+                        <b:commandButton action="/reservado/processo/processo_lsta" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                            <img class="img-responsive img-rounded" src="resources/imagens/processos.png"/>
+                            <b>Processos</b>
+                        </b:commandButton>
+                    </p:column>
+                    <p:column>
+                        <b:commandButton action="#" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                            <img class="img-responsive img-rounded" src="resources/imagens/requerentes.png"/>
+                            <b>Requerentes</b>
+                        </b:commandButton>
+                    </p:column>
+                    <p:column>
+                        <b:commandButton action="#" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                            <img class="img-responsive img-rounded" src="resources/imagens/juiz.png"/>
+                            <b>Juizes</b>
+                        </b:commandButton>
+                    </p:column>
+                    <p:column >
+                        <b:commandButton  action="#" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                            <img class="img-responsive img-rounded" src="resources/imagens/advgs.png"/>
+                            <b>Advogados</b>
+                        </b:commandButton>
+                    </p:column>
+
+                </h:dataTable>
+
+
+            </h:form>
+
+
+
+            <br></br>
+
+            <img class="img-responsive img-rounded" width="95%" src="resources/imagens/mt2.png" alt=""/>
+
+        </center>
+
+    </h:body>
+
+</html>
+
