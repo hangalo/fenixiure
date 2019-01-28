@@ -17,18 +17,17 @@
 
 
 
-                    <b:panel title="Procurar por número" collapsible="false" look="normal">
+                    <b:panel title="Procurar por data de conclusão" collapsible="false" look="normal">
                         <h:form>
-                            
                             <h:panelGrid columns="6"  cellspacing="10%">
-                                <p:inputText title="numero" id="cognumero" value="#{processoMBean.numero}" required="true" requiredMessage="#{msg.msg_cognumero}" immediate="true"/>
-                                <b:commandButton icon="ui-icon-zoomin" style="margin-left:  10px" value="Pesquisar" />
+                                <p:calendar effect="slide" value="#{processoMBean.dataConclusao}" pattern="dd/MM/yyyy" locale="pt"  />
+                                <b:commandButton style="margin-left:  10px" value="Pesquisar" />
                             </h:panelGrid>
                             <br></br>
 
 
                             <!--inicio Datatable-->
-                            <p:dataTable value="#{processoMBean.findByNumero}" var="processo" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <p:dataTable value="#{processoMBean.findByDataConclusao}" var="processo" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="NÚMERO "/>
@@ -71,7 +70,7 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total Processos  (#{processoMBean.findByNumero.size()})
+                                    Total Processos  (#{processoMBean.findByDataConclusao.size()})
                                 </f:facet>                           
                             </p:dataTable>
 

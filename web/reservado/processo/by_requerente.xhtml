@@ -17,18 +17,21 @@
 
 
 
-                    <b:panel title="Procurar por número" collapsible="false" look="normal">
+                    <b:panel title="Procurar por requerente" collapsible="false" look="normal">
                         <h:form>
-                            
                             <h:panelGrid columns="6"  cellspacing="10%">
-                                <p:inputText title="numero" id="cognumero" value="#{processoMBean.numero}" required="true" requiredMessage="#{msg.msg_cognumero}" immediate="true"/>
-                                <b:commandButton icon="ui-icon-zoomin" style="margin-left:  10px" value="Pesquisar" />
+                                <p:selectOneMenu effect="slide" style="width:200px;" id="requerentes" filter="true" filterMatchMode="startsWith" label="Requerente" value="#{processoMBean.idRequerente}" required="true">
+                                    <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems  value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente.idRequente}" itemLabel="#{requerente.nomeRequente}"/>
+                                </p:selectOneMenu>
+                                <b:commandButton style="margin-left:10px"  value="Pesquisar" />
                             </h:panelGrid>
+
                             <br></br>
 
 
                             <!--inicio Datatable-->
-                            <p:dataTable value="#{processoMBean.findByNumero}" var="processo" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <p:dataTable value="#{processoMBean.findByRequerente}" var="processo" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="NÚMERO "/>
@@ -71,7 +74,7 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total Processos  (#{processoMBean.findByNumero.size()})
+                                    Total Processos  (#{processoMBean.findByRequerente.size()})
                                 </f:facet>                           
                             </p:dataTable>
 
@@ -301,10 +304,9 @@
                     <!--fim do dialogo editar-->
 
                     <!--Inicio do dialog ver-->
-                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="500" height="380">
+                    <p:dialog header="Dados de estado" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="500" height="380">
                         <h:form>
                             <center>
-
 
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="CÓDIGO: "/>

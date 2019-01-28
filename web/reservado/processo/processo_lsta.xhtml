@@ -21,15 +21,15 @@
                                     <p:menubar style="margin-left: 3px">
                                         <p:submenu label="Procurar por" icon="ui-icon-zoomin">
                                             <p:menuitem value="Número" url="/reservado/processo/by_numero.jsf"/>
-                                            <p:menuitem value="Data Entrada" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Data Conclusão" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Especie" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Estado" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Requerente" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Requerido" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Juiz" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Advogado" url="/reservado/processo/processo_lsta.jsf"/>
-                                            <p:menuitem value="Tipo Decisão" url="/reservado/processo/processo_lsta.jsf"/>
+                                            <p:menuitem value="Data Entrada" url="/reservado/processo/by_data_entrada.jsf"/>
+                                            <p:menuitem value="Data Conclusão" url="/reservado/processo/by_data_conclusao.jsf"/>
+                                            <p:menuitem value="Especie" url="/reservado/processo/by_especie.jsf"/>
+                                            <p:menuitem value="Estado" url="/reservado/processo/by_estado.jsf"/>
+                                            <p:menuitem value="Requerente" url="/reservado/processo/by_requerente.jsf"/>
+                                            <p:menuitem value="Requerido" url="/reservado/processo/by_requerido.jsf"/>
+                                            <p:menuitem value="Juiz" url="/reservado/processo/by_juiz.jsf"/>
+                                            <p:menuitem value="Advogado" url="/reservado/processo/by_advogado.jsf"/>
+                                            <p:menuitem value="Decisão" url="/reservado/processo/by_tipo_decisao.jsf"/>
                                         </p:submenu>
                                     </p:menubar>
 
@@ -305,10 +305,9 @@
                     <!--fim do dialogo editar-->
 
                     <!--Inicio do dialog ver-->
-                    <p:dialog header="Dados do processo" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="500" height="380">
+                    <p:dialog header="Dados de estado" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="500" height="390">
                         <h:form>
                             <center>
-
 
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="CÓDIGO: "/>
@@ -335,13 +334,13 @@
                                     <p:outputLabel value="#{processoMBean.processo.idAdvogado.nomeAdvogado}"/>
                                     <p:outputLabel value="JUIZ:"/>
                                     <p:outputLabel value="#{processoMBean.processo.idJuiz.nomeJuiz}"/>
+                                    <p:outputLabel value="DECISÃO:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idTipoDecisao.tipoDecisao}"/>
                                 </p:panelGrid>
-
                             </center>
                         </h:form>
 
                     </p:dialog>
-
                     <!--Fim do dialog ver-->
 
 
