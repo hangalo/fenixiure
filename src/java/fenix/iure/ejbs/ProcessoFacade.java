@@ -39,6 +39,14 @@ public class ProcessoFacade extends AbstractFacade<Processo> {
         return query.getResultList();
         
     }
+    public List<Processo> findRecentes() {
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p ORDER BY p.dataEntrada DESC");
+        //query.setParameter("numeroProcesso", numero);
+        query.setMaxResults(5);
+        return query.getResultList();
+        
+    }
     
     public List<Processo> findByDataEntrada(Date dataEntrada) {
         Query query;

@@ -81,6 +81,9 @@ public class ProcessoMBean implements Serializable {
     private List<Processo> findByTipoDecisao;
     private List<Processo> findByJuiz;
     
+    // Buscar processos recentes
+    private List<Processo> findRecentes;
+    
     
     @Inject
     ProcessoFacade processoFacade;
@@ -122,6 +125,8 @@ public class ProcessoMBean implements Serializable {
         
         juizes =  new ArrayList<>();
         
+        findRecentes = new ArrayList<>();
+        
     }
 
    
@@ -133,7 +138,7 @@ public class ProcessoMBean implements Serializable {
     
     public String newSave() {
         processo = new Processo();
-        return "processo_listar?faces-redirect=true";
+        return "processo_lsta?faces-redirect=true";
     }
     
     public void guardar(ActionEvent evt) {
@@ -147,7 +152,7 @@ public class ProcessoMBean implements Serializable {
     }
     
     public String startEdit() {
-        return "processo_listar?faces-redirect=true";
+        return "processo_lsta?faces-redirect=true";
     }
     public void edit(javafx.event.ActionEvent event) {
         processoFacade.edit(processo);
@@ -155,7 +160,7 @@ public class ProcessoMBean implements Serializable {
             requerentes = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("processo_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -165,7 +170,7 @@ public class ProcessoMBean implements Serializable {
         processoFacade.remove(processo);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              processos = null;
-             return "processo_listar?faces-redirect=true";    
+             return "processo_lsta?faces-redirect=true";    
     }
 
     public List<EspecieProcesso> getEspecies() {
@@ -340,6 +345,12 @@ public class ProcessoMBean implements Serializable {
         findByJuiz = processoFacade.findByIdJuiz(idJuiz);
         return findByJuiz;
     }
+
+    public List<Processo> getFindRecentes() {
+        findRecentes = processoFacade.findRecentes();
+        return findRecentes;
+    }
+    
     
     
     
