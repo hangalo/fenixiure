@@ -7,11 +7,10 @@
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>conteudo</title>
-        <link href="resources/css/default.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Custom CSS estilisa a barra superior-->
-        <link href="resources/css/sb-admin-2.min.css" rel="stylesheet" type="text/css"/>
-
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        
 
     </h:head>
     <h:body>
@@ -21,31 +20,26 @@
             <h:form>
 
                 <h:dataTable value="#">
-                     <p:column >
-                        <b:commandButton  action="/reservado/processo/processo_lsta" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                    <p:column >
+                        <b:commandButton  action="/reservado/processo/processo_nvo" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
                             <h:graphicImage class="img-responsive img-rounded" library="imagens" name="proces2.png" />
-           
-                            <b>Processos</b>
+
+                            <b>Novo Processo</b>
                         </b:commandButton>
                     </p:column>
-                     <p:column >
-                        <b:commandButton  action="/fenixiure/index" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+
+                    <p:column >
+                        <b:commandButton  action="/reservado/requerente/requerente_nvo" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
                             <h:graphicImage class="img-responsive img-rounded" library="imagens" name="req2.png" />
-           
-                            <b>Requerentes</b>
-                        </b:commandButton>
-                    </p:column>
-                     <p:column >
-                        <b:commandButton  action="/fenixiure/index" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
-                           <h:graphicImage class="img-responsive img-rounded" library="imagens" name="jz2.png" />
-                             <b>Juizes</b>
+
+                            <b>Novo Requerente</b>
                         </b:commandButton>
                     </p:column>
                     <p:column >
-                        <b:commandButton  action="/fenixiure/index" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
-                            <h:graphicImage class="img-responsive img-rounded" library="imagens" name="advogado2.png" />
-           
-                            <b>Advogados</b>
+                        <b:commandButton  action="/reservado/requerido/requerido_nvo" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                            <h:graphicImage class="img-responsive img-rounded" library="imagens" name="requeridos.png" />
+
+                            <b>Novo Requerido</b>
                         </b:commandButton>
                     </p:column>
 
@@ -58,9 +52,9 @@
 
             <br></br>
 
-            
-            <h:graphicImage class="img-responsive img-rounded" width="95%" library="imagens" name="martelo3.png" />
-           
+
+            <h:graphicImage class="img-responsive img-thumbnail" width="95%" library="imagens" name="martelo3.png" />
+
         </center>
 
     </h:body>

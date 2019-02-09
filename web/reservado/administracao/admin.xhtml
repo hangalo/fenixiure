@@ -1,0 +1,347 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <f:view>
+            <ui:composition template="./../../WEB-INF/templates/administracao.xhtml">
+
+                <ui:define name="content">
+
+                    <p:panel header="Área Administrativa">
+                        <h:form id="formFechar">
+                            <a style="float: right" href="/fenixiure/index.jsf">Fechar</a>
+                        </h:form>
+                        <br></br>
+                        <br></br>
+                        <p:accordionPanel>
+                            <!--Inicio Especie -->
+                            <p:tab class="normal" title="Especie de Processo" >
+                                <h:form id="formCadastroEspecie">
+
+                                    <p:dataTable value="#{especieProcessoMBean.especieProcessos}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:column>
+
+                                            <h:outputText value="#{item.especieProcesso}"/>
+                                        </p:column>
+                                        <p:column style="width: 100px; text-align: center" width="160">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="Operações"/>
+                                            </f:facet>
+                                            <p:commandButton  icon="ui-icon-trash" action="#{especieProcessoMBean.delete()}">
+                                                <f:setPropertyActionListener target="#{especieProcessoMBean.especieProcesso}" value="#{item}"/>
+                                            </p:commandButton>
+                                            <p:commandButton icon="ui-icon-pencil" update=":editarEspecie" oncomplete="PF('dialogoEditarEspecie').show();">
+                                                <f:setPropertyActionListener target="#{especieProcessoMBean.especieProcesso}" value="#{item}"/>
+                                            </p:commandButton>
+                                        </p:column>
+                                        <f:facet name="footer">
+                                            Total de Espécies:  (#{especieProcessoMBean.especieProcessos.size()})
+                                        </f:facet>  
+
+
+
+
+                                    </p:dataTable>
+                                </h:form>
+                                <br></br>
+
+
+                                <!--Inicio Formulario auxiliar -->
+                                <h:form id="OperacoesEpecie">
+                                    <p:commandButton style=" height: 43px; width: 140px" value="Nova" type="button" onclick="PF('dialogoGuardarEspecie').show();"/>    
+                                </h:form>
+                                <!--Fim Formulario auxiliar -->
+
+
+                                <!--Inicio dialogo guardar -->
+                                <p:dialog  header="Nova especie processo" id="guardarEspecie" widgetVar="dialogoGuardarEspecie" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
+                                    <h:form enctype="multipart/form-data">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="Espécie: "/>
+                                            <p:inputText size="30" value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
+                                        </h:panelGrid>
+                                        <br></br>
+                                        <p:commandButton value="Guardar" action="#{especieProcessoMBean.guardar(evt)}" ajax="false"/>
+                                    </h:form>
+                                </p:dialog>
+
+                                <!--Fim dialogo guardar -->
+
+
+
+
+                            </p:tab>
+
+                            <!--Fim Especie -->
+
+
+
+
+                            <!--Inicio Estado -->
+                            <p:tab class="normal" title="Estado de Processo" >
+                                <h:form id="formCadastroEstado">
+
+                                    <p:dataTable value="#{estadoProcessoMBean.estadoProcessos}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:column>
+
+                                            <h:outputText value="#{item.estadoProcesso}"/>
+                                        </p:column>
+                                        <p:column style="width: 100px; text-align: center" width="160">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="Operações"/>
+                                            </f:facet>
+                                            <p:commandButton  icon="ui-icon-trash" action="#{estadoProcessoMBean.delete()}">
+                                                <f:setPropertyActionListener target="#{estadoProcessoMBean.estadoProcesso}" value="#{item}"/>
+                                            </p:commandButton>
+                                            <p:commandButton icon="ui-icon-pencil" update=":editarEstado" oncomplete="PF('dialogoEditarEstado').show();">
+                                                <f:setPropertyActionListener target="#{estadoProcessoMBean.estadoProcesso}" value="#{item}"/>
+                                            </p:commandButton>
+                                        </p:column>
+                                        <f:facet name="footer">
+                                            Total de Estados:  (#{estadoProcessoMBean.estadoProcessos.size()})
+                                        </f:facet>  
+
+
+
+
+                                    </p:dataTable>
+                                </h:form>
+                                <br></br>
+
+
+                                <!--Inicio Formulario auxiliar -->
+                                <h:form id="OperacoesEstado">
+                                    <p:commandButton style=" height: 43px; width: 140px" value="Novo" type="button" onclick="PF('dialogoGuardarEstado').show();"/>    
+                                </h:form>
+                                <!--Fim Formulario auxiliar -->
+
+
+                                <!--Inicio dialogo guardar -->
+                                <p:dialog  header="Novo estado processo" id="guardarEstado" widgetVar="dialogoGuardarEstado" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
+                                    <h:form enctype="multipart/form-data">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="Estado: "/>
+                                            <p:inputText size="30" value="#{estadoProcessoMBean.estadoProcesso.estadoProcesso}"/>
+                                        </h:panelGrid>
+                                        <br></br>
+                                        <p:commandButton value="Guardar" action="#{estadoProcessoMBean.guardar(evt)}" ajax="false"/>
+                                    </h:form>
+                                </p:dialog>
+
+                                <!--Fim dialogo guardar -->
+
+
+
+
+                            </p:tab>
+                            <!--Fim Estado -->
+
+
+                            <!--Inicio Tipo Pessoa -->
+                            <p:tab class="normal" title="Tipo de Pessoa" >
+
+                                <h:form id="formCadastroTipoPessoa">
+
+                                    <p:dataTable value="#{tipoPessoaMBean.tipoPessoas}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:column>
+
+                                            <h:outputText value="#{item.nomeTipo}"/>
+                                        </p:column>
+                                        <p:column style="width: 100px; text-align: center" width="160">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="Operações"/>
+                                            </f:facet>
+                                            <p:commandButton  icon="ui-icon-trash" action="#{tipoPessoaMBean.delete()}">
+                                                <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{item}"/>
+                                            </p:commandButton>
+                                            <p:commandButton icon="ui-icon-pencil" update=":editarTipoPessoa" oncomplete="PF('dialogoEditarTipoPessoa').show();">
+                                                <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{item}"/>
+                                            </p:commandButton>
+                                        </p:column>
+
+
+                                        <f:facet name="footer">
+                                            Total de Tipos: (#{tipoPessoaMBean.tipoPessoas.size()})
+                                        </f:facet> 
+
+
+                                    </p:dataTable>
+                                </h:form>
+                                <br></br>
+
+
+                                <!--Inicio Formulario auxiliar -->
+                                <h:form id="OperacoesTipoPessoa">
+                                    <p:commandButton style=" height: 43px; width: 140px" value="Novo" type="button" onclick="PF('dialogoGuardarTipoPessoa').show();"/>    
+                                </h:form>
+                                <!--Fim Formulario auxiliar -->
+
+
+                                <!--Inicio dialogo guardar -->
+                                <p:dialog  header="Novo tipo de pessoa" id="guardarTipoPessoa" widgetVar="dialogoGuardarTipoPessoa" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
+                                    <h:form enctype="multipart/form-data">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="Tipo:  "/>
+                                            <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
+                                        </h:panelGrid>
+                                        <br></br>
+                                        <p:commandButton value="Guardar" action="#{tipoPessoaMBean.guardar(evt)}" ajax="false"/>
+                                    </h:form>
+                                </p:dialog>
+
+                                <!--Fim dialogo guardar -->
+
+
+
+
+                            </p:tab>
+                            <!--Fim Tipo Pessoa -->
+
+                            <!--Inicio Tipo Decisão -->
+                            <p:tab class="normal" title="Tipo de Decisão" >
+                                <h:form id="formCadastroTipoDecisao">
+
+                                    <p:dataTable value="#{tipoDecisaoMBean.tipos}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:column>
+
+                                            <h:outputText value="#{item.tipoDecisao}"/>
+                                        </p:column>
+                                        <p:column style="width: 100px; text-align: center" width="160">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="Operações"/>
+                                            </f:facet>
+                                            <p:commandButton  icon="ui-icon-trash" action="#{tipoDecisaoMBean.delete()}">
+                                                <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{item}"/>
+                                            </p:commandButton>
+                                            <p:commandButton icon="ui-icon-pencil" update=":editarTipoDecisao" oncomplete="PF('dialogoEditarTipoDecisao').show();">
+                                                <f:setPropertyActionListener target="#{tipoDecisaoMBean.tipoDecisao}" value="#{item}"/>
+                                            </p:commandButton>
+                                        </p:column>
+
+
+                                        <f:facet name="footer">
+                                            Total de Tipos: (#{tipoDecisaoMBean.tipos.size()})
+                                        </f:facet> 
+
+
+                                    </p:dataTable>
+                                </h:form>
+                                <br></br>
+
+
+                                <!--Inicio Formulario auxiliar -->
+                                <h:form id="OperacoesTipoDecisao">
+                                    <p:commandButton style=" height: 43px; width: 140px" value="Novo" type="button" onclick="PF('dialogoGuardarTipoDecisao').show();"/>    
+                                </h:form>
+                                <!--Fim Formulario auxiliar -->
+
+
+                                <!--Inicio dialogo guardar -->
+                                <p:dialog  header="Novo tipo de pessoa" id="guardarTipoDecisao" widgetVar="dialogoGuardarTipoDecisao" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
+                                    <h:form enctype="multipart/form-data">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="Tipo:  "/>
+                                            <p:inputText size="30" value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                                        </h:panelGrid>
+                                        <br></br>
+                                        <p:commandButton value="Guardar" action="#{tipoDecisaoMBean.guardar(evt)}" ajax="false"/>
+                                    </h:form>
+                                </p:dialog>
+
+                                <!--Fim dialogo guardar -->
+
+
+
+                            </p:tab>
+                            <!--Fim Tipo Decisão -->
+
+
+                        </p:accordionPanel>
+
+                    </p:panel>
+
+                    <!--inicio do dialogo editar Especie-->
+                    <p:dialog  widgetVar="dialogoEditarEspecie" id="editarEspecie" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{especieProcessoMBean.especieProcesso.idEspecieProcesso}"/>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Espécie: "/>
+                                <p:inputText size="30" value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
+                            </h:panelGrid>
+                            <br></br>
+
+                            <p:commandButton value="Alterar" action="#{especieProcessoMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar Especie-->
+
+                    <!--inicio do dialogo editar Estado-->
+                    <p:dialog  widgetVar="dialogoEditarEstado" id="editarEstado" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{estadoProcessoMBean.estadoProcesso.idEstadoProcesso}"/>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Estado: "/>
+                                <p:inputText size="30" value="#{estadoProcessoMBean.estadoProcesso.estadoProcesso}"/>
+                            </h:panelGrid>
+                            <br></br>
+
+                            <p:commandButton value="Alterar" action="#{estadoProcessoMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar Estado-->
+
+
+
+
+                    <!--inicio tipo pessoa-->
+                    <p:dialog  widgetVar="dialogoEditarTipoPessoa" id="editarTipoPessoa" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{tipoPessoaMBean.tipoPessoa.idTipo}"/>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Tipo: "/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
+                            </h:panelGrid>
+                            <br></br>
+
+                            <p:commandButton value="Alterar" action="#{tipoPessoaMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim tipo pessoa-->
+
+                    <!--inicio tipo pessoa-->
+                    <p:dialog  widgetVar="dialogoEditarTipoDecisao" id="editarTipoDecisao" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{tipoDecisaoMBean.tipoDecisao.idTipoDecisao}"/>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Tipo: "/>
+                                <p:inputText size="30" value="#{tipoDecisaoMBean.tipoDecisao.tipoDecisao}"/>
+                            </h:panelGrid>
+                            <br></br>
+
+                            <p:commandButton value="Alterar" action="#{tipoDecisaoMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim tipo pessoa-->
+
+
+
+
+
+
+
+
+
+
+
+                </ui:define>
+
+            </ui:composition>
+        </f:view>
+    </body>
+</html>

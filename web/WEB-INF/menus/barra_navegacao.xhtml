@@ -4,11 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>conteudo</title>
-        <link href="resources/css/default.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Custom CSS estilisa a barra superior-->
-        <link href="resources/css/sb-admin-2.min.css" rel="stylesheet" type="text/css"/>
-
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        
 
     </h:head>
     <h:body>
@@ -16,21 +15,22 @@
         <!-- Inicio Navigation -->
         <nav  style="background: #cc0000; margin-bottom: 0;"  class="navbar navbar-default navbar-static-top" role="navigation">
             <!-- Inicio Logotipo -->
-            <div class="navbar-header" style="width: 65%">
+            <div class="navbar-header" style="width: 65%; padding-top: 0.5%; padding-bottom: 0.5%;">
                 <a href="/fenixiure/index.jsf">
-                <h:graphicImage class="img-circle" style="margin-bottom: 1%;margin-left: 3%" width="85px" library="imagens" name="logo.png" />
-            </a><b class="h1" >Fenix Iure</b>
-                
+                    <h:graphicImage class="img-circle" style="margin-bottom: 0%;margin-left: 3%" width="60px" library="imagens" name="logo2.png" />
+                </a><b class="h1">Fenix Iure</b>
+
             </div>
             <!-- Fim Logotipo -->
 
             <!-- Inicio Area reservada -->
             <div style="margin-right: 5%; margin-top: 1%" class="nav navbar-top-links navbar-right">
-                <p> <a href="#"><span class="glyphicon glyphicon-user"></span></a> Elisio Kavaimunwa                                  
-                    <a href="#"> 
-                        <span class="glyphicon glyphicon-log-out"></span>
-                    </a>Logout
-                </p>
+                                         
+                    <h:form>
+                        <h:commandLink action="/reservado/administracao/area_administrativa" value="Ir para Área Administrativa"/> 
+                    </h:form>
+
+                
             </div>
 
             <!-- Fim Area reservada -->
@@ -38,7 +38,7 @@
 
         </nav>
         <!-- Fim Navigation -->
-        
+
     </h:body>
 </html>
 

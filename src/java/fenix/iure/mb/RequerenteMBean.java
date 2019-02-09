@@ -39,9 +39,6 @@ public class RequerenteMBean implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private Requente requerente;
-    private RequerenteDAO requerenteDAO;
-    private TipoPessoaDAO tipoPessoaDAO;
-    private MunicipioDAO municipioDAO;
     private List<Requente> requerentes;
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
@@ -89,13 +86,7 @@ public class RequerenteMBean implements Serializable{
         this.requerente = requerente;
     }
 
-    public RequerenteDAO getRequerenteDAO() {
-        return requerenteDAO;
-    }
-
-    public void setRequerenteDAO(RequerenteDAO requerenteDAO) {
-        this.requerenteDAO = requerenteDAO;
-    }
+   
 
     public void guardar(ActionEvent evt) {
         requenteFacade.create(requerente);

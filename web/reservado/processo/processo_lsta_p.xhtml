@@ -1,0 +1,331 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/dashboard_publico.xhtml">
+
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <f:view>
+                    <b:panel title="Processos" collapsible="false" look="normal">
+                        <h:form>
+                           
+                            <!--inicio Datatable-->
+                            <p:dataTable value="#{processoMBean.findRecentes}" var="processo" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="NÚMERO "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.numeroProcesso}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="DATA ENTRADA "/>
+                                    </f:facet>
+                                    <p:outputLabel id="data_entrada" value="#{processo.dataEntrada}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="DATA CONCLUSÃO "/>
+                                    </f:facet>
+                                    <p:outputLabel id="data_conclusao1" value="#{processo.dataConclusao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+
+                                </p:column>
+
+
+                                <p:column style="width: 100px; text-align: center" width="160">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Operações"/>
+                                    </f:facet>
+                                    <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
+                                    </p:commandButton>
+
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    Total Processos  (#{processoMBean.processos.size()})
+                                </f:facet>                           
+                            </p:dataTable>
+
+                            <!--Fim Datatable-->                         
+                        </h:form>
+                    </b:panel>
+                    <h:form id="Operacoes">
+                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px" value="Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
+                              
+                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px" value="Fechar" action="/index" ajax="false" immediate="true" />                   
+                    </h:form>
+
+                    
+                    
+                    <!--inicio do dialogo guardar-->
+                    <p:dialog  header="Novo Processo"  id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" footer="Fenix Iure" width="74%" height="455">
+                        <h:form enctype="multipart/form-data">
+
+                            <h:panelGrid  columns="4" >
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="NÚMERO"/>
+                                        <p:inputText id="numero" value="#{processoMBean.processo.numeroProcesso}" size="20"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="DATA ENTRADA"/>
+                                        <p:calendar id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 60px" value="DATA CONCLUSAO"/>
+                                        <p:calendar id="data_conclusao" style="margin-left: 60px"  value="#{processoMBean.processo.dataConclusao}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>                                    
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 15%" value="ESPÉCIE"/>
+                                        <p:selectOneMenu id="especies" effect="slide" style="width:213px; margin-left:15% "  filter="true" filterMatchMode="startsWith" label="Especie" value="#{processoMBean.processo.idEspecieProcesso}" required="true" converter="especieProcesoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{processoMBean.especies}" var="especie" itemValue="#{especie}" itemLabel="#{especie.especieProcesso}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  value="ESTADO"/>
+                                        <p:selectOneMenu style="width:220px" id="estados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Estaodo" value="#{processoMBean.processo.idEstadoProcesso}" required="true" converter="estadoProcessoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.estadoProcesso}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="TIPO DECISÃO"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="tipos_decisao" effect="slide"   filter="true" filterMatchMode="startsWith" label="TipoDecisao" value="#{processoMBean.processo.idTipoDecisao}" required="true" converter="tipoDecisaoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.tipos}" var="tipoDecisao" itemValue="#{tipoDecisao}" itemLabel="#{tipoDecisao.tipoDecisao}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 30%" value="REQUERENTE"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="requerentes" effect="slide"   filter="true" filterMatchMode="startsWith" label="Requerente" value="#{processoMBean.processo.idRequente}" required="true" converter="requerenteConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente}" itemLabel="#{requerente.nomeRequente}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="REQUERIDO"/>
+                                        <p:selectOneMenu style="width:213px; margin-left:15%" id="requeridos" effect="slide"   filter="true" filterMatchMode="startsWith" label="Requerido" value="#{processoMBean.processo.idRequerido}" required="true" converter="requeridoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.requeridos}" var="requerido" itemValue="#{requerido}" itemLabel="#{requerido.nomeRequerido}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="ADVOGADO"/>
+                                        <p:selectOneMenu style="width:220px;" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{processoMBean.processo.idAdvogado}" required="true" converter="advogadoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="JUIZ"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="juizes" effect="slide"   filter="true" filterMatchMode="startsWith" label="Juizes" value="#{processoMBean.processo.idJuiz}" required="true" converter="juizConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.juizes}" var="juiz" itemValue="#{juiz}" itemLabel="#{juiz.nomeJuiz}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <hr></hr>
+                                        <p:outputLabel  value="RESUMO DISPACHO"/>
+                                        <p:inputTextarea  id="resumo" value="#{processoMBean.processo.resumoDespacho}" rows="6" cols="100"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <br></br>
+                            <p:commandButton value="Guardar" action="#{processoMBean.guardar(evt)}" ajax="false"/>
+
+                        </h:form>
+                    </p:dialog>
+
+                    <!--fim do dialogo guardar-->
+
+                    <!--inicio do dialogo editar-->
+
+                    <p:dialog header="Editar processo"  id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" footer="Fenix Iure"  width="74%" height="455">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{processoMBean.processo.idProcesso}"/>
+                            <h:panelGrid  columns="4" >
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="NÚMERO"/>
+                                        <p:inputText id="numero" value="#{processoMBean.processo.numeroProcesso}" size="20"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="DATA ENTRADA"/>
+                                        <p:calendar id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 60px" value="DATA CONCLUSAO"/>
+                                        <p:calendar id="data_conclusao" style="margin-left: 60px"  value="#{processoMBean.processo.dataConclusao}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>                                    
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 15%" value="ESPÉCIE"/>
+                                        <p:selectOneMenu id="especies" effect="slide" style="width:213px; margin-left:15% "  filter="true" filterMatchMode="startsWith" label="Especie" value="#{processoMBean.processo.idEspecieProcesso}" required="true" converter="especieProcesoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{processoMBean.especies}" var="especie" itemValue="#{especie}" itemLabel="#{especie.especieProcesso}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  value="ESTADO"/>
+                                        <p:selectOneMenu style="width:220px" id="estados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Estaodo" value="#{processoMBean.processo.idEstadoProcesso}" required="true" converter="estadoProcessoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.estadoProcesso}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="TIPO DECISÃO"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="tipos_decisao" effect="slide"   filter="true" filterMatchMode="startsWith" label="TipoDecisao" value="#{processoMBean.processo.idTipoDecisao}" required="true" converter="tipoDecisaoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.tipos}" var="tipoDecisao" itemValue="#{tipoDecisao}" itemLabel="#{tipoDecisao.tipoDecisao}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 30%" value="REQUERENTE"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="requerentes" effect="slide"   filter="true" filterMatchMode="startsWith" label="Requerente" value="#{processoMBean.processo.idRequente}" required="true" converter="requerenteConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente}" itemLabel="#{requerente.nomeRequente}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="REQUERIDO"/>
+                                        <p:selectOneMenu style="width:213px; margin-left:15%" id="requeridos" effect="slide"   filter="true" filterMatchMode="startsWith" label="Requerido" value="#{processoMBean.processo.idRequerido}" required="true" converter="requeridoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.requeridos}" var="requerido" itemValue="#{requerido}" itemLabel="#{requerido.nomeRequerido}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="ADVOGADO"/>
+                                        <p:selectOneMenu style="width:220px;" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{processoMBean.processo.idAdvogado}" required="true" converter="advogadoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 15%" value="JUIZ"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="juizes" effect="slide"   filter="true" filterMatchMode="startsWith" label="Juizes" value="#{processoMBean.processo.idJuiz}" required="true" converter="juizConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{processoMBean.juizes}" var="juiz" itemValue="#{juiz}" itemLabel="#{juiz.nomeJuiz}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <hr></hr>
+                                        <p:outputLabel  value="RESUMO DISPACHO"/>
+                                        <p:inputTextarea  id="resumo" value="#{processoMBean.processo.resumoDespacho}" rows="6" cols="100"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <br></br>
+                            <p:commandButton value="Alterar" action="#{processoMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar-->
+
+                    <!--Inicio do dialog ver-->
+                    <p:dialog footer="Fenix Iure" header="Dados de estado" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="40%" height="360">
+                        <h:form>
+                            <center>
+
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="NÚMERO: "/>
+                                    <p:outputLabel value="#{processoMBean.processo.numeroProcesso}"/>                      
+                                    <p:outputLabel value="DATA ENTRADA: "/>
+                                    <p:outputLabel id="data_entrada2" value="#{processoMBean.processo.dataEntrada}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+                                    <p:outputLabel value="DATA CONCLUSÃO: "/>
+                                    <p:outputLabel id="data_conclusao2" value="#{processoMBean.processo.dataConclusao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>                                    
+                                    <p:outputLabel value="ESPÉCIE:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idEspecieProcesso.especieProcesso}"/>
+                                    <p:outputLabel value="ESTADO:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idEstadoProcesso.estadoProcesso}"/>
+                                    <p:outputLabel value="REQUERENTE:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idRequente.nomeRequente}"/>
+                                    <p:outputLabel value="REQUERIDO:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idRequerido.nomeRequerido}"/>
+                                    <p:outputLabel value="ADVOGADO:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idAdvogado.nomeAdvogado}"/>
+                                    <p:outputLabel value="JUIZ:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idJuiz.nomeJuiz}"/>
+                                    <p:outputLabel value="DECISÃO:"/>
+                                    <p:outputLabel value="#{processoMBean.processo.idTipoDecisao.tipoDecisao}"/>
+                                </p:panelGrid>
+                            </center>
+                        </h:form>
+
+                    </p:dialog>
+                    <!--Fim do dialog ver-->
+
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

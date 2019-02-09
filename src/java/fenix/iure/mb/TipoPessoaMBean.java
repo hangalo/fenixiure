@@ -63,7 +63,7 @@ public class TipoPessoaMBean implements Serializable {
 
     public String newSave() {
         tipoPessoa = new TipoPessoa();
-        return "tipo_pessoa_listar?faces-redirect=true";
+        return "admin?faces-redirect=true";
     }
 
     public void guardar(ActionEvent evt) {
@@ -76,7 +76,7 @@ public class TipoPessoaMBean implements Serializable {
     }
 
     public String startEdit() {
-        return "tipo_pessoa_listar?faces-redirect=true";
+        return "admin?faces-redirect=true";
     }
 
     public void edit(javafx.event.ActionEvent event) {
@@ -85,7 +85,7 @@ public class TipoPessoaMBean implements Serializable {
             tipoPessoas = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("tipo_pessoa_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("admin.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -99,7 +99,7 @@ public class TipoPessoaMBean implements Serializable {
            tipoPessoaFacade.remove(tipoPessoa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             tipoPessoas = null;
-            return "tipo_pessoa_listar?faces-redirect=true";
+            return "admin?faces-redirect=true";
         /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;

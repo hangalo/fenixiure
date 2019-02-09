@@ -8,11 +8,10 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <link href="resources/css/default.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Custom CSS estilisa a barra superior-->
-        <link href="resources/css/sb-admin-2.min.css" rel="stylesheet" type="text/css"/>
-
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        
         <title>Fenix Iure</title>
 
     </h:head>
@@ -23,7 +22,7 @@
             
             <p:layoutUnit position="north"   resizable="false" closable="false" collapsible="false">
                 <ui:insert name="top">
-                    <ui:include src="../menus/barra_navegacao.xhtml"></ui:include>   
+                    <ui:include src="../menus/barra_navegacao_admini.xhtml"></ui:include>   
                 </ui:insert>
             </p:layoutUnit>
 
@@ -36,7 +35,7 @@
 
             <p:layoutUnit position="west" size="320" style="text-align: center" header="Menu" collapsible="true">
                 <ui:insert name="menu">
-                    <ui:include src="../menus/menu_navegacao.xhtml"></ui:include>                   
+                    <ui:include src="../menus/menu_administrativo.xhtml"></ui:include>                   
                 </ui:insert>
             </p:layoutUnit>
 

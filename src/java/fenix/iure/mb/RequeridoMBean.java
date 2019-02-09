@@ -39,9 +39,6 @@ public class RequeridoMBean implements Serializable {
    private static final long serialVersionUID = 1L;
 
     private Requerido requerido;
-    private RequeridoDAO requeridoDAO;
-    private TipoPessoaDAO tipoPessoaDAO;
-    private MunicipioDAO municipioDAO;
     private List<Requerido> requeridos;
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
@@ -102,7 +99,7 @@ public class RequeridoMBean implements Serializable {
     }
       
        public String startEdit() {
-        return "requerido_listar?faces-redirect=true";
+        return "requerido_lstar?faces-redirect=true";
     }
 
     
@@ -113,7 +110,7 @@ public class RequeridoMBean implements Serializable {
             requerido = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("requerido_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("requerido_lstar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(RequeridoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -126,7 +123,7 @@ public class RequeridoMBean implements Serializable {
         requeridoFacade.remove(requerido);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              requeridos = null;
-             return "requerido_listar?faces-redirect=true";
+             return "requerido_lstar?faces-redirect=true";
         }     
     
 

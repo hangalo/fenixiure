@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/dashboard.xhtml">
+
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <f:view>
+                    <b:panel title="Procurar por nome" collapsible="false" look="normal">
+                        <h:form>
+                            
+                            <h:panelGrid columns="6"  cellspacing="10%">
+                                <p:inputText placeholder="Nome" id="cognome" value="#{juizMBean.nome}" required="true" requiredMessage="#{msg.msg_cognome}" immediate="true"/>
+                                <b:commandButton icon="ui-icon-zoomin" style="margin-left:  10px" value="Pesquisar" />
+                            </h:panelGrid>
+                            <br></br>
+
+                            
+
+                           <!--inicio Datatable-->
+                           <p:dataTable value="#{juizMBean.byNome}" var="juiz" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Nome "/>
+                                    </f:facet>
+                                    <h:outputText value="#{juiz.nomeJuiz}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Sobrenome "/>
+                                    </f:facet>
+                                    <h:outputText value="#{juiz.sobrenomeJuiz}"/>
+                                </p:column>
+                                
+                                
+                                <p:column style="width: 100px; text-align: center" width="160">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Operações"/>
+                                    </f:facet>
+                                    <p:commandButton  icon="ui-icon-trash" action="#{juizMBean.delete()}">
+                                        <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{juiz}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{juiz}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{juiz}"/>
+                                    </p:commandButton>
+
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    Total Juizes  (#{juizMBean.byNome.size()})
+                                </f:facet>                           
+                            </p:dataTable>
+
+                            <!--Fim Datatable-->                        
+                        </h:form>
+                    </b:panel>
+
+                    <!--Inicio do dialogo guardar-->
+
+                    <h:form id="Operacoes">
+                        <p:commandButton value="Fechar" action="/reservado/juiz/juiz_lstar" ajax="false" immediate="true" />                   
+                    </h:form>
+
+                    <!--Fim do dialogo guardar-->
+
+
+                    
+                    <!--inicio do dialogo guardar-->
+                    <p:dialog  header="Novo Juiz" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                        <h:form enctype="multipart/form-data">
+                            <h:panelGrid  columns="2" >
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Nome:"/>
+                                    <p:inputText id="nome" value="#{juizMBean.juiz.nomeJuiz}" size="20"/>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
+                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Data de Nascimento:"/>
+                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt_BR" effect ="slide" />
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
+                                    <p:calendar style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt" effect="slide" />
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                        
+                            <br></br>
+                            <p:commandButton value="Guardar" action="#{juizMBean.guardar(evt)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+
+                    <!--fim do dialogo guardar-->
+                    
+                    <!--inicio do dialogo editar-->
+
+                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" width="510" height="200">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{juizMBean.juiz.idJuiz}"/>
+                            <h:panelGrid  columns="2" >
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Nome:"/>
+                                    <p:inputText id="nome" value="#{juizMBean.juiz.nomeJuiz}" size="20"/>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel style="margin-left: 15%" value="Sobrenoome:"/>
+                                    <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Data de Nascimento:"/>
+                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
+                                    <p:calendar style="margin-left: 15%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                        
+                            
+                            <br></br>
+                            <p:commandButton value="Alterar" action="#{juizMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar-->
+                    
+                    <!--Inicio do dialog ver-->
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="320" height="220">
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Nome: "/>
+                                <p:outputLabel value="#{juizMBean.juiz.nomeJuiz}"/>
+                                <p:outputLabel value="Sobrenome: "/>
+                                <p:outputLabel value="#{juizMBean.juiz.sobrenomeJuiz}"/>
+                                <p:outputLabel value="Data de Nascimento: "/>
+                                <p:outputLabel id="data_nasc" value="#{juizMBean.juiz.dataNascimentoJuiz}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+                                <p:outputLabel value="Data inicio de Função "/>
+                                <p:outputLabel id="data_inic" value="#{juizMBean.juiz.dataInicioFuncoes}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+                            </p:panelGrid>
+                        </h:form>
+
+                    </p:dialog>
+
+                    <!--Fim do dialog ver-->
+
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

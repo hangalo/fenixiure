@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/dashboard.xhtml">
+
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <f:view>
+                    <b:panel title="Tipo de Pessoas" collapsible="false" look="normal">
+                        <h:form>
+                            <!--inicio Datatable-->
+                            <p:dataTable value="#{tipoPessoaMBean.tipoPessoas}" var="tipoPessoa" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Tipo: "/>
+                                    </f:facet>
+                                    <h:outputText value="#{tipoPessoa.nomeTipo}"/>
+                                </p:column>
+                                <p:column style="width: 100px; text-align: center" width="160">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Operações"/>
+                                    </f:facet>
+                                    <p:commandButton  icon="ui-icon-trash" action="#{tipoPessoaMBean.delete()}">
+                                        <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{tipoPessoa}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{tipoPessoa}"/>
+                                    </p:commandButton>
+                                    <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <f:setPropertyActionListener target="#{tipoPessoaMBean.tipoPessoa}" value="#{tipoPessoa}"/>
+                                    </p:commandButton>
+
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    Total de Tipos de Pessoas  (#{tipoPessoaMBean.tipoPessoas.size()})
+                                </f:facet>                           
+                            </p:dataTable>
+
+                            <!--Fim Datatable-->
+                        </h:form>
+                    </b:panel>
+
+                    <!--Inicio do dialogo guardar-->
+
+                     <h:form id="Operacoes">
+                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
+                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Fechar" action="/reservado/administracao/area_administrativa" ajax="false" immediate="true" />                             
+                    </h:form>
+
+                    <!--Fim do dialogo guardar-->
+
+                    <!--inicio do dialogo guardar-->
+                    <p:dialog  header="Novo Tipo de Pessoa" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" style="width: 400px; height: 150px">
+                        <h:form enctype="multipart/form-data">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Tipo: "/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
+                            </h:panelGrid>
+                            <br></br>
+                            <p:commandButton value="Guardar" action="#{tipoPessoaMBean.guardar(evt)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+
+                    <!--fim do dialogo guardar-->
+
+                    <!--inicio do dialogo editar-->
+
+                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{tipoPessoaMBean.tipoPessoa.idTipo}"/>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Tipo: "/>
+                                <p:inputText size="30" value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
+                            </h:panelGrid>
+                            <br></br>
+                            <p:commandButton value="Alterar" action="#{tipoPessoaMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar-->
+
+                    <!--Inicio do dialog ver-->
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false">
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Código: "/>
+                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.idTipo}"/>
+                                <p:outputLabel value="Tipo: "/>
+                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
+                            </p:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    <!--Fim do dialog ver-->
+
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

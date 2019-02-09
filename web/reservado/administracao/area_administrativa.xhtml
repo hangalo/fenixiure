@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+
+
+        <ui:composition template="./../../WEB-INF/templates/dashboard.xhtml">
+
+            <ui:define name="content">
+                
+                <center>
+                    <h:form>
+
+                        <h:dataTable value="#">
+                            <p:column >
+                                <b:commandButton  action="/reservado/processo/processo_lsta" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                                    <h:graphicImage class="img-responsive img-rounded" library="imagens" name="proces2.png" />
+
+                                    <b>Processos</b>
+                                </b:commandButton>
+                            </p:column>
+                            <p:column >
+                                <b:commandButton  action="/reservado/requerente/requerente_lstar" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                                    <h:graphicImage class="img-responsive img-rounded" library="imagens" name="req2.png" />
+                                    <b>Requerentes</b>
+                                </b:commandButton>
+                            </p:column>
+                            <p:column >
+                                <b:commandButton  action="/reservado/juiz/juiz_lstar" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                                    <h:graphicImage class="img-responsive img-rounded" library="imagens" name="jz2.png" />
+                                    <b>Juizes</b>
+                                </b:commandButton>
+                            </p:column>
+                            <p:column >
+                                <b:commandButton  action="/reservado/advogado/advogado_lstar" style="margin-top: 10%; margin-left: 10%" class="btn btn-default">
+                                    <h:graphicImage class="img-responsive img-rounded" library="imagens" name="advogado2.png" />
+
+                                    <b>Advogados</b>
+                                </b:commandButton>
+                            </p:column>
+                            <p:column >
+                        
+                    </p:column>
+
+                        </h:dataTable>
+
+
+                    </h:form>
+
+
+
+                    <br></br>
+
+
+                    <h:graphicImage class="img-responsive img-rounded" width="95%" library="imagens" name="martelo3.png" />
+
+                </center>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
