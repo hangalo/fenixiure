@@ -54,7 +54,7 @@
 
                      <h:form id="Operacoes">
                         <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
-                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Fechar" action="/reservado/administracao/area_administrativa" ajax="false" immediate="true" />                             
+                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                             
                     </h:form>
 
                     <!--Fim do dialogo guardar-->
@@ -92,8 +92,6 @@
                     <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false">
                         <h:form>
                             <p:panelGrid columns="2">
-                                <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{tipoPessoaMBean.tipoPessoa.idTipo}"/>
                                 <p:outputLabel value="Tipo: "/>
                                 <h:outputText value="#{tipoPessoaMBean.tipoPessoa.nomeTipo}"/>
                             </p:panelGrid>

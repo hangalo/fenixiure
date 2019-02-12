@@ -165,6 +165,17 @@ public class ProcessoMBean implements Serializable {
                 Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
+    public void editPublico(javafx.event.ActionEvent event) {
+        processoFacade.edit(processo);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+            requerentes = null;
+
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta_p.jsf");
+            } catch (IOException ex) {
+                Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
     
     public String delete() {
         processoFacade.remove(processo);

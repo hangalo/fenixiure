@@ -116,6 +116,18 @@ public class RequeridoMBean implements Serializable {
             }
         }
          
+       public void editPublico(javafx.event.ActionEvent event) {
+        requeridoFacade.edit(requerido);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+            requerido = null;
+
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("requerido_lstar_p.jsf");
+            } catch (IOException ex) {
+                Logger.getLogger(RequeridoMBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+         
 
     
     

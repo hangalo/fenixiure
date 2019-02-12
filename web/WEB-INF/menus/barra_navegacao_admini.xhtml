@@ -24,11 +24,10 @@
             <!-- Fim Logotipo -->
 
             <!-- Inicio Area reservada -->
-            <div style="margin-right: 5%; margin-top: 1%" class="nav navbar-top-links navbar-right">
-                           
-                
+            <div style="margin-right: 5%; margin-top: 1%" class="nav navbar-top-links navbar-right">                                        
                     <h:form>
-                        <h:commandLink action="/index" value="Fechar área Administrativa"/> 
+                        <p style="float: right; margin-left: 15px">#{user}</p>
+                        <h:commandLink action="#{loginMB.logout()}" value="Logout"/> 
                     </h:form>
 
                 

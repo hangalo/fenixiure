@@ -59,7 +59,7 @@ public class TipoDecisaoMBean implements Serializable {
     }
     
     public String startEdit() {
-        return "admin?faces-redirect=true";
+        return "decisao_lstar?faces-redirect=true";
     }
     
     public void edit(javafx.event.ActionEvent event) {
@@ -68,14 +68,12 @@ public class TipoDecisaoMBean implements Serializable {
             tipos = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("admin.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("decisao_lstar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         /* {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }*/
+        
 
     
     
@@ -83,7 +81,7 @@ public class TipoDecisaoMBean implements Serializable {
         tipoDecisaoFacade.remove(tipoDecisao);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              tipos = null;
-             return "admin?faces-redirect=true";
+             return "decisao_lstar?faces-redirect=true";
              
     }
 

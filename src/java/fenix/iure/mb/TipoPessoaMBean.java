@@ -63,20 +63,18 @@ public class TipoPessoaMBean implements Serializable {
 
     public String newSave() {
         tipoPessoa = new TipoPessoa();
-        return "admin?faces-redirect=true";
+        return "pessoas_lstar?faces-redirect=true";
     }
 
     public void guardar(ActionEvent evt) {
         tipoPessoaFacade.create(tipoPessoa);
         tipoPessoa = new TipoPessoa();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        /*} else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }*/
+       
     }
 
     public String startEdit() {
-        return "admin?faces-redirect=true";
+        return "pessoas_lstar?faces-redirect=true";
     }
 
     public void edit(javafx.event.ActionEvent event) {
@@ -85,25 +83,19 @@ public class TipoPessoaMBean implements Serializable {
             tipoPessoas = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("admin.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("pessoas_lstar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        /*} else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }*/
-
+        
     }
 
     public String delete() {
            tipoPessoaFacade.remove(tipoPessoa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             tipoPessoas = null;
-            return "admin?faces-redirect=true";
-        /*} else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
-            return null;
-        }*/
+            return "pessoas_lstar?faces-redirect=true";
+        
     }
 
 }

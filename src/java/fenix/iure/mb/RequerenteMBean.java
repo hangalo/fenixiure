@@ -114,15 +114,24 @@ public class RequerenteMBean implements Serializable{
             requerentes = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_listar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         /*else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Editar\t", "\tErro ao editar dados"));
-        }*/
+       
+       
+       public void editPublico(javafx.event.ActionEvent event) {
+        requenteFacade.edit(requerente);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+            requerentes = null;
 
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar_p.jsf");
+            } catch (IOException ex) {
+                Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     
     
     public String delete() {

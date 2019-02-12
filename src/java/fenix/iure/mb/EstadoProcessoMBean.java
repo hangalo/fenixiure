@@ -84,7 +84,7 @@ public class EstadoProcessoMBean implements Serializable {
     }
     
     public String startEdit() {
-        return "admin?faces-redirect=true";
+        return "estado_lstar?faces-redirect=true";
     }
     
     public void edit(javafx.event.ActionEvent event) {
@@ -93,7 +93,7 @@ public class EstadoProcessoMBean implements Serializable {
             estadoProcessos = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("admin.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("estado_lstar.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(EspecieProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -108,10 +108,7 @@ public class EstadoProcessoMBean implements Serializable {
         estadoProcessoFacade.remove(estadoProcesso);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              estadoProcessos = null;
-             return "admin?faces-redirect=true";
-        /*}else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
-            return null;
-        }  */    
+             return "estado_lstar?faces-redirect=true";
+         
     }
 }

@@ -15,7 +15,7 @@
                 <f:view>
                     <b:panel title="Estados Processos" collapsible="false" look="normal">
 
-                        <p:dataTable value="#{estadoProcessoMBean.estadoProcessos}" var="estadoProcesso" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                        <p:dataTable value="#{estadoProcessoMBean.estadoProcessos}" var="estadoProcesso" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                             
                             <p:column>
                                 <f:facet name="header">
@@ -51,7 +51,7 @@
 
                      <h:form id="Operacoes">
                         <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
-                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Fechar" action="/reservado/administracao/area_administrativa" ajax="false" immediate="true" />                             
+                        <p:commandButton style="margin-left: 20px; height: 43px; width: 140px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                             
                     </h:form>
 
                     <!--inicio do dialogo guardar-->
@@ -87,8 +87,6 @@
                     <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false">
                         <h:form>
                             <p:panelGrid columns="2">
-                                <p:outputLabel value="Código: "/>
-                                <h:outputText value="#{estadoProcessoMBean.estadoProcesso.idEstadoProcesso}"/>
                                 <p:outputLabel value="Estado Processo: "/>
                                 <h:outputText value="#{estadoProcessoMBean.estadoProcesso.estadoProcesso}"/>
                             </p:panelGrid>
