@@ -43,7 +43,7 @@ public class LoginMB {
             if (usuario1.getLoginUsuario().equals(username) && usuario1.getSenhaUsuario().equals(password)) {
                 context.getExternalContext().getSessionMap().put("user", username);
                 try {
-                    context.getExternalContext().redirect("area_administrativa.jsf");
+                    context.getExternalContext().redirect("/fenixiure/area_administrativa.jsf");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -61,7 +61,7 @@ public class LoginMB {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().invalidateSession();
         try {
-            context.getExternalContext().redirect("index.jsf");
+            context.getExternalContext().redirect("/fenixiure/index.jsf");
         } catch (IOException e) {
             System.out.println("" + e.getMessage());
         }
