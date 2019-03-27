@@ -21,18 +21,21 @@ import fenix.iure.entities.Processo;
 import fenix.iure.entities.Requente;
 import fenix.iure.entities.Requerido;
 import fenix.iure.entities.TipoDecisao;
+import fenix.iure.util.GestorImpressao;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -105,6 +108,10 @@ public class ProcessoMBean implements Serializable {
     
     public ProcessoMBean() {
     }
+    
+    // Variaveis para os relatorios
+    @ManagedProperty(value = "#{gestorImpressao}")
+    private GestorImpressao gestorImpressao;
     
     @PostConstruct
     public void inicializar() {
@@ -360,6 +367,24 @@ public class ProcessoMBean implements Serializable {
     public List<Processo> getFindRecentes() {
         findRecentes = processoFacade.findRecentes();
         return findRecentes;
+    }
+
+    public GestorImpressao getGestorImpressao() {
+        return gestorImpressao;
+    }
+
+    public void setGestorImpressao(GestorImpressao gestorImpressao) {
+        this.gestorImpressao = gestorImpressao;
+    }
+    
+     public String imprimirListaArtigo() {
+        String relatorio = "processo_lista1.jasper";
+        HashMap parametros = new HashMap();
+        gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
+        //gestorImpressao.imprimirPDF(relatorio, parametros);
+        gestorImpressao.imprimir(relatorio, parametros);
+        return null;
+
     }
     
     

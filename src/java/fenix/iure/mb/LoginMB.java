@@ -36,7 +36,7 @@ public class LoginMB {
     public LoginMB() {
     }
 
-    public void login() {
+    public void login(){
         FacesContext context = FacesContext.getCurrentInstance();
         usuarios = usuarioFacade.findAll();
         for (Usuario usuario1 : usuarios) {
