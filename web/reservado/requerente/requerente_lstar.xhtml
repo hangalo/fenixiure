@@ -14,7 +14,7 @@
             <ui:define name="content">
                 <p:growl autoUpdate="true" showDetail="true"/>
                 <f:view>
-                    <b:panel title="Requerentes" collapsible="false" look="normal">
+                    <b:panel title="Autores" collapsible="false" look="normal">
                         <h:form>
                             
                             <h:dataTable value="#">
@@ -22,9 +22,6 @@
                                     <p:menubar style="margin-left: 3px">
                                         <p:submenu label="Procurar por" icon="ui-icon-zoomin">
                                             <p:menuitem value="Nome" url="/reservado/requerente/by_nome.jsf"/>
-                                            <p:menuitem value="Nome e sobrenome" url="/reservado/requerente/by_nome_sobrenome.jsf"/>
-                                            <p:menuitem value="Sobrenome" url="/reservado/requerente/by_sobrenome.jsf"/>
-                                            <p:menuitem value="Número BI" url="/reservado/requerente/by_num_bi.jsf"/>
                                             <p:menuitem value="Município" url="/reservado/requerente/by_municipio.jsf"/>
                                             <p:menuitem value="Tipo de Pessoa" url="/reservado/requerente/by_tipo_pessoa.jsf"/>
                                         
@@ -51,12 +48,6 @@
                                         <p:outputLabel value="Nome "/>
                                     </f:facet>
                                     <h:outputText value="#{requerente.nomeRequente}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Sobrenome "/>
-                                    </f:facet>
-                                    <h:outputText value="#{requerente.sobrenomeRequerente}"/>
                                 </p:column>
                                 
                                 
@@ -105,18 +96,8 @@
                                         <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
                                     </h:panelGrid> 
                                 </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="SOBRENOME:"/>
-                                        <p:inputText style="margin-left: 20px" id="sobrenome" value="#{requerenteMBean.requerente.sobrenomeRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="BI:"/>
-                                        <p:inputText style="margin-left: 20px" id="bi" value="#{requerenteMBean.requerente.NBiRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
+                                
+                                
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
@@ -126,6 +107,14 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
+                                
+                                <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left:30% " value="ADVOGADO:"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{requerenteMBean.requerente.idAdvogado}" required="true" converter="advogadoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{requerenteMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
 
                             </h:panelGrid>
 
@@ -193,23 +182,12 @@
                             <h:panelGrid  columns="4">  
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <h:inputHidden value="#{requerenteMBean.requerente.idRequente}"/>
                                         <p:outputLabel value="NOME:"/>
                                         <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
                                     </h:panelGrid> 
                                 </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="SOBRENOME:"/>
-                                        <p:inputText style="margin-left: 20px" id="sobrenome" value="#{requerenteMBean.requerente.sobrenomeRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="BI:"/>
-                                        <p:inputText style="margin-left: 20px" id="bi" value="#{requerenteMBean.requerente.NBiRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
+                                
+                                
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
@@ -219,6 +197,14 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
+                                
+                                <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left:30% " value="ADVOGADO:"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{requerenteMBean.requerente.idAdvogado}" required="true" converter="advogadoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{requerenteMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
 
                             </h:panelGrid>
 
@@ -257,8 +243,13 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
-     
+                                
+                                
+                                
+                                
                             </h:panelGrid>
+                            
+                            
                             
                             
                             
@@ -274,10 +265,6 @@
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Nome: "/>
                                 <h:outputText value="#{requerenteMBean.requerente.nomeRequente}"/>
-                                <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{requerenteMBean.requerente.sobrenomeRequerente}"/>
-                                <p:outputLabel value="Bilhete de Identidade "/>
-                                <h:outputText value="#{requerenteMBean.requerente.NBiRequerente}"/>
                                 <p:outputLabel value="Municipio "/>
                                 <h:outputText value="#{requerenteMBean.requerente.idMunicipio.nomeMunicipio}"/>
                                 <p:outputLabel value="Tipo "/>

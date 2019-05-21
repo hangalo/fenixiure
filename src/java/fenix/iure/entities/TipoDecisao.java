@@ -24,15 +24,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "tipo_decisao")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoDecisao.findAll", query = "SELECT t FROM TipoDecisao t")
-    , @NamedQuery(name = "TipoDecisao.findByIdTipoDecisao", query = "SELECT t FROM TipoDecisao t WHERE t.idTipoDecisao = :idTipoDecisao")
-    , @NamedQuery(name = "TipoDecisao.findByTipoDecisao", query = "SELECT t FROM TipoDecisao t WHERE t.tipoDecisao = :tipoDecisao")})
+    @NamedQuery(name = "TipoDecisao.findAll", query = "SELECT t FROM TipoDecisao t"),
+    @NamedQuery(name = "TipoDecisao.findByIdTipoDecisao", query = "SELECT t FROM TipoDecisao t WHERE t.idTipoDecisao = :idTipoDecisao"),
+    @NamedQuery(name = "TipoDecisao.findByTipoDecisao", query = "SELECT t FROM TipoDecisao t WHERE t.tipoDecisao = :tipoDecisao")})
 public class TipoDecisao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +45,9 @@ public class TipoDecisao implements Serializable {
     @Column(name = "tipo_decisao")
     private String tipoDecisao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDecisao")
-    private Collection<Processo> processoCollection;
+    private Collection<ProcessoFindo> processoFindoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDecisao")
+    private Collection<Tramitacao> tramitacaoCollection;
 
     public TipoDecisao() {
     }
@@ -71,12 +73,21 @@ public class TipoDecisao implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Processo> getProcessoCollection() {
-        return processoCollection;
+    public Collection<ProcessoFindo> getProcessoFindoCollection() {
+        return processoFindoCollection;
     }
 
-    public void setProcessoCollection(Collection<Processo> processoCollection) {
-        this.processoCollection = processoCollection;
+    public void setProcessoFindoCollection(Collection<ProcessoFindo> processoFindoCollection) {
+        this.processoFindoCollection = processoFindoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Tramitacao> getTramitacaoCollection() {
+        return tramitacaoCollection;
+    }
+
+    public void setTramitacaoCollection(Collection<Tramitacao> tramitacaoCollection) {
+        this.tramitacaoCollection = tramitacaoCollection;
     }
 
     @Override

@@ -27,18 +27,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "advogado")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Advogado.findAll", query = "SELECT a FROM Advogado a")
-    , @NamedQuery(name = "Advogado.findByIdAdvogado", query = "SELECT a FROM Advogado a WHERE a.idAdvogado = :idAdvogado")
-    , @NamedQuery(name = "Advogado.findByNomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.nomeAdvogado = :nomeAdvogado")
-    , @NamedQuery(name = "Advogado.findBySobrenomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.sobrenomeAdvogado = :sobrenomeAdvogado")
-    , @NamedQuery(name = "Advogado.findByDataNascimentoAdvogado", query = "SELECT a FROM Advogado a WHERE a.dataNascimentoAdvogado = :dataNascimentoAdvogado")
-    , @NamedQuery(name = "Advogado.findByDataInicioFuncoes", query = "SELECT a FROM Advogado a WHERE a.dataInicioFuncoes = :dataInicioFuncoes")})
+    @NamedQuery(name = "Advogado.findAll", query = "SELECT a FROM Advogado a"),
+    @NamedQuery(name = "Advogado.findByIdAdvogado", query = "SELECT a FROM Advogado a WHERE a.idAdvogado = :idAdvogado"),
+    @NamedQuery(name = "Advogado.findByNomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.nomeAdvogado = :nomeAdvogado"),
+    @NamedQuery(name = "Advogado.findBySobrenomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.sobrenomeAdvogado = :sobrenomeAdvogado"),
+    @NamedQuery(name = "Advogado.findByDataInicioFuncoes", query = "SELECT a FROM Advogado a WHERE a.dataInicioFuncoes = :dataInicioFuncoes")})
 public class Advogado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,14 +52,13 @@ public class Advogado implements Serializable {
     @Size(max = 45)
     @Column(name = "sobrenome_advogado")
     private String sobrenomeAdvogado;
-    @Column(name = "data_nascimento_advogado")
-    @Temporal(TemporalType.DATE)
-    private Date dataNascimentoAdvogado;
     @Column(name = "data_inicio_funcoes")
     @Temporal(TemporalType.DATE)
     private Date dataInicioFuncoes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAdvogado")
-    private Collection<Processo> processoCollection;
+    private Collection<Requerido> requeridoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAdvogado")
+    private Collection<Requente> requenteCollection;
 
     public Advogado() {
     }
@@ -93,14 +91,6 @@ public class Advogado implements Serializable {
         this.sobrenomeAdvogado = sobrenomeAdvogado;
     }
 
-    public Date getDataNascimentoAdvogado() {
-        return dataNascimentoAdvogado;
-    }
-
-    public void setDataNascimentoAdvogado(Date dataNascimentoAdvogado) {
-        this.dataNascimentoAdvogado = dataNascimentoAdvogado;
-    }
-
     public Date getDataInicioFuncoes() {
         return dataInicioFuncoes;
     }
@@ -110,12 +100,21 @@ public class Advogado implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Processo> getProcessoCollection() {
-        return processoCollection;
+    public Collection<Requerido> getRequeridoCollection() {
+        return requeridoCollection;
     }
 
-    public void setProcessoCollection(Collection<Processo> processoCollection) {
-        this.processoCollection = processoCollection;
+    public void setRequeridoCollection(Collection<Requerido> requeridoCollection) {
+        this.requeridoCollection = requeridoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Requente> getRequenteCollection() {
+        return requenteCollection;
+    }
+
+    public void setRequenteCollection(Collection<Requente> requenteCollection) {
+        this.requenteCollection = requenteCollection;
     }
 
     @Override

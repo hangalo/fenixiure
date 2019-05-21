@@ -5,7 +5,7 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.TipoDecisaoDAO;
+
 import fenix.iure.ejbs.TipoDecisaoFacade;
 import fenix.iure.entities.TipoDecisao;
 import javax.faces.component.UIComponent;

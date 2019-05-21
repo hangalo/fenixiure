@@ -23,8 +23,6 @@
                                             <p:menuitem value="Nome" url="/reservado/advogado/by_nome.jsf"/>
                                             <p:menuitem value="Nome e sobrenome" url="/reservado/advogado/by_nome_sobrenome.jsf"/>
                                             <p:menuitem value="Sobrenome" url="/reservado/advogado/by_sobrenome.jsf"/>
-                                            <p:menuitem value="Data de inicio de função" url="/reservado/advogado/by_data_inicio_funcoes.jsf"/>
-                                            <p:menuitem value="Data de nascimento" url="/reservado/advogado/by_data_nascimento.jsf"/>
                                         </p:submenu>
                                     </p:menubar>
 
@@ -98,12 +96,7 @@
                                         <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel value="Data de Nascimento:"/>
-                                        <p:calendar effect ="slide" value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
-                                    </h:panelGrid>
-                                </h:panelGroup>
+                                
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
@@ -138,12 +131,7 @@
                                         <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
                                     </h:panelGrid>
                                 </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel value="Data de Nascimento:"/>
-                                        <p:calendar  value="#{advoadoMBean.advogado.dataNascimentoAdvogado}" pattern="dd/MM/yyyy" locale="pt"  />
-                                    </h:panelGrid>
-                                </h:panelGroup>
+                                
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
@@ -168,10 +156,6 @@
                                 <p:outputLabel value="#{advoadoMBean.advogado.nomeAdvogado}"/>
                                 <p:outputLabel value="Sobrenome: "/>
                                 <p:outputLabel value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
-                                <p:outputLabel value="Data de Nascimento: "/>
-                                <p:outputLabel id="data_nasc" value="#{advoadoMBean.advogado.dataNascimentoAdvogado}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                </p:outputLabel>
                                 <p:outputLabel value="Data inicio de Função "/>
                                 
                                 <p:outputLabel id="data_inic" value="#{advoadoMBean.advogado.dataInicioFuncoes}">

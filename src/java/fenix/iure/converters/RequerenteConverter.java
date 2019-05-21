@@ -5,7 +5,7 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.RequerenteDAO;
+
 import fenix.iure.ejbs.RequenteFacade;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

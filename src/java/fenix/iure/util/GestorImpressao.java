@@ -74,9 +74,9 @@ public class GestorImpressao {
     }
 
     public String imprimirPDF(String relatorio, HashMap paramentos) {
-        try {/*
+        try {
                 jasperPrint = new JasperPrint(); 
-                intanciei o objecto a cima para testar as funcionalidade da impressão de relatórios.
+                /* intanciei o objecto a cima para testar as funcionalidade da impressão de relatórios.
                 De facto, gera um NullPointerException indicando pra linea 89, no objecto jasperPrint.
                 Daí concli que o objecto não havia sido instaciado.
             

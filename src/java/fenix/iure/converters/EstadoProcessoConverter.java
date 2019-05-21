@@ -5,7 +5,7 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.EstadoProcessoDAO;
+
 import fenix.iure.ejbs.EstadoProcessoFacade;
 import fenix.iure.entities.EstadoProcesso;
 import javax.faces.component.UIComponent;
@@ -23,7 +23,6 @@ import javax.naming.NamingException;
 @FacesConverter(value = "estadoProcessoConverter", forClass = EstadoProcesso.class)
 public class EstadoProcessoConverter implements Converter{
 
-    EstadoProcessoDAO estadoProcessoDAO = new EstadoProcessoDAO();
     EstadoProcessoFacade estadoProcessoFacade = lookupEstadoProcessoFacade();
     
     @Override

@@ -26,20 +26,18 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "requente")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Requente.findAll", query = "SELECT r FROM Requente r")
-    , @NamedQuery(name = "Requente.findByIdRequente", query = "SELECT r FROM Requente r WHERE r.idRequente = :idRequente")
-    , @NamedQuery(name = "Requente.findByNomeRequente", query = "SELECT r FROM Requente r WHERE r.nomeRequente = :nomeRequente")
-    , @NamedQuery(name = "Requente.findBySobrenomeRequerente", query = "SELECT r FROM Requente r WHERE r.sobrenomeRequerente = :sobrenomeRequerente")
-    , @NamedQuery(name = "Requente.findByNBiRequerente", query = "SELECT r FROM Requente r WHERE r.nBiRequerente = :nBiRequerente")
-    , @NamedQuery(name = "Requente.findByCasaRequerente", query = "SELECT r FROM Requente r WHERE r.casaRequerente = :casaRequerente")
-    , @NamedQuery(name = "Requente.findByRuaRequerente", query = "SELECT r FROM Requente r WHERE r.ruaRequerente = :ruaRequerente")
-    , @NamedQuery(name = "Requente.findByBairroRequerente", query = "SELECT r FROM Requente r WHERE r.bairroRequerente = :bairroRequerente")})
+    @NamedQuery(name = "Requente.findAll", query = "SELECT r FROM Requente r"),
+    @NamedQuery(name = "Requente.findByIdRequente", query = "SELECT r FROM Requente r WHERE r.idRequente = :idRequente"),
+    @NamedQuery(name = "Requente.findByNomeRequente", query = "SELECT r FROM Requente r WHERE r.nomeRequente = :nomeRequente"),
+    @NamedQuery(name = "Requente.findByCasaRequerente", query = "SELECT r FROM Requente r WHERE r.casaRequerente = :casaRequerente"),
+    @NamedQuery(name = "Requente.findByRuaRequerente", query = "SELECT r FROM Requente r WHERE r.ruaRequerente = :ruaRequerente"),
+    @NamedQuery(name = "Requente.findByBairroRequerente", query = "SELECT r FROM Requente r WHERE r.bairroRequerente = :bairroRequerente")})
 public class Requente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,12 +50,6 @@ public class Requente implements Serializable {
     @Column(name = "nome_requente")
     private String nomeRequente;
     @Size(max = 45)
-    @Column(name = "sobrenome_requerente")
-    private String sobrenomeRequerente;
-    @Size(max = 45)
-    @Column(name = "n_bi_requerente")
-    private String nBiRequerente;
-    @Size(max = 45)
     @Column(name = "casa_requerente")
     private String casaRequerente;
     @Size(max = 45)
@@ -68,6 +60,9 @@ public class Requente implements Serializable {
     private String bairroRequerente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRequente")
     private Collection<Processo> processoCollection;
+    @JoinColumn(name = "id_advogado", referencedColumnName = "id_advogado")
+    @ManyToOne(optional = false)
+    private Advogado idAdvogado;
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     @ManyToOne(optional = false)
     private Municipio idMunicipio;
@@ -96,22 +91,6 @@ public class Requente implements Serializable {
 
     public void setNomeRequente(String nomeRequente) {
         this.nomeRequente = nomeRequente;
-    }
-
-    public String getSobrenomeRequerente() {
-        return sobrenomeRequerente;
-    }
-
-    public void setSobrenomeRequerente(String sobrenomeRequerente) {
-        this.sobrenomeRequerente = sobrenomeRequerente;
-    }
-
-    public String getNBiRequerente() {
-        return nBiRequerente;
-    }
-
-    public void setNBiRequerente(String nBiRequerente) {
-        this.nBiRequerente = nBiRequerente;
     }
 
     public String getCasaRequerente() {
@@ -145,6 +124,14 @@ public class Requente implements Serializable {
 
     public void setProcessoCollection(Collection<Processo> processoCollection) {
         this.processoCollection = processoCollection;
+    }
+
+    public Advogado getIdAdvogado() {
+        return idAdvogado;
+    }
+
+    public void setIdAdvogado(Advogado idAdvogado) {
+        this.idAdvogado = idAdvogado;
     }
 
     public Municipio getIdMunicipio() {

@@ -5,7 +5,6 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.RequeridoDAO;
 import fenix.iure.ejbs.RequeridoFacade;
 import fenix.iure.entities.Requerido;
 import javax.faces.component.UIComponent;
@@ -23,7 +22,7 @@ import javax.naming.NamingException;
 @FacesConverter(value = "requeridoConverter", forClass = Requerido.class)
 public class RequeridoConverter implements Converter{
 
-    RequeridoDAO requeridoDAO = new RequeridoDAO();
+            
     RequeridoFacade requeridoFacade = lookupRequeridoFacade();
     
     @Override

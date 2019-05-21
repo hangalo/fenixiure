@@ -5,10 +5,7 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.TipoPessoaDAO;
-import fenix.iure.ejbs.AdvogadoFacade;
 import fenix.iure.ejbs.TipoPessoaFacade;
-import fenix.iure.entities.Advogado;
 import fenix.iure.entities.TipoPessoa;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -24,16 +21,15 @@ import javax.naming.NamingException;
  */
 @FacesConverter(value = "tipoPessoaConverter", forClass = TipoPessoa.class)
 public class TipoPessoaConverter implements Converter {
-                 //TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO();
-    
+
     TipoPessoaFacade tipoPessoaFacade = lookupTipoPessoaFacade();
-    
-    
+
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
+
         TipoPessoa tipoPessoa;
         if (value != null) {
-            tipoPessoa = (TipoPessoa)tipoPessoaFacade.find(Integer.parseInt(value));
+            tipoPessoa = (TipoPessoa) tipoPessoaFacade.find(Integer.parseInt(value));
             return tipoPessoa;
         }
         return null;
@@ -46,8 +42,7 @@ public class TipoPessoaConverter implements Converter {
         }
         return null;
     }
-    
-    
+
     private TipoPessoaFacade lookupTipoPessoaFacade() {
         Context context = null;
         try {
@@ -59,5 +54,5 @@ public class TipoPessoaConverter implements Converter {
         }
 
     }
-    
+
 }

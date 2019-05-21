@@ -5,7 +5,7 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.JuizDAO;
+
 import fenix.iure.ejbs.JuizFacade;
 import fenix.iure.entities.Juiz;
 import javax.faces.component.UIComponent;

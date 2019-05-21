@@ -5,7 +5,7 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.AdvogadoDAO;
+
 import fenix.iure.ejbs.AdvogadoFacade;
 //import fenix.iure.modelo.Advogado;
 import fenix.iure.entities.Advogado;
@@ -163,7 +163,7 @@ public class AdvoadoMBean implements Serializable {
     }
 
     public String startEdit() {
-        return "advogado_listar?faces-redirect=true";
+        return "advogado_lstar?faces-redirect=true";
     }
 
     public void edit(ActionEvent event) {
@@ -174,7 +174,7 @@ public class AdvoadoMBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("advogado_listar.jsf");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("advogado_lstar.jsf");
                 } catch (IOException ex) {
                     Logger.getLogger(AdvoadoMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -231,7 +231,7 @@ public class AdvoadoMBean implements Serializable {
             advogados = null;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tSucesso ao eliminar os dados"));
             
-            return "advogado_listar?faces-redirect=true";
+            return "advogado_lstar?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;

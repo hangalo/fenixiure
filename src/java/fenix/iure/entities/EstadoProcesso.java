@@ -24,15 +24,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "estado_processo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoProcesso.findAll", query = "SELECT e FROM EstadoProcesso e")
-    , @NamedQuery(name = "EstadoProcesso.findByIdEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.idEstadoProcesso = :idEstadoProcesso")
-    , @NamedQuery(name = "EstadoProcesso.findByEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.estadoProcesso = :estadoProcesso")})
+    @NamedQuery(name = "EstadoProcesso.findAll", query = "SELECT e FROM EstadoProcesso e"),
+    @NamedQuery(name = "EstadoProcesso.findByIdEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.idEstadoProcesso = :idEstadoProcesso"),
+    @NamedQuery(name = "EstadoProcesso.findByEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.estadoProcesso = :estadoProcesso")})
 public class EstadoProcesso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,8 +44,8 @@ public class EstadoProcesso implements Serializable {
     @Size(max = 45)
     @Column(name = "estado_processo")
     private String estadoProcesso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstadoProcesso")
-    private Collection<Processo> processoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstado")
+    private Collection<Tramitacao> tramitacaoCollection;
 
     public EstadoProcesso() {
     }
@@ -71,12 +71,12 @@ public class EstadoProcesso implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Processo> getProcessoCollection() {
-        return processoCollection;
+    public Collection<Tramitacao> getTramitacaoCollection() {
+        return tramitacaoCollection;
     }
 
-    public void setProcessoCollection(Collection<Processo> processoCollection) {
-        this.processoCollection = processoCollection;
+    public void setTramitacaoCollection(Collection<Tramitacao> tramitacaoCollection) {
+        this.tramitacaoCollection = tramitacaoCollection;
     }
 
     @Override

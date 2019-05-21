@@ -106,12 +106,7 @@
                                     <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt_BR" effect ="slide" />
-                                </h:panelGrid>
-                            </h:panelGroup>
+                           
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
@@ -147,12 +142,7 @@
                                     <p:inputText  style="margin-left: 15%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
                                 </h:panelGrid>
                             </h:panelGroup>
-                            <h:panelGroup>
-                                <h:panelGrid columns="1">
-                                    <p:outputLabel value="Data de Nascimento:"/>
-                                    <p:calendar  value="#{juizMBean.juiz.dataNascimentoJuiz}" pattern="dd/MM/yyyy" locale="pt"  />
-                                </h:panelGrid>
-                            </h:panelGroup>
+                           
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel style="margin-left: 15%" value="Data Inicio Função"/>
@@ -177,10 +167,6 @@
                                 <p:outputLabel value="#{juizMBean.juiz.nomeJuiz}"/>
                                 <p:outputLabel value="Sobrenome: "/>
                                 <p:outputLabel value="#{juizMBean.juiz.sobrenomeJuiz}"/>
-                                <p:outputLabel value="Data de Nascimento: "/>
-                                <p:outputLabel id="data_nasc" value="#{juizMBean.juiz.dataNascimentoJuiz}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                </p:outputLabel>
                                 <p:outputLabel value="Data inicio de Função "/>
                                 <p:outputLabel id="data_inic" value="#{juizMBean.juiz.dataInicioFuncoes}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />

@@ -25,18 +25,12 @@
 
 
                           <!--inicio Datatable-->
-                          <p:dataTable value="#{requerenteMBean.findByNome}" var="requerente" paginator="true" cellSeparator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                          <p:dataTable value="#{requerenteMBean.findByNome}" var="requerente" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Nome "/>
                                     </f:facet>
                                     <h:outputText value="#{requerente.nomeRequente}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Sobrenome "/>
-                                    </f:facet>
-                                    <h:outputText value="#{requerente.sobrenomeRequerente}"/>
                                 </p:column>
                                 
                                 
@@ -57,7 +51,7 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total Juizes  (#{requerenteMBean.findByNome.size()})
+                                    Total Juizes  (#{requerenteMBean.requerentes.size()})
                                 </f:facet>                           
                             </p:dataTable>
 
@@ -67,8 +61,8 @@
                     
                     <!--Inicio do dialogo guardar-->
 
-                    <h:form id="Operacoes">
-                        <p:commandButton value="Fechar" action="/reservado/requerente/requerente_lstar" ajax="false" immediate="true" />                   
+                   <h:form id="Operacoes">
+                        <p:commandButton style="margin-left: 3px" value="Fechar" action="/reservado/requerente/requerente_lstar" ajax="false" immediate="true" />                   
                     </h:form>
 
                     <!--Fim do dialogo guardar-->
@@ -88,18 +82,8 @@
                                         <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
                                     </h:panelGrid> 
                                 </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="SOBRENOME:"/>
-                                        <p:inputText style="margin-left: 20px" id="sobrenome" value="#{requerenteMBean.requerente.sobrenomeRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="BI:"/>
-                                        <p:inputText style="margin-left: 20px" id="bi" value="#{requerenteMBean.requerente.NBiRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
+                                
+                                
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
@@ -109,6 +93,14 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
+                                
+                                <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left:30% " value="ADVOGADO:"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{requerenteMBean.requerente.idAdvogado}" required="true" converter="advogadoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{requerenteMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
 
                             </h:panelGrid>
 
@@ -176,23 +168,12 @@
                             <h:panelGrid  columns="4">  
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <h:inputHidden value="#{requerenteMBean.requerente.idRequente}"/>
                                         <p:outputLabel value="NOME:"/>
                                         <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
                                     </h:panelGrid> 
                                 </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="SOBRENOME:"/>
-                                        <p:inputText style="margin-left: 20px" id="sobrenome" value="#{requerenteMBean.requerente.sobrenomeRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 20px" value="BI:"/>
-                                        <p:inputText style="margin-left: 20px" id="bi" value="#{requerenteMBean.requerente.NBiRequerente}" size="20"/>
-                                    </h:panelGrid> 
-                                </h:panelGroup>
+                                
+                                
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
@@ -202,6 +183,14 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
+                                
+                                <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left:30% " value="ADVOGADO:"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{requerenteMBean.requerente.idAdvogado}" required="true" converter="advogadoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{requerenteMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
 
                             </h:panelGrid>
 
@@ -240,8 +229,13 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
-     
+                                
+                                
+                                
+                                
                             </h:panelGrid>
+                            
+                            
                             
                             
                             
@@ -251,16 +245,12 @@
                     </p:dialog>
                     <!--fim do dialogo editar-->
                     
-                     <!--Inicio do dialog ver-->
-                    <p:dialog header="Dados do Requerente" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="310" height="250">
+                    <!--Inicio do dialog ver-->
+                    <p:dialog header="Dados de Requerente" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="310" height="250">
                         <h:form>                                                       
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Nome: "/>
                                 <h:outputText value="#{requerenteMBean.requerente.nomeRequente}"/>
-                                <p:outputLabel value="Sobrenome: "/>
-                                <h:outputText value="#{requerenteMBean.requerente.sobrenomeRequerente}"/>
-                                <p:outputLabel value="Bilhete de Identidade "/>
-                                <h:outputText value="#{requerenteMBean.requerente.NBiRequerente}"/>
                                 <p:outputLabel value="Municipio "/>
                                 <h:outputText value="#{requerenteMBean.requerente.idMunicipio.nomeMunicipio}"/>
                                 <p:outputLabel value="Tipo "/>
@@ -271,6 +261,9 @@
                         
                     </p:dialog>
 
+                    <!--Fim do dialog ver-->
+                    
+                    
                     
 
                 </f:view>

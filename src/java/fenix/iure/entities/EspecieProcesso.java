@@ -24,15 +24,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "especie_processo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EspecieProcesso.findAll", query = "SELECT e FROM EspecieProcesso e")
-    , @NamedQuery(name = "EspecieProcesso.findByIdEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.idEspecieProcesso = :idEspecieProcesso")
-    , @NamedQuery(name = "EspecieProcesso.findByEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.especieProcesso = :especieProcesso")})
+    @NamedQuery(name = "EspecieProcesso.findAll", query = "SELECT e FROM EspecieProcesso e"),
+    @NamedQuery(name = "EspecieProcesso.findByIdEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.idEspecieProcesso = :idEspecieProcesso"),
+    @NamedQuery(name = "EspecieProcesso.findByEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.especieProcesso = :especieProcesso")})
 public class EspecieProcesso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class EspecieProcesso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_especie_processo")
     private Integer idEspecieProcesso;
-    @Size(max = 150)
+    @Size(max = 45)
     @Column(name = "especie_processo")
     private String especieProcesso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEspecieProcesso")

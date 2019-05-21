@@ -5,12 +5,12 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.MunicipioDAO;
-import fenix.iure.dao.RequerenteDAO;
-import fenix.iure.dao.TipoPessoaDAO;
+
+import fenix.iure.ejbs.AdvogadoFacade;
 import fenix.iure.ejbs.MunicipioFacade;
 import fenix.iure.ejbs.RequenteFacade;
 import fenix.iure.ejbs.TipoPessoaFacade;
+import fenix.iure.entities.Advogado;
 import fenix.iure.entities.Municipio;
 import fenix.iure.entities.Requente;
 import fenix.iure.entities.TipoPessoa;
@@ -42,6 +42,7 @@ public class RequerenteMBean implements Serializable{
     private List<Requente> requerentes;
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
+    private List<Advogado> advogados;
 
     
     @Inject
@@ -50,6 +51,8 @@ public class RequerenteMBean implements Serializable{
     TipoPessoaFacade tipoPessoaFacade;
     @Inject
     RequenteFacade requenteFacade;
+    @Inject
+    AdvogadoFacade advogadoFacade;
     
   
     // Listas das pesquisas paramentrizadas
@@ -103,7 +106,7 @@ public class RequerenteMBean implements Serializable{
     }
 
     public String startEdit() {
-        return "requerente_listar?faces-redirect=true";
+        return "requerente_lstar?faces-redirect=true";
     }
 
     
@@ -138,7 +141,7 @@ public class RequerenteMBean implements Serializable{
         requenteFacade.remove(requerente);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              requerentes = null;
-             return "requerente_listar?faces-redirect=true";
+             return "requerente_lstar?faces-redirect=true";
         /*}else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
@@ -237,6 +240,11 @@ public class RequerenteMBean implements Serializable{
 
     public void setIdTipoPessoa(int idTipoPessoa) {
         this.idTipoPessoa = idTipoPessoa;
+    }
+
+    public List<Advogado> getAdvogados() {
+        advogados = advogadoFacade.findAll();
+        return advogados;
     }
 
     

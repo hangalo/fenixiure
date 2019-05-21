@@ -5,12 +5,11 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.MunicipioDAO;
-import fenix.iure.dao.RequeridoDAO;
-import fenix.iure.dao.TipoPessoaDAO;
+import fenix.iure.ejbs.AdvogadoFacade;
 import fenix.iure.ejbs.MunicipioFacade;
 import fenix.iure.ejbs.RequeridoFacade;
 import fenix.iure.ejbs.TipoPessoaFacade;
+import fenix.iure.entities.Advogado;
 import fenix.iure.entities.Municipio;
 import fenix.iure.entities.Requerido;
 import fenix.iure.entities.TipoPessoa;
@@ -42,8 +41,10 @@ public class RequeridoMBean implements Serializable {
     private List<Requerido> requeridos;
     private List<TipoPessoa> tipoPessoas;
     private List<Municipio> municipios;
+    private List<Advogado> advogados;
     
-    
+    @Inject
+    AdvogadoFacade advogadoFacade;
     @Inject
     RequeridoFacade requeridoFacade;
     @Inject
@@ -230,6 +231,12 @@ public class RequeridoMBean implements Serializable {
         findByTipoPessoa = requeridoFacade.findByIdTipoPessoa(idTipoPessoa);
         return findByTipoPessoa;
     }
+
+    public List<Advogado> getAdvogasos() {
+        advogados = advogadoFacade.findAll();
+        return advogados;
+    }
+    
     
     
     

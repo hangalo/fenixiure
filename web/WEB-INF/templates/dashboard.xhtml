@@ -11,7 +11,7 @@
         <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="bootstrap.min.css" />
-        
+
         <title>Fenix Iure</title>
 
     </h:head>
@@ -19,34 +19,35 @@
     <h:body>
 
         <p:layout fullPage="true">
-            
+            <!-- 
             <p:layoutUnit position="north"   resizable="false" closable="false" collapsible="false">
                 <ui:insert name="top">
                     <ui:include src="../menus/barra_navegacao_admini.xhtml"></ui:include>   
                 </ui:insert>
             </p:layoutUnit>
+            -->
 
-
-            <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+            <p:layoutUnit  position="south" size="50" closable="true" collapsible="true">
                 <ui:insert name="rodape">
-                    <ui:include src="../menus/rodape.xhtml"></ui:include></ui:insert>
+                    <ui:include src="../menus/rodape.xhtml"></ui:include>
+                </ui:insert>
             </p:layoutUnit>
 
 
-            <p:layoutUnit position="west" size="320" style="text-align: center" header="Menu" collapsible="true">
+            <p:layoutUnit position="west" size="320" style="text-align: center" footer="" header="MENU" collapsed="true" visible="true" effect="slide" effectSpeed="2200" collapseSize="50" collapsible="true">
                 <ui:insert name="menu">
                     <ui:include src="../menus/menu_administrativo.xhtml"></ui:include>                   
                 </ui:insert>
             </p:layoutUnit>
 
 
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center" style="text-align: center" header="== FÊNIX IURE - SISTEMA INTEGRADO DE GESTÃO DE PROCESSOS JUDICIAIS ==">
                 <ui:insert name="content"> 
-                
+
                 </ui:insert>
             </p:layoutUnit>
 
         </p:layout>
     </h:body>
-    
+
 </html>

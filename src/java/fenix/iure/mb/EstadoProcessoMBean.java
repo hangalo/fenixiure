@@ -5,7 +5,7 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.EstadoProcessoDAO;
+
 import fenix.iure.ejbs.EstadoProcessoFacade;
 import fenix.iure.entities.EstadoProcesso;
 import java.awt.event.ActionEvent;
@@ -31,7 +31,6 @@ public class EstadoProcessoMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private EstadoProcesso estadoProcesso;
-    private EstadoProcessoDAO estadoProcessoDAO;
     private List<EstadoProcesso> estadoProcessos;
     
     
@@ -44,8 +43,7 @@ public class EstadoProcessoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         estadoProcesso = new EstadoProcesso();
-        estadoProcessoDAO = new EstadoProcessoDAO();
-        
+         
     }
 
     public EstadoProcesso getEstadoProcesso() {
@@ -56,13 +54,7 @@ public class EstadoProcessoMBean implements Serializable {
         this.estadoProcesso = estadoProcesso;
     }
 
-    public EstadoProcessoDAO getEstadoProcessoDAO() {
-        return estadoProcessoDAO;
-    }
-
-    public void setEstadoProcessoDAO(EstadoProcessoDAO estadoProcessoDAO) {
-        this.estadoProcessoDAO = estadoProcessoDAO;
-    }
+   
 
     public List<EstadoProcesso> getEstadoProcessos() {
         estadoProcessos= estadoProcessoFacade.findAll();

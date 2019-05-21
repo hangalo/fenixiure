@@ -27,18 +27,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "juiz")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Juiz.findAll", query = "SELECT j FROM Juiz j")
-    , @NamedQuery(name = "Juiz.findByIdJuiz", query = "SELECT j FROM Juiz j WHERE j.idJuiz = :idJuiz")
-    , @NamedQuery(name = "Juiz.findByNomeJuiz", query = "SELECT j FROM Juiz j WHERE j.nomeJuiz = :nomeJuiz")
-    , @NamedQuery(name = "Juiz.findBySobrenomeJuiz", query = "SELECT j FROM Juiz j WHERE j.sobrenomeJuiz = :sobrenomeJuiz")
-    , @NamedQuery(name = "Juiz.findByDataNascimentoJuiz", query = "SELECT j FROM Juiz j WHERE j.dataNascimentoJuiz = :dataNascimentoJuiz")
-    , @NamedQuery(name = "Juiz.findByDataInicioFuncoes", query = "SELECT j FROM Juiz j WHERE j.dataInicioFuncoes = :dataInicioFuncoes")})
+    @NamedQuery(name = "Juiz.findAll", query = "SELECT j FROM Juiz j"),
+    @NamedQuery(name = "Juiz.findByIdJuiz", query = "SELECT j FROM Juiz j WHERE j.idJuiz = :idJuiz"),
+    @NamedQuery(name = "Juiz.findByNomeJuiz", query = "SELECT j FROM Juiz j WHERE j.nomeJuiz = :nomeJuiz"),
+    @NamedQuery(name = "Juiz.findBySobrenomeJuiz", query = "SELECT j FROM Juiz j WHERE j.sobrenomeJuiz = :sobrenomeJuiz"),
+    @NamedQuery(name = "Juiz.findByDataInicioFuncoes", query = "SELECT j FROM Juiz j WHERE j.dataInicioFuncoes = :dataInicioFuncoes")})
 public class Juiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,9 +52,6 @@ public class Juiz implements Serializable {
     @Size(max = 45)
     @Column(name = "sobrenome_juiz")
     private String sobrenomeJuiz;
-    @Column(name = "data_nascimento_juiz")
-    @Temporal(TemporalType.DATE)
-    private Date dataNascimentoJuiz;
     @Column(name = "data_inicio_funcoes")
     @Temporal(TemporalType.DATE)
     private Date dataInicioFuncoes;
@@ -91,14 +87,6 @@ public class Juiz implements Serializable {
 
     public void setSobrenomeJuiz(String sobrenomeJuiz) {
         this.sobrenomeJuiz = sobrenomeJuiz;
-    }
-
-    public Date getDataNascimentoJuiz() {
-        return dataNascimentoJuiz;
-    }
-
-    public void setDataNascimentoJuiz(Date dataNascimentoJuiz) {
-        this.dataNascimentoJuiz = dataNascimentoJuiz;
     }
 
     public Date getDataInicioFuncoes() {

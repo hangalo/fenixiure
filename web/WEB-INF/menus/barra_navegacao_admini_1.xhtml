@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>conteudo</title>
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+
+
+    </h:head>
+    <h:body>
+        
+       
+        
+
+        <!-- Inicio Navigation -->
+        <nav  style="background: #d0e9c6; margin-bottom: 0;"  class="navbar navbar-default navbar-static-top" role="navigation">
+            <!-- Inicio Logotipo -->
+            <div class="navbar-header" style="width: 65%; padding-top: 0.5%; padding-bottom: 0.5%;">
+                <a href="/fenixiure/area_administrativa.jsf">
+                    <h:graphicImage class="img-rounded" style="margin-bottom: 0%;margin-left: 3%" width="250px" library="imagens" name="f2.png" />
+                </a><b class="h1"></b>
+
+            </div>
+            <!-- Fim Logotipo -->
+
+            <!-- Inicio Area reservada -->
+            <div style="margin-right: 5%; margin-top: 1%" class="nav navbar-top-links navbar-right">                                        
+                <h:form>
+                    <p style="float: right; margin-left: 15px">#{user}</p>
+                    <h:commandLink action="#{loginMB.logout()}" value="Logout"/> 
+                </h:form>
+
+
+            </div>
+
+            <!-- Fim Area reservada -->
+
+
+        </nav>
+        <!-- Fim Navigation -->
+
+
+
+
+    </h:body>
+</html>
+

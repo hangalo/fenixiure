@@ -46,10 +46,10 @@ import javax.inject.Inject;
 @Named(value = "processoMBean")
 @SessionScoped
 public class ProcessoMBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
-    private Processo processo; 
+    private Processo processo;
     private List<Processo> processos;
     // Listas para as comboboxs
     private List<EspecieProcesso> especies;
@@ -59,7 +59,7 @@ public class ProcessoMBean implements Serializable {
     private List<Requerido> requeridos;
     private List<Advogado> advogados;
     private List<Juiz> juizes;
-    
+
     // Variaveis para pesquisas paramentrizadas
     private String numero;
     private Date dataEntrada;
@@ -71,7 +71,7 @@ public class ProcessoMBean implements Serializable {
     private int idAdvogado;
     private int idTipoDecisao;
     private int idJuiz;
-    
+
     // Listas das pesquisas paramentrizadas
     private List<Processo> findByNumero;
     private List<Processo> findByDataEntrada;
@@ -83,11 +83,10 @@ public class ProcessoMBean implements Serializable {
     private List<Processo> findByAdvogado;
     private List<Processo> findByTipoDecisao;
     private List<Processo> findByJuiz;
-    
+
     // Buscar processos recentes
     private List<Processo> findRecentes;
-    
-    
+
     @Inject
     ProcessoFacade processoFacade;
     @Inject
@@ -104,91 +103,108 @@ public class ProcessoMBean implements Serializable {
     AdvogadoFacade advogadoFacade;
     @Inject
     JuizFacade juizFacade;
-    
-    
+
     public ProcessoMBean() {
     }
-    
+
     // Variaveis para os relatorios
     @ManagedProperty(value = "#{gestorImpressao}")
     private GestorImpressao gestorImpressao;
-    
+
     @PostConstruct
     public void inicializar() {
         processo = new Processo();
-        processos =  new ArrayList<>();       
-        
-        especies =  new ArrayList<>();
-        
-        estados =  new ArrayList<>();
-        
-        tipos =  new ArrayList<>();
-        
-        requerentes =  new ArrayList<>();
-        
-        requeridos =  new ArrayList<>();
-        
-        advogados =  new ArrayList<>();
-        
-        juizes =  new ArrayList<>();
-        
-        findRecentes = new ArrayList<>();
-        
-    }
+        processos = new ArrayList<>();
 
-   
+        especies = new ArrayList<>();
+
+        estados = new ArrayList<>();
+
+        tipos = new ArrayList<>();
+
+        requerentes = new ArrayList<>();
+
+        requeridos = new ArrayList<>();
+
+        advogados = new ArrayList<>();
+
+        juizes = new ArrayList<>();
+
+        findRecentes = new ArrayList<>();
+
+    }
 
     public List<Processo> getProcessos() {
         processos = processoFacade.findAll();
         return processos;
     }
-    
+
     public String newSave() {
         processo = new Processo();
         return "processo_lsta?faces-redirect=true";
     }
-    
-    public void guardar(ActionEvent evt) {
+
+    public String guardar(ActionEvent evt) {
+        String controlo = null;
         if (processo != null) {
-            processoFacade.create(processo);
-            processo = new Processo();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+            try {
+                processoFacade.create(processo);
+                processo = new Processo();
+                controlo = null;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+                
+                return controlo;
+
+            } catch (javax.ejb.EJBException | java.lang.NumberFormatException ex) {
+                controlo = null;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao guardar\t", "\tNúmero de processo ja exisente!"));
+                
+                return controlo;
+            }
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro2 ao guardar os dados"));
+            newSave();
+            return controlo;
         }
+        
     }
-    
+
     public String startEdit() {
         return "processo_lsta?faces-redirect=true";
     }
+
     public void edit(javafx.event.ActionEvent event) {
-        processoFacade.edit(processo);
+        try {
+            processoFacade.edit(processo);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             requerentes = null;
+        } catch (javax.ejb.EJBException e) {
+        }
 
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta.jsf");
-            } catch (IOException ex) {
-                Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta.jsf");
+        } catch (IOException ex) {
+            Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     public void editPublico(javafx.event.ActionEvent event) {
         processoFacade.edit(processo);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            requerentes = null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        requerentes = null;
 
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta_p.jsf");
-            } catch (IOException ex) {
-                Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta_p.jsf");
+        } catch (IOException ex) {
+            Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     public String delete() {
         processoFacade.remove(processo);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-             processos = null;
-             return "processo_lsta?faces-redirect=true";    
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+        processos = null;
+        return "processo_lsta?faces-redirect=true";
     }
 
     public List<EspecieProcesso> getEspecies() {
@@ -376,18 +392,14 @@ public class ProcessoMBean implements Serializable {
     public void setGestorImpressao(GestorImpressao gestorImpressao) {
         this.gestorImpressao = gestorImpressao;
     }
-    
-     public String imprimirListaArtigo() {
+
+    public String imprimirListaArtigo() {
         String relatorio = "processo_lista1.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
-        //gestorImpressao.imprimirPDF(relatorio, parametros);
-        gestorImpressao.imprimir(relatorio, parametros);
+        gestorImpressao.imprimirPDF(relatorio, parametros);
         return null;
 
     }
-    
-    
-    
-    
+
 }

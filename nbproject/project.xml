@@ -35,6 +35,10 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${file.reference.afterdark-1.0.10.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
                     <file>${libs.jasper6.1.0.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>

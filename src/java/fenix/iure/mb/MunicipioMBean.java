@@ -8,8 +8,7 @@ package fenix.iure.mb;
 
 
 
-import fenix.iure.dao.MunicipioDAO;
-import fenix.iure.dao.ProvinciaDAO;
+
 import fenix.iure.ejbs.MunicipioFacade;
 import fenix.iure.ejbs.ProvinciaFacade;
 import fenix.iure.entities.Municipio;
@@ -35,9 +34,7 @@ import javax.inject.Inject;
 @SessionScoped
 public class MunicipioMBean implements Serializable {
 
-    private ProvinciaDAO provinciaDAO;
-    private MunicipioDAO municipioDAO;
-
+   
     private Municipio municipio;
     private Provincia provincia;
     private List<Municipio> municipios;
@@ -63,8 +60,6 @@ public class MunicipioMBean implements Serializable {
         provincia = new Provincia();
         municipios = new ArrayList<>();
         provincias = new ArrayList<>();
-        municipioDAO = new MunicipioDAO();
-        provinciaDAO = new ProvinciaDAO();
         provincias = provinciaFacade.findAll();
     }
 

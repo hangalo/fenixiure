@@ -5,7 +5,7 @@
  */
 package fenix.iure.converters;
 
-import fenix.iure.dao.EspecieProcessoDAO;
+
 import fenix.iure.ejbs.EspecieProcessoFacade;
 import fenix.iure.entities.EspecieProcesso;
 import javax.faces.component.UIComponent;

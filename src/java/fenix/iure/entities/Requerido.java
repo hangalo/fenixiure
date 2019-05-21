@@ -26,20 +26,18 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "requerido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Requerido.findAll", query = "SELECT r FROM Requerido r")
-    , @NamedQuery(name = "Requerido.findByIdRequerido", query = "SELECT r FROM Requerido r WHERE r.idRequerido = :idRequerido")
-    , @NamedQuery(name = "Requerido.findByNomeRequerido", query = "SELECT r FROM Requerido r WHERE r.nomeRequerido = :nomeRequerido")
-    , @NamedQuery(name = "Requerido.findBySobrenomeRequerido", query = "SELECT r FROM Requerido r WHERE r.sobrenomeRequerido = :sobrenomeRequerido")
-    , @NamedQuery(name = "Requerido.findByNBiRequerido", query = "SELECT r FROM Requerido r WHERE r.nBiRequerido = :nBiRequerido")
-    , @NamedQuery(name = "Requerido.findByCasaRequerido", query = "SELECT r FROM Requerido r WHERE r.casaRequerido = :casaRequerido")
-    , @NamedQuery(name = "Requerido.findByRuaRequerido", query = "SELECT r FROM Requerido r WHERE r.ruaRequerido = :ruaRequerido")
-    , @NamedQuery(name = "Requerido.findByBairroRequerido", query = "SELECT r FROM Requerido r WHERE r.bairroRequerido = :bairroRequerido")})
+    @NamedQuery(name = "Requerido.findAll", query = "SELECT r FROM Requerido r"),
+    @NamedQuery(name = "Requerido.findByIdRequerido", query = "SELECT r FROM Requerido r WHERE r.idRequerido = :idRequerido"),
+    @NamedQuery(name = "Requerido.findByNomeRequerido", query = "SELECT r FROM Requerido r WHERE r.nomeRequerido = :nomeRequerido"),
+    @NamedQuery(name = "Requerido.findByCasaRequerido", query = "SELECT r FROM Requerido r WHERE r.casaRequerido = :casaRequerido"),
+    @NamedQuery(name = "Requerido.findByRuaRequerido", query = "SELECT r FROM Requerido r WHERE r.ruaRequerido = :ruaRequerido"),
+    @NamedQuery(name = "Requerido.findByBairroRequerido", query = "SELECT r FROM Requerido r WHERE r.bairroRequerido = :bairroRequerido")})
 public class Requerido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,12 +50,6 @@ public class Requerido implements Serializable {
     @Column(name = "nome_requerido")
     private String nomeRequerido;
     @Size(max = 45)
-    @Column(name = "sobrenome_requerido")
-    private String sobrenomeRequerido;
-    @Size(max = 45)
-    @Column(name = "n_bi_requerido")
-    private String nBiRequerido;
-    @Size(max = 45)
     @Column(name = "casa_requerido")
     private String casaRequerido;
     @Size(max = 45)
@@ -66,14 +58,17 @@ public class Requerido implements Serializable {
     @Size(max = 45)
     @Column(name = "bairro_requerido")
     private String bairroRequerido;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRequerido")
-    private Collection<Processo> processoCollection;
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     @ManyToOne(optional = false)
     private Municipio idMunicipio;
+    @JoinColumn(name = "id_advogado", referencedColumnName = "id_advogado")
+    @ManyToOne(optional = false)
+    private Advogado idAdvogado;
     @JoinColumn(name = "id_tipo", referencedColumnName = "id_tipo")
     @ManyToOne(optional = false)
     private TipoPessoa idTipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRequerido")
+    private Collection<Processo> processoCollection;
 
     public Requerido() {
     }
@@ -96,22 +91,6 @@ public class Requerido implements Serializable {
 
     public void setNomeRequerido(String nomeRequerido) {
         this.nomeRequerido = nomeRequerido;
-    }
-
-    public String getSobrenomeRequerido() {
-        return sobrenomeRequerido;
-    }
-
-    public void setSobrenomeRequerido(String sobrenomeRequerido) {
-        this.sobrenomeRequerido = sobrenomeRequerido;
-    }
-
-    public String getNBiRequerido() {
-        return nBiRequerido;
-    }
-
-    public void setNBiRequerido(String nBiRequerido) {
-        this.nBiRequerido = nBiRequerido;
     }
 
     public String getCasaRequerido() {
@@ -138,15 +117,6 @@ public class Requerido implements Serializable {
         this.bairroRequerido = bairroRequerido;
     }
 
-    @XmlTransient
-    public Collection<Processo> getProcessoCollection() {
-        return processoCollection;
-    }
-
-    public void setProcessoCollection(Collection<Processo> processoCollection) {
-        this.processoCollection = processoCollection;
-    }
-
     public Municipio getIdMunicipio() {
         return idMunicipio;
     }
@@ -155,12 +125,29 @@ public class Requerido implements Serializable {
         this.idMunicipio = idMunicipio;
     }
 
+    public Advogado getIdAdvogado() {
+        return idAdvogado;
+    }
+
+    public void setIdAdvogado(Advogado idAdvogado) {
+        this.idAdvogado = idAdvogado;
+    }
+
     public TipoPessoa getIdTipo() {
         return idTipo;
     }
 
     public void setIdTipo(TipoPessoa idTipo) {
         this.idTipo = idTipo;
+    }
+
+    @XmlTransient
+    public Collection<Processo> getProcessoCollection() {
+        return processoCollection;
+    }
+
+    public void setProcessoCollection(Collection<Processo> processoCollection) {
+        this.processoCollection = processoCollection;
     }
 
     @Override

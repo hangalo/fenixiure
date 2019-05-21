@@ -5,7 +5,7 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.TipoPessoaDAO;
+
 import fenix.iure.ejbs.TipoPessoaFacade;
 import fenix.iure.entities.TipoPessoa;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,6 @@ public class TipoPessoaMBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private TipoPessoa tipoPessoa;
-    private TipoPessoaDAO tipoPessoaDAO;
     private List<TipoPessoa> tipoPessoas;
 
     @Inject
@@ -44,7 +43,7 @@ public class TipoPessoaMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         tipoPessoa = new TipoPessoa();
-        tipoPessoaDAO = new TipoPessoaDAO();
+        
 
     }
 

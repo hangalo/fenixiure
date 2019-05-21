@@ -20,23 +20,22 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author informatica
+ * @author Elísio Kavaimunwa
  */
 @Entity
 @Table(name = "processo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Processo.findAll", query = "SELECT p FROM Processo p")
-    , @NamedQuery(name = "Processo.findByIdProcesso", query = "SELECT p FROM Processo p WHERE p.idProcesso = :idProcesso")
-    , @NamedQuery(name = "Processo.findByNumeroProcesso", query = "SELECT p FROM Processo p WHERE p.numeroProcesso = :numeroProcesso")
-    , @NamedQuery(name = "Processo.findByDataEntrada", query = "SELECT p FROM Processo p WHERE p.dataEntrada = :dataEntrada")
-    , @NamedQuery(name = "Processo.findByDataConclusao", query = "SELECT p FROM Processo p WHERE p.dataConclusao = :dataConclusao")
-    , @NamedQuery(name = "Processo.findByResumoDespacho", query = "SELECT p FROM Processo p WHERE p.resumoDespacho = :resumoDespacho")})
+    @NamedQuery(name = "Processo.findAll", query = "SELECT p FROM Processo p"),
+    @NamedQuery(name = "Processo.findByIdProcesso", query = "SELECT p FROM Processo p WHERE p.idProcesso = :idProcesso"),
+    @NamedQuery(name = "Processo.findByNumeroProcesso", query = "SELECT p FROM Processo p WHERE p.numeroProcesso = :numeroProcesso"),
+    @NamedQuery(name = "Processo.findByDataEntrada", query = "SELECT p FROM Processo p WHERE p.dataEntrada = :dataEntrada")})
 public class Processo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,27 +44,17 @@ public class Processo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_processo")
     private Integer idProcesso;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "numero_processo")
     private String numeroProcesso;
     @Column(name = "data_entrada")
     @Temporal(TemporalType.DATE)
     private Date dataEntrada;
-    @Column(name = "data_conclusao")
-    @Temporal(TemporalType.DATE)
-    private Date dataConclusao;
-    @Size(max = 200)
-    @Column(name = "resumo_despacho")
-    private String resumoDespacho;
-    @JoinColumn(name = "id_advogado", referencedColumnName = "id_advogado")
-    @ManyToOne(optional = false)
-    private Advogado idAdvogado;
     @JoinColumn(name = "id_especie_processo", referencedColumnName = "id_especie_processo")
     @ManyToOne(optional = false)
     private EspecieProcesso idEspecieProcesso;
-    @JoinColumn(name = "id_estado_processo", referencedColumnName = "id_estado_processo")
-    @ManyToOne(optional = false)
-    private EstadoProcesso idEstadoProcesso;
     @JoinColumn(name = "id_juiz", referencedColumnName = "id_juiz")
     @ManyToOne(optional = false)
     private Juiz idJuiz;
@@ -75,15 +64,17 @@ public class Processo implements Serializable {
     @JoinColumn(name = "id_requerido", referencedColumnName = "id_requerido")
     @ManyToOne(optional = false)
     private Requerido idRequerido;
-    @JoinColumn(name = "id_tipo_decisao", referencedColumnName = "id_tipo_decisao")
-    @ManyToOne(optional = false)
-    private TipoDecisao idTipoDecisao;
 
     public Processo() {
     }
 
     public Processo(Integer idProcesso) {
         this.idProcesso = idProcesso;
+    }
+
+    public Processo(Integer idProcesso, String numeroProcesso) {
+        this.idProcesso = idProcesso;
+        this.numeroProcesso = numeroProcesso;
     }
 
     public Integer getIdProcesso() {
@@ -102,8 +93,6 @@ public class Processo implements Serializable {
         this.numeroProcesso = numeroProcesso;
     }
 
-    
-
     public Date getDataEntrada() {
         return dataEntrada;
     }
@@ -112,44 +101,12 @@ public class Processo implements Serializable {
         this.dataEntrada = dataEntrada;
     }
 
-    public Date getDataConclusao() {
-        return dataConclusao;
-    }
-
-    public void setDataConclusao(Date dataConclusao) {
-        this.dataConclusao = dataConclusao;
-    }
-
-    public String getResumoDespacho() {
-        return resumoDespacho;
-    }
-
-    public void setResumoDespacho(String resumoDespacho) {
-        this.resumoDespacho = resumoDespacho;
-    }
-
-    public Advogado getIdAdvogado() {
-        return idAdvogado;
-    }
-
-    public void setIdAdvogado(Advogado idAdvogado) {
-        this.idAdvogado = idAdvogado;
-    }
-
     public EspecieProcesso getIdEspecieProcesso() {
         return idEspecieProcesso;
     }
 
     public void setIdEspecieProcesso(EspecieProcesso idEspecieProcesso) {
         this.idEspecieProcesso = idEspecieProcesso;
-    }
-
-    public EstadoProcesso getIdEstadoProcesso() {
-        return idEstadoProcesso;
-    }
-
-    public void setIdEstadoProcesso(EstadoProcesso idEstadoProcesso) {
-        this.idEstadoProcesso = idEstadoProcesso;
     }
 
     public Juiz getIdJuiz() {
@@ -174,14 +131,6 @@ public class Processo implements Serializable {
 
     public void setIdRequerido(Requerido idRequerido) {
         this.idRequerido = idRequerido;
-    }
-
-    public TipoDecisao getIdTipoDecisao() {
-        return idTipoDecisao;
-    }
-
-    public void setIdTipoDecisao(TipoDecisao idTipoDecisao) {
-        this.idTipoDecisao = idTipoDecisao;
     }
 
     @Override

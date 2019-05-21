@@ -5,7 +5,7 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.JuizDAO;
+
 import fenix.iure.ejbs.JuizFacade;
 import fenix.iure.entities.Juiz;
 import java.awt.event.ActionEvent;
@@ -37,7 +37,6 @@ public class JuizMBean implements Serializable {
     }
 
     private Juiz juiz;
-    private JuizDAO juizDAO;
     private List<Juiz> juizes;
 
     private List<Juiz> findByNome;
@@ -59,9 +58,7 @@ public class JuizMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         juiz = new Juiz();
-        juizDAO = new JuizDAO();
-
-        findByNome = new ArrayList<>();
+         findByNome = new ArrayList<>();
         findbySobrenome = new ArrayList<>();
         findByNomeSobrenome = new ArrayList<>();
         findByDataNascimento = new ArrayList<>();
@@ -83,7 +80,7 @@ public class JuizMBean implements Serializable {
 
     public String newSave() {
         juiz = new Juiz();
-        return "juiz_listar?faces-redirect=true";
+        return "juiz_lstar?faces-redirect=true";
     }
 
     public void guardar(ActionEvent evt) {
@@ -96,7 +93,7 @@ public class JuizMBean implements Serializable {
     }
 
     public String startEdit() {
-        return "juiz_listar?faces-redirect=true";
+        return "juiz_lstar?faces-redirect=true";
     }
 
     public void edit(javafx.event.ActionEvent event) {
@@ -105,7 +102,7 @@ public class JuizMBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 juizes = null;
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("juiz_listar.jsf");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("juiz_lstar.jsf");
                 } catch (IOException ex) {
                     Logger.getLogger(JuizMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -166,7 +163,7 @@ public class JuizMBean implements Serializable {
         juizFacade.remove(juiz);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             juizes = null;
-            return "juiz_listar?faces-redirect=true";
+            return "juiz_lstar?faces-redirect=true";
         /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;

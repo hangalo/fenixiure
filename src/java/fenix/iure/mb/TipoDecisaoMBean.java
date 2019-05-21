@@ -5,7 +5,7 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.dao.TipoDecisaoDAO;
+
 import fenix.iure.ejbs.TipoDecisaoFacade;
 import fenix.iure.entities.TipoDecisao;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,6 @@ public class TipoDecisaoMBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private TipoDecisao tipoDecisao;
-    private TipoDecisaoDAO tipoDecisaoDAO;
     private List<TipoDecisao> tipos;
     
     @Inject
@@ -44,7 +43,6 @@ public class TipoDecisaoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         tipoDecisao = new TipoDecisao();
-        tipoDecisaoDAO = new TipoDecisaoDAO();
         
     }
     
