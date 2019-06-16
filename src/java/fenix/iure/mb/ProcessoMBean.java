@@ -394,10 +394,23 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String imprimirListaArtigo() {
-        String relatorio = "processo_lista1.jasper";
+        String relatorio = "processos_lista.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
         gestorImpressao.imprimirPDF(relatorio, parametros);
+        return null;
+
+    }
+    
+     public String imprimirProcessosPorNumero(){
+        String numero = "12345";
+        //Departamento dep = professorDepartamento.getDepartamento();
+        String relatorio = "processos_por_numero.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("numero", numero);
+        gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
         return null;
 
     }

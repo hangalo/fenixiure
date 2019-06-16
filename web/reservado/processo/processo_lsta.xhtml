@@ -34,7 +34,10 @@
                                     <p:commandButton style="margin-left: 20px; height: 43px; width: 140px" value="Novo" type="button" onclick="PF('dialogoGuardar').show();"/>
                                 </p:column>
                                  <p:column>
-                                   <!--  <p:commandButton style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#/*{processoMBean.imprimirListaArtigo()}*/" ajax="false" immediate="true" /> -->                   
+                                     <p:commandButton style="margin-left: 20px; height: 43px; width: 150px"  value="Imprimir lista" action="#{processoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" />                   
+                                </p:column>
+                                 <p:column>
+                                     <p:commandButton style="margin-left: 20px; height: 43px; width: 150px"  value="Imprimir Ficha" action="#{processoMBean.imprimirProcessosPorNumero() }" ajax="false" immediate="true" />                   
                                 </p:column>
                                 <p:column>
                                     <p:commandButton style="margin-left: 20px; height: 43px; width: 140px" value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                   
@@ -121,7 +124,7 @@
                             <h:panelGrid  columns="2" >
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel for="numero"  value="NÚMERO"/>
+                                        <p:outputLabel style="margin-left: 0px" for="numero"  value="NÚMERO"/>
                                         <p:inputText required="true" id="numero" value="#{processoMBean.processo.numeroProcesso}" size="20"/>
                                         <p:message for="numero" />
                                         
@@ -130,7 +133,7 @@
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel for="data_entrada" style="margin-left: 15%" value="DATA ENTRADA"/>
+                                        <p:outputLabel for="data_entrada" style="" value="DATA ENTRADA"/>
                                         <p:calendar required="true"  id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt"  />
                                         <p:message for="data_entrada" />
                                     </h:panelGrid>
