@@ -11,21 +11,24 @@
         <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputScript library="js" name="scripts.js" />
 
         <title>Fenix Iure</title>
 
     </h:head>
 
     <h:body>
+        <!-- grow global para as mensagens do formulario -->
+        <p:growl id="msgGlobal" life="3000"/>
 
         <p:layout fullPage="true">
-            <!-- 
+            
             <p:layoutUnit position="north"   resizable="false" closable="false" collapsible="false">
                 <ui:insert name="top">
-                    <ui:include src="../menus/barra_navegacao_admini.xhtml"></ui:include>   
+                    <ui:include src="../menus/barra_navegacao.xhtml"></ui:include>   
                 </ui:insert>
             </p:layoutUnit>
-            -->
+            
 
             <p:layoutUnit  position="south" size="50" closable="true" collapsible="true">
                 <ui:insert name="rodape">
@@ -41,7 +44,7 @@
             </p:layoutUnit>
 
 
-            <p:layoutUnit position="center" style="text-align: center" header="== FÊNIX IURE - SISTEMA INTEGRADO DE GESTÃO DE PROCESSOS JUDICIAIS ==">
+            <p:layoutUnit position="center" style="text-align: center">
                 <ui:insert name="content"> 
 
                 </ui:insert>

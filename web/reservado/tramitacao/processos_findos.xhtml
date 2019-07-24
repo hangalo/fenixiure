@@ -25,12 +25,12 @@
                                     </p:menubar>
 
                                 </p:column>
-                                 <p:column>
+                                <p:column>
                                     <h:panelGrid columns="6"  cellspacing="10%">
-                                      
-                                        <p:calendar placeholder="Início" effect="slide" style="margin-left: 15px; width: 10px" value="#{tramitacaoMBean.dataInicio}" pattern="dd/MM/yyyy" locale="pt"  />
 
-                                        <p:calendar placeholder="Fim" effect="slide" style="margin-left: 15px" value="#{tramitacaoMBean.dataFim}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:calendar placeholder="Data Início" effect="slide" style="margin-left: 15px; width: 10px" value="#{tramitacaoMBean.dataInicio}" pattern="dd/MM/yyyy" locale="pt"  />
+
+                                        <p:calendar placeholder="Data Fim" effect="slide" style="margin-left: 15px" value="#{tramitacaoMBean.dataFim}" pattern="dd/MM/yyyy" locale="pt"  />
 
                                         <b:commandButton style="margin-left:10px" icon="ui-icon-zoomin"  value="Pesquisar" />
                                     </h:panelGrid>
@@ -39,6 +39,9 @@
 
                                 <p:column>
                                     <!-- <p:commandButton style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#/*{tramitacaoMBean.imprimirProcessos()}*/" ajax="false" immediate="true" />  -->                  
+                                </p:column>
+                                 <p:column>
+                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#{tramitacaoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" />                   
                                 </p:column>
                                 <p:column>
                                     <p:commandButton style="margin-left: 20px; height: 35px; width: 100px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                   
@@ -51,7 +54,6 @@
 
                             <!--inicio Datatable-->
                             <p:dataTable value="#{tramitacaoMBean.resultados}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Número"/>
@@ -80,20 +82,21 @@
 
                                     <h:outputText value="#{item.idProcesso.idRequerido.nomeRequerido}"/>
                                 </p:column>
-                                <p:column >
+                                
+                                <p:column>
                                     <f:facet name="header">
-                                        <p:outputLabel value="Data Entrada"/>
+                                        <p:outputLabel value="Data Término"/>
                                     </f:facet>
-                                    <p:outputLabel id="data_entrada"  value="#{item.idProcesso.dataEntrada}">
+                                    <p:outputLabel id="data_conclusao"  value="#{item.dataTermino}">
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </p:outputLabel>
 
                                 </p:column>
-                                <p:column >
+                                 <p:column>
                                     <f:facet name="header">
-                                        <p:outputLabel value="Data Término"/>
+                                        <p:outputLabel value="Data Entrada"/>
                                     </f:facet>
-                                    <p:outputLabel id="data_conclusao"  value="#{item.dataConclusaoTramitacao}">
+                                     <p:outputLabel id="data_entrada3"  value="#{item.idProcesso.dataEntrada}">
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </p:outputLabel>
 
@@ -116,12 +119,12 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
                                     </f:facet>
-                                    <p:commandButton  icon="ui-icon-trash" action="#{tramitacaoMBean.delete()}">
-                                        <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
-                                    </p:commandButton>
-                                    <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
-                                        <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
-                                    </p:commandButton>
+                                    <!-- <p:commandButton  icon="ui-icon-trash" action="#//{tramitacaoMBean.delete()}">
+                                        <f:setPropertyActionListener target="#//{tramitacaoMBean.tramitacao}" value="#//{item}"/>
+                                    </p:commandButton> -->
+                                    <!-- <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <f:setPropertyActionListener target="#/*{tramitacaoMBean.tramitacao}" value="#/*{item}"/>
+                                    </p:commandButton> -->
                                     <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
                                         <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
                                     </p:commandButton>
@@ -142,24 +145,23 @@
 
                     <!--Fim do dialogo guardar-->
 
-
                     <!--inicio do dialogo guardar-->
-                    <p:dialog  header="Nova Tramitação" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="700" height="350">
+                    <p:dialog  header="Nova Tramitação" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="700" height="400">
                         <h:form enctype="multipart/form-data">
                             <h:panelGrid  columns="2" >
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel  style="margin-left: 0%" value="Processo"/>
+                                        <p:outputLabel  style="margin-left: 0%" value="PROCESSO"/>
                                         <p:selectOneMenu id="especies" effect="slide" style="width:213px; margin-left:0% "  filter="true" filterMatchMode="startsWith" label="Especie" value="#{tramitacaoMBean.tramitacao.idProcesso}" required="true" converter="processoConverter">
                                             <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems value="#{tramitacaoMBean.processos}" var="processo" itemValue="#{processo}" itemLabel="#{processo.numeroProcesso}"/>
+                                            <f:selectItems value="#{tramitacaoMBean.processos}" var="processo" itemValue="#{processo}" itemLabel="#{processo.numeroProcesso}; Autor:#{processo.idRequente.nomeRequente}; Reu:#{processo.idRequerido.nomeRequerido} Espécie:#{processo.idEspecieProcesso.especieProcesso} "/>
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 15%" value="Data Conclusão"/>
-                                        <p:calendar effect ="slide" style="margin-left: 15%"  value="#{tramitacaoMBean.tramitacao.dataConclusaoTramitacao}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        <p:outputLabel style="margin-left: 0%" value="DATA CONCLUSÃO"/>
+                                        <p:calendar effect ="slide" style="margin-left: 0%"  value="#{tramitacaoMBean.tramitacao.dataConclusaoTramitacao}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
                                 <h:panelGroup>
@@ -171,19 +173,27 @@
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
-
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel  value="ESTADO" style="margin-left:15%"/>
-                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="estados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Estaodo" value="#{tramitacaoMBean.tramitacao.idEstado}" required="true" converter="estadoProcessoConverter">
-                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems  value="#{tramitacaoMBean.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.estadoProcesso}"/>
-                                        </p:selectOneMenu>
+                                        <p:outputLabel value="DATA TÉRMINO"/>
+                                        <p:calendar id="data_termino" disabled="true" effect ="slide"  value="#{tramitacaoMBean.tramitacao.dataTermino}" pattern="dd/MM/yyyy" locale="pt"  />
                                     </h:panelGrid>
                                 </h:panelGroup>
 
 
+
+                                <h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel style="margin-left: 0px"  value="ESTADO:"/>
+                                        <p:selectOneRadio style="margin-left: 30px;" id="estado" value="#{tramitacaoMBean.tramitacao.estadoProcesso}">
+                                            <p:ajax update="data_termino"/>
+                                            <f:selectItems value="#{tramitacaoMBean.opEstados}" />
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
                             </h:panelGrid>
+
                             <h:panelGroup>
                                 <h:panelGrid columns="1">
                                     <p:outputLabel value="Observação"/>
@@ -191,7 +201,13 @@
                                 </h:panelGrid>
                             </h:panelGroup>
                             <br></br>
-                            <p:commandButton value="Guardar" action="#{tramitacaoMBean.guardar(evt)}" ajax="false"/>
+
+                            <p:commandButton update=":msgGlobal" value="Guardar" action="#{tramitacaoMBean.guardar(evt)}" ajax="false">
+
+                            </p:commandButton>
+
+
+
                         </h:form>
                     </p:dialog>
 
@@ -228,15 +244,18 @@
                                     </h:panelGrid>
                                 </h:panelGroup>
 
+                                <!-- 
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
                                         <p:outputLabel  value="ESTADO" style="margin-left:15%"/>
-                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="estados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Estaodo" value="#{tramitacaoMBean.tramitacao.idEstado}" required="true" converter="estadoProcessoConverter">
-                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems  value="#{tramitacaoMBean.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.estadoProcesso}"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:15%" id="estados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Estaodo" value="#//{tramitacaoMBean.tramitacao.idEstado}" required="true" converter="estadoProcessoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#//{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#//{tramitacaoMBean.estados}" var="estado" itemValue="#//{estado}" itemLabel="#//{estado.estadoProcesso}"/>
                                         </p:selectOneMenu>
                                     </h:panelGrid>
                                 </h:panelGroup>
+                                
+                                -->
 
 
                             </h:panelGrid>
@@ -259,9 +278,6 @@
                     <p:dialog header="Dados de Tramitação" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="auto" height="auto">
                         <h:form>
                             <p:panelGrid columns="2">
-                                <p:outputLabel value="Id: "/>
-                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.idProcesso}"/>
-
                                 <p:outputLabel value="Número: "/>
                                 <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.numeroProcesso}"/>
                                 <p:outputLabel value="Data Entrada: "/>
@@ -275,11 +291,11 @@
                                 <p:outputLabel value="Reu:"/>
                                 <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.idRequerido.nomeRequerido}"/>
                                 <p:outputLabel value="Estado:"/>
-                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idEstado.estadoProcesso}"/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.estadoProcesso}"/>
                                 <p:outputLabel value="Decisão: "/>
                                 <p:outputLabel value="#{tramitacaoMBean.tramitacao.idTipoDecisao.tipoDecisao}"/>
                                 <p:outputLabel value="Data Conclusão:"/>
-                                <p:outputLabel id="data_conclusao"  value="#{tramitacaoMBean.tramitacao.dataConclusaoTramitacao}">
+                                <p:outputLabel id="data_conclusao"  value="#{tramitacaoMBean.tramitacao.dataTermino}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </p:outputLabel>
 
@@ -294,7 +310,6 @@
                     </p:dialog>
 
                     <!--Fim do dialog ver-->
-
 
                 </f:view>
             </ui:define>

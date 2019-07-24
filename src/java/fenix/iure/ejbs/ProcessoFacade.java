@@ -111,4 +111,23 @@ public class ProcessoFacade extends AbstractFacade<Processo> {
         return query.getResultList();
     }
     
+    public List<Processo> findProcessosNaoFindos() {
+        String estadoProcesso = "EM_ANDAMENTO";
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p LEFT JOIN p.tramitacaoCollection t WHERE t.estadoProcesso = :estadoProcesso GROUP BY p.idProcesso");
+        query.setParameter("estadoProcesso", estadoProcesso);
+        return query.getResultList();
+        
+    }
+   
+    public List<Processo> findProcessosFindos() {
+        String estadoProcesso = "FINDO";
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p LEFT JOIN p.tramitacaoCollection t WHERE t.estadoProcesso = :estadoProcesso GROUP BY p.idProcesso");
+        query.setParameter("estadoProcesso", estadoProcesso);
+        return query.getResultList();
+        
+    }
+    
+    
 }

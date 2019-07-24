@@ -7,7 +7,7 @@
         <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="bootstrap.min.css" />
-        
+
 
     </h:head>
     <h:body>
@@ -16,7 +16,7 @@
         <nav  style="background: #ffffff; margin-bottom: 0;"  class="navbar navbar-default navbar-static-top" role="navigation">
             <!-- Inicio Logotipo -->
             <div class="navbar-header" style="width: 65%; padding-top: 0.5%; padding-bottom: 0.5%;">
-                <a href="/fenixiure/index.jsf">
+                <a href="/fenixiure/area_administrativa.jsf">
                     <h:graphicImage class="img-circle" style="margin-bottom: 0%;margin-left: 3%" width="60px" library="imagens" name="logo2.png" />
                 </a><b class="h1">Fenix Iure</b>
 
@@ -25,12 +25,15 @@
 
             <!-- Inicio Area reservada -->
             <div style="margin-right: 5%; margin-top: 1%" class="nav navbar-top-links navbar-right">
-                                         
-                    <h:form>
-                        <h:commandLink action="/login" value="Área Administrativa"/> 
-                    </h:form>
-
                 
+                <p>
+                    Usuário: #{loginMB.username}
+                </p>                     
+                <h:form>
+                    <h:commandLink action="/login" value="Logout"/> 
+                </h:form>
+
+
             </div>
 
             <!-- Fim Area reservada -->

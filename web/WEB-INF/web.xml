@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
-    <filter>  
-        <filter-name>sec</filter-name>  
-        <filter-class>fenix.iure.controller.MyFilter</filter-class>  
-    </filter>  
-   
-    <filter-mapping>  
-        <filter-name>sec</filter-name>  
-        <url-pattern>/*</url-pattern>  
+    <filter>
+        <filter-name>sec</filter-name>
+        <filter-class>fenix.iure.controller.MyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>sec</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!--Cliente Side Validation -->
     <context-param>
         <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
         <param-value>true</param-value>
     </context-param>
-    
-    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>afterdark</param-value>
+        <param-value>blitzer</param-value>
     </context-param>
     <mime-mapping>
         <extension>xhtml</extension>
@@ -34,6 +30,7 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <!--Configurações do jsf -->
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
@@ -46,4 +43,5 @@
     <welcome-file-list>
         <welcome-file>area_administrativa.jsf</welcome-file>
     </welcome-file-list>
+    
 </web-app>

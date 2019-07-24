@@ -5,6 +5,7 @@
  */
 package fenix.iure.mb;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import fenix.iure.ejbs.AdvogadoFacade;
 import fenix.iure.ejbs.EspecieProcessoFacade;
 import fenix.iure.ejbs.EstadoProcessoFacade;
@@ -22,10 +23,12 @@ import fenix.iure.entities.Requente;
 import fenix.iure.entities.Requerido;
 import fenix.iure.entities.TipoDecisao;
 import fenix.iure.util.GestorImpressao;
+import fenix.iure.util.JSFUtil;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -87,6 +90,9 @@ public class ProcessoMBean implements Serializable {
     // Buscar processos recentes
     private List<Processo> findRecentes;
 
+    // Buscar processos findos
+    private List<Processo> findProcessosFindos;
+
     @Inject
     ProcessoFacade processoFacade;
     @Inject
@@ -144,53 +150,51 @@ public class ProcessoMBean implements Serializable {
         return "processo_lsta?faces-redirect=true";
     }
 
-    public String guardar(ActionEvent evt) {
-        String controlo = null;
+    public void guardar(ActionEvent evt) {
         if (processo != null) {
             try {
                 processoFacade.create(processo);
                 processo = new Processo();
-                controlo = null;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-                
-                return controlo;
+                JSFUtil.adicionarMensagemDeSucesso("Processo salvo com sucesso!");
 
-            } catch (javax.ejb.EJBException | java.lang.NumberFormatException ex) {
-                controlo = null;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao guardar\t", "\tNúmero de processo ja exisente!"));
-                
-                return controlo;
+            } catch (javax.ejb.EJBException ex) {
+                JSFUtil.adicionarMensagemDeErro("Número do processo ja existe!");
+            } catch (NumberFormatException ex) {
+                JSFUtil.adicionarMensagemDeErro(ex.getMessage());
             }
+
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro2 ao guardar os dados"));
             newSave();
-            return controlo;
+
         }
-        
+
     }
 
     public String startEdit() {
         return "processo_lsta?faces-redirect=true";
     }
 
-    public void edit(javafx.event.ActionEvent event) {
+    public String edit(javafx.event.ActionEvent event) {
+        String controlo = null;
         try {
             processoFacade.edit(processo);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            requerentes = null;
-        } catch (javax.ejb.EJBException e) {
+            processo = new Processo();
+            controlo = null;
+            JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
+
+            return controlo;
+
+        } catch (javax.ejb.EJBException | java.lang.NumberFormatException ex) {
+            controlo = null;
+            JSFUtil.adicionarMensagemDeErro("Número do processo ja existe!");
+            return controlo;
         }
 
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("processo_lsta.jsf");
-        } catch (IOException ex) {
-            Logger.getLogger(ProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void editPublico(javafx.event.ActionEvent event) {
         processoFacade.edit(processo);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
         requerentes = null;
 
         try {
@@ -201,9 +205,14 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String delete() {
-        processoFacade.remove(processo);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-        processos = null;
+        try {
+            processoFacade.remove(processo);
+            processos = null;
+            JSFUtil.adicionarMensagemDeErro("Sucesso ao Eliminar dados!");
+        } catch (Exception e) {
+            JSFUtil.adicionarMensagemDeErro(e.getMessage());
+        }
+
         return "processo_lsta?faces-redirect=true";
     }
 
@@ -394,25 +403,42 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String imprimirListaArtigo() {
-        String relatorio = "processos_lista.jasper";
+        String relatorio = "processos_lista_insignia.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
         gestorImpressao.imprimirPDF(relatorio, parametros);
         return null;
 
     }
-    
-     public String imprimirProcessosPorNumero(){
-        String numero = "12345";
-        //Departamento dep = professorDepartamento.getDepartamento();
+
+    public String imprimirFichaProcesso(String parametro) {
         String relatorio = "processos_por_numero.jasper";
         HashMap parametros = new HashMap();
-        parametros.put("numero", numero);
-        gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
+        parametros.put("numeroProcesso", parametro);
+        gestorImpressao = new GestorImpressao();
         gestorImpressao.imprimirPDF(relatorio, parametros);
 
         return null;
 
+    }
+
+    public List<Processo> getFindProcessosFindos() {
+        findProcessosFindos = processoFacade.findProcessosFindos();
+        return findProcessosFindos;
+    }
+
+    private Integer indexTabela;
+
+    
+    public Integer getIndexTabela() {
+        for (int i = 1; i <= processos.size(); i++) {
+            indexTabela = i;
+        }
+        return indexTabela;
+    }
+
+    public void setIndexTabela(Integer indexTabela) {
+        this.indexTabela = indexTabela;
     }
 
 }

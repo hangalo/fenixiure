@@ -5,7 +5,6 @@
  */
 package fenix.iure.mb;
 
-
 import fenix.iure.ejbs.AdvogadoFacade;
 import fenix.iure.ejbs.MunicipioFacade;
 import fenix.iure.ejbs.RequenteFacade;
@@ -34,7 +33,7 @@ import javax.inject.Inject;
  */
 @Named(value = "requerenteMBean")
 @SessionScoped
-public class RequerenteMBean implements Serializable{
+public class RequerenteMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +43,6 @@ public class RequerenteMBean implements Serializable{
     private List<Municipio> municipios;
     private List<Advogado> advogados;
 
-    
     @Inject
     MunicipioFacade municipioFacade;
     @Inject
@@ -53,8 +51,7 @@ public class RequerenteMBean implements Serializable{
     RequenteFacade requenteFacade;
     @Inject
     AdvogadoFacade advogadoFacade;
-    
-  
+
     // Listas das pesquisas paramentrizadas
     private List<Requente> findByNome;
     private List<Requente> findbySobrenome;
@@ -62,22 +59,20 @@ public class RequerenteMBean implements Serializable{
     private List<Requente> findByBilheteIdentidade;
     private List<Requente> findByMunicipio;
     private List<Requente> findByTipoDecisao;
-    
+
     // Variaveis para pesquisas paramentrizadas
     private String nome;
     private String sobrenome;
     private String bilheteIdentidade;
     private int idMunicipio;
     private int idTipoPessoa;
-    
-    
+
     public RequerenteMBean() {
     }
 
     @PostConstruct
     public void inicializar() {
         requerente = new Requente();
-        
 
     }
 
@@ -89,12 +84,10 @@ public class RequerenteMBean implements Serializable{
         this.requerente = requerente;
     }
 
-   
-
     public void guardar(ActionEvent evt) {
         requenteFacade.create(requerente);
-            requerente = new Requente();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+        requerente = new Requente();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
         /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
         }*/
@@ -109,43 +102,36 @@ public class RequerenteMBean implements Serializable{
         return "requerente_lstar?faces-redirect=true";
     }
 
-    
-    
-       public void edit(javafx.event.ActionEvent event) {
+    public void edit(javafx.event.ActionEvent event) {
         requenteFacade.edit(requerente);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            requerentes = null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        requerentes = null;
 
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar.jsf");
-            } catch (IOException ex) {
-                Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar.jsf");
+        } catch (IOException ex) {
+            Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       
-       public void editPublico(javafx.event.ActionEvent event) {
+    }
+
+    public void editPublico(javafx.event.ActionEvent event) {
         requenteFacade.edit(requerente);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            requerentes = null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        requerentes = null;
 
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar_p.jsf");
-            } catch (IOException ex) {
-                Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar_p.jsf");
+        } catch (IOException ex) {
+            Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-    
+    }
+
     public String delete() {
         requenteFacade.remove(requerente);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-             requerentes = null;
-             return "requerente_lstar?faces-redirect=true";
-        /*}else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
-            return null;
-        }  */    
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+        requerentes = null;
+        return "requerente_lstar?faces-redirect=true";
+       
     }
 
     public List<TipoPessoa> getTipoPessoas() {
@@ -155,7 +141,7 @@ public class RequerenteMBean implements Serializable{
 
     public List<Municipio> getMunicipios() {
         municipios = municipioFacade.findAll();
-                return municipios;
+        return municipios;
     }
 
     public List<Requente> getFindByNome() {
@@ -190,7 +176,6 @@ public class RequerenteMBean implements Serializable{
         return findByBilheteIdentidade;
     }
 
-    
     public List<Requente> getFindByTipoPessoa() {
         findByTipoDecisao = requenteFacade.findByIdTipoPessoa(idTipoPessoa);
         return findByTipoDecisao;
@@ -200,7 +185,6 @@ public class RequerenteMBean implements Serializable{
         findByMunicipio = requenteFacade.findByIdMunicipio(idMunicipio);
         return findByMunicipio;
     }
-    
 
     public String getNome() {
         return nome;
@@ -246,15 +230,5 @@ public class RequerenteMBean implements Serializable{
         advogados = advogadoFacade.findAll();
         return advogados;
     }
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 
 }

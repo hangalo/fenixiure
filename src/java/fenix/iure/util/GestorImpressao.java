@@ -75,19 +75,7 @@ public class GestorImpressao {
 
     public String imprimirPDF(String relatorio, HashMap paramentos) {
         try {
-                jasperPrint = new JasperPrint(); 
-                /* intanciei o objecto a cima para testar as funcionalidade da impressão de relatórios.
-                De facto, gera um NullPointerException indicando pra linea 89, no objecto jasperPrint.
-                Daí concli que o objecto não havia sido instaciado.
-            
-            
-            
-                O.B.S.: Preferi deixar comentado, pois não é de minha autoria alterar codigo na área que não 
-                        me compete. Deixei algo relacionado a isso no meu readme.
-            
-                Escreveu: Elisio Kavaimunwa
-             */
-            
+            jasperPrint = new JasperPrint(); 
             prepararRelatorio(relatorio, paramentos);
             HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
             ServletOutputStream outputStream = response.getOutputStream();

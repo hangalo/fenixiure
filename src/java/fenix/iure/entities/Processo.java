@@ -6,8 +6,10 @@
 package fenix.iure.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +41,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Processo.findByNumeroProcesso", query = "SELECT p FROM Processo p WHERE p.numeroProcesso = :numeroProcesso"),
     @NamedQuery(name = "Processo.findByDataEntrada", query = "SELECT p FROM Processo p WHERE p.dataEntrada = :dataEntrada")})
 public class Processo implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
+    private Collection<ProcessoFindo> processoFindoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
+    private Collection<Tramitacao> tramitacaoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -156,6 +165,24 @@ public class Processo implements Serializable {
     @Override
     public String toString() {
         return "fenix.iure.entities.Processo[ idProcesso=" + idProcesso + " ]";
+    }
+
+    @XmlTransient
+    public Collection<ProcessoFindo> getProcessoFindoCollection() {
+        return processoFindoCollection;
+    }
+
+    public void setProcessoFindoCollection(Collection<ProcessoFindo> processoFindoCollection) {
+        this.processoFindoCollection = processoFindoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Tramitacao> getTramitacaoCollection() {
+        return tramitacaoCollection;
+    }
+
+    public void setTramitacaoCollection(Collection<Tramitacao> tramitacaoCollection) {
+        this.tramitacaoCollection = tramitacaoCollection;
     }
     
 }

@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tramitacao.findAll", query = "SELECT t FROM Tramitacao t"),
     @NamedQuery(name = "Tramitacao.findByIdTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.idTramitacao = :idTramitacao"),
     @NamedQuery(name = "Tramitacao.findByDataConclusaoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dataConclusaoTramitacao = :dataConclusaoTramitacao"),
-    @NamedQuery(name = "Tramitacao.findByDispachoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dispachoTramitacao = :dispachoTramitacao")})
+    @NamedQuery(name = "Tramitacao.findByDispachoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dispachoTramitacao = :dispachoTramitacao"),
+    @NamedQuery(name = "Tramitacao.findByEstadoProcesso", query = "SELECT t FROM Tramitacao t WHERE t.estadoProcesso = :estadoProcesso"),
+    @NamedQuery(name = "Tramitacao.findByDataTermino", query = "SELECT t FROM Tramitacao t WHERE t.dataTermino = :dataTermino")})
 public class Tramitacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +51,15 @@ public class Tramitacao implements Serializable {
     @Size(max = 20000)
     @Column(name = "dispacho_tramitacao")
     private String dispachoTramitacao;
+    @Size(max = 45)
+    @Column(name = "estado_processo")
+    private String estadoProcesso;
+    @Column(name = "data_termino")
+    @Temporal(TemporalType.DATE)
+    private Date dataTermino;
     @JoinColumn(name = "id_processo", referencedColumnName = "id_processo")
     @ManyToOne(optional = false)
     private Processo idProcesso;
-    @JoinColumn(name = "id_estado", referencedColumnName = "id_estado_processo")
-    @ManyToOne(optional = false)
-    private EstadoProcesso idEstado;
     @JoinColumn(name = "id_tipo_decisao", referencedColumnName = "id_tipo_decisao")
     @ManyToOne(optional = false)
     private TipoDecisao idTipoDecisao;
@@ -90,20 +95,28 @@ public class Tramitacao implements Serializable {
         this.dispachoTramitacao = dispachoTramitacao;
     }
 
+    public String getEstadoProcesso() {
+        return estadoProcesso;
+    }
+
+    public void setEstadoProcesso(String estadoProcesso) {
+        this.estadoProcesso = estadoProcesso;
+    }
+
+    public Date getDataTermino() {
+        return dataTermino;
+    }
+
+    public void setDataTermino(Date dataTermino) {
+        this.dataTermino = dataTermino;
+    }
+
     public Processo getIdProcesso() {
         return idProcesso;
     }
 
     public void setIdProcesso(Processo idProcesso) {
         this.idProcesso = idProcesso;
-    }
-
-    public EstadoProcesso getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(EstadoProcesso idEstado) {
-        this.idEstado = idEstado;
     }
 
     public TipoDecisao getIdTipoDecisao() {
