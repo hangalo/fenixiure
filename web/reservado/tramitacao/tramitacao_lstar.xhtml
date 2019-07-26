@@ -15,7 +15,7 @@
                 <f:view>
                     <b:panel collapsible="false" look="normal">
                         <h:form>
-                            <h:dataTable value="#">
+                            <h:dataTable value="#" var="item" >
 
                                 <p:column>
                                     <h:panelGrid columns="7"  cellspacing="10%">
@@ -35,7 +35,7 @@
                                     <p:commandButton style="margin-left: 20px; height: 35px; width: 100px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                   
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#{processoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" />                   
+                                    <p:commandButton id="habilitar" disabled="false" style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#{tramitacaoMBean.imprimirTramitacoesDoProcesso()}" ajax="false" immediate="true" />                   
                                 </p:column>
                                 
                             </h:dataTable>
@@ -45,12 +45,11 @@
 
                             <!--inicio Datatable-->
                             <p:dataTable value="#{tramitacaoMBean.findByProcesso}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                               
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="Número"/>
                                     </f:facet>
-
+                                    
                                     <h:outputText value="#{item.idProcesso.numeroProcesso}"/>
                                 </p:column>
                                 <p:column>

@@ -31,23 +31,24 @@ public class TramitacaoDAO implements GenericoDAO<Tramitacao> {
     // Variavel para consultar processos Findos
     private static final String SELECT_PROCESSO_FINDO = "SELECT MAX(data_termino) AS data_termino, t.id_tramitacao, t.data_conclusao_tramitacao, t.dispacho_tramitacao, p.numero_processo,p.id_processo, p.data_entrada, r.nome_requente, r.id_requente, re.nome_requerido,re.id_requerido, ep.especie_processo, ep.id_especie_processo, td.id_tipo_decisao, td.tipo_decisao, t.estado_processo, j.id_juiz, j.nome_juiz "
             + " FROM tramitacao t"
-            + " INNER JOIN processo p ON t.id_processo = p.id_processo"
-            + " INNER JOIN requente r ON t.id_processo = p.id_processo"
-            + " INNER JOIN requerido re ON t.id_processo = p.id_processo"
-            + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao"
-            + " INNER JOIN juiz j ON t.id_processo = p.id_processo"
-            + " INNER JOIN especie_processo ep ON t.id_processo = p.id_processo"
+            + " INNER JOIN processo p ON p.id_processo = t.id_processo "
+            + " INNER JOIN requente r ON p.id_requente = r.id_requente "
+            + " INNER JOIN requerido re ON p.id_requerido = re.id_requerido "
+            + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao "
+            + " INNER JOIN juiz j ON j.id_juiz = p.id_juiz "
+            + " INNER JOIN especie_processo ep ON p.id_especie_processo = ep.id_especie_processo "
             + " WHERE t.estado_processo = 'FINDO'"
             + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC;";
 
     private static final String SELECT_PROCESSO_FINDO_POR_DATAS = "SELECT MAX(data_termino) AS data_termino, t.id_tramitacao, t.data_conclusao_tramitacao, t.dispacho_tramitacao, p.numero_processo,p.id_processo, p.data_entrada, r.nome_requente, r.id_requente, re.nome_requerido,re.id_requerido, ep.especie_processo, ep.id_especie_processo, td.id_tipo_decisao, td.tipo_decisao, t.estado_processo, j.id_juiz, j.nome_juiz "
-            + " FROM tramitacao t"
-            + " INNER JOIN processo p ON t.id_processo = p.id_processo"
-            + " INNER JOIN requente r ON t.id_processo = p.id_processo"
-            + " INNER JOIN requerido re ON t.id_processo = p.id_processo"
-            + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao"
-            + " INNER JOIN juiz j ON t.id_processo = p.id_processo"
-            + " INNER JOIN especie_processo ep ON t.id_processo = p.id_processo"
+            + " FROM tramitacao t "
+            + " INNER JOIN processo p ON p.id_processo = t.id_processo "
+            + " INNER JOIN requente r ON p.id_requente = r.id_requente "
+            + " INNER JOIN requerido re ON p.id_requerido = re.id_requerido "
+            + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao "
+            + " INNER JOIN juiz j ON j.id_juiz = p.id_juiz "
+            + " INNER JOIN especie_processo ep ON p.id_especie_processo = ep.id_especie_processo "
+            
             + " WHERE t.estado_processo = 'FINDO' AND p.data_entrada >= ? AND p.data_entrada <= ? "
             + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC;";
 

@@ -64,7 +64,7 @@ public class TramitacaoMBean implements Serializable {
     private int idDecisao = 0;
     private Date dataInicio, dataFim;
     private String dataInicio1, dataFim1;
-    
+
     // Listas das pesquisas paramentrizadas
     private List<Tramitacao> findByProcesso;
     private List<Tramitacao> findByEstadoIntervaloDatas;
@@ -79,7 +79,7 @@ public class TramitacaoMBean implements Serializable {
 
     // Lista para verificar processos findos por numero
     private List<Tramitacao> processosFindosPorNumero;
-    
+
     // Variavel para a actualizacao do campo dataT+ermino via ajax
     private String tipoEstado;
 
@@ -94,7 +94,7 @@ public class TramitacaoMBean implements Serializable {
     EstadoProcessoFacade estadoProcessoFacade;
     @Inject
     EspecieProcessoFacade especieProcessoFacade;
-    
+
     // Objecto auxiliar para as buscas com JDBC
     TramitacaoDAO tramitacaoDAO;
 
@@ -146,7 +146,7 @@ public class TramitacaoMBean implements Serializable {
         return estados;
     }
 
-     public void guardar(ActionEvent evt) {
+    public void guardar(ActionEvent evt) {
         if (tramitacao != null) {
             tramitacaoFacade.create(tramitacao);
             tramitacao = new Tramitacao();
@@ -156,7 +156,8 @@ public class TramitacaoMBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
         }
     }
- /* public String guardar(ActionEvent evt) {
+
+    /* public String guardar(ActionEvent evt) {
         String controlo = null;
         tramitacoes =this.getTramitacoes();
         
@@ -171,7 +172,7 @@ public class TramitacaoMBean implements Serializable {
             return controlo;
         }
     }*/
-     
+
     // Metodo para verificar processos findos
     public List<Tramitacao> getProcessosFindosPorNumero() {
         processosFindosPorNumero = tramitacaoFacade.findByIdProcessoFindosPorNumero(tramitacao);
@@ -180,10 +181,9 @@ public class TramitacaoMBean implements Serializable {
         }
         return processosFindosPorNumero;
     }
-    
-    
-   //Esse método não permite regitar tramaitações quando o processo ja se encontra no seu estado findo 
-   /* public void guardar(ActionEvent evt) {
+
+    //Esse método não permite regitar tramaitações quando o processo ja se encontra no seu estado findo 
+    /* public void guardar(ActionEvent evt) {
         if (tramitacao != null) {
             getProcessosFindosPorNumero();
             if (processosFindosPorNumero.size() > 0) {
@@ -203,12 +203,12 @@ public class TramitacaoMBean implements Serializable {
     public String startEdit() {
         return "tramitacao_lstar?faces-redirect=true";
     }
-*/
+     */
     public void edit(javafx.event.ActionEvent event) {
-            tramitacaoFacade.edit(tramitacao);
-            JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
-            tramitacoes = null;
-        
+        tramitacaoFacade.edit(tramitacao);
+        JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
+        tramitacoes = null;
+
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("tramitacao_lstar.jsf");
         } catch (IOException ex) {
@@ -318,7 +318,6 @@ public class TramitacaoMBean implements Serializable {
         FindByProcessosFindosIntervaloTempo = tramitacaoFacade.findByIdProcessoFindosIntervaloTempo(dataInicio, dataFim);
         return FindByProcessosFindosIntervaloTempo;
     }
-   
 
     public List<Tramitacao> getFindByProcessosFindosDecisaoIntervaloTempo() {
         FindByProcessosFindosDecisaoIntervaloTempo = tramitacaoFacade.findByIdProcessoFindosDecisaoIntervaloTempo(idDecisao, dataInicio, dataFim);
@@ -340,7 +339,7 @@ public class TramitacaoMBean implements Serializable {
             resultados = tramitacaoFacade.findByIdProcessoFindosDecisaoIntervaloTempo(idDecisao, dataInicio, dataFim);
         } else if (idDecisao == 0 && dataInicio != null && dataFim != null) {
             resultados = tramitacaoDAO.buscarProcessosFindosPorDatas(dataInicio1, dataFim1);
-               }
+        }
         return resultados;
     }
 
@@ -349,9 +348,9 @@ public class TramitacaoMBean implements Serializable {
         FindByProcessoFindoEstado = tramitacaoFacade.findByIdProcessoEstado(idEstado);
         return FindByProcessoFindoEstado;
     }
-    
+
     // Método para a Enum de Estados
-     public List<SelectItem> getOpEstados() {
+    public List<SelectItem> getOpEstados() {
         List<SelectItem> list = new ArrayList<>();
         for (Estado estado : Estado.values()) {
             list.add(new SelectItem(estado, estado.getExtensao()));
@@ -387,9 +386,8 @@ public class TramitacaoMBean implements Serializable {
     public void setDataFim1(String dataFim1) {
         this.dataFim1 = dataFim1;
     }
-    
-    
-     public String imprimirListaArtigo() {
+
+    public String imprimirListaArtigo() {
         String relatorio = "processos_findos.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
@@ -398,10 +396,17 @@ public class TramitacaoMBean implements Serializable {
 
     }
 
-    
+    public String imprimirTramitacoesDoProcesso() {
+        int parametro = idProcesso;
+        String relatorio = "tramitacoes_do_processo2.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("numero_processo", parametro);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+        
+       
+        return null;
 
-    
-    
+    }
 
-    
 }

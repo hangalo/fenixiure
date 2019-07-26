@@ -27,7 +27,7 @@ public class Testes {
         List<Tramitacao> tramitacaos = null;
        
         tramitacaos = tramitacaoDAO.buscarProcessosFindosPorDatas(dataInicio, dataFim);
-       
+       // tramitacaos = tramitacaoDAO.buscarProcessosFindos();
         for (Tramitacao tramitacao : tramitacaos) {
             
             System.out.println("Numero: " + tramitacao.getIdProcesso().getNumeroProcesso());
