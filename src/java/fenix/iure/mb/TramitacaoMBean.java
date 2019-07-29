@@ -398,9 +398,9 @@ public class TramitacaoMBean implements Serializable {
 
     public String imprimirTramitacoesDoProcesso() {
         int parametro = idProcesso;
-        String relatorio = "tramitacoes_do_processo2.jasper";
+        String relatorio = "trametes_por_processo_com_parametro.jasper";
         HashMap parametros = new HashMap();
-        parametros.put("numero_processo", parametro);
+        parametros.put("id_processo", parametro);
         gestorImpressao = new GestorImpressao();
         gestorImpressao.imprimirPDF(relatorio, parametros);
         

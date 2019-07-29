@@ -31,13 +31,14 @@
                                 <p:column>
                                     <p:commandButton style="margin-left: 20px; height: 35px; width: 100px" value="Nova" type="button" onclick="PF('dialogoGuardar').show();"/>
                                 </p:column>
-                                <p:column>
-                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 100px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                   
-                                </p:column>
-                                <p:column>
+                                 <p:column>
                                     <p:commandButton id="habilitar" disabled="false" style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#{tramitacaoMBean.imprimirTramitacoesDoProcesso()}" ajax="false" immediate="true" />                   
                                 </p:column>
                                 
+                                <p:column>
+                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 100px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                   
+                                </p:column>
+                               
                             </h:dataTable>
 
                             <br></br>

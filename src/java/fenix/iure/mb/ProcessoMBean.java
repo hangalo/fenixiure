@@ -403,7 +403,7 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String imprimirListaArtigo() {
-        String relatorio = "processos_lista_insignia.jasper";
+        String relatorio = "processos_lista_com_borda.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
         gestorImpressao.imprimirPDF(relatorio, parametros);
@@ -427,18 +427,11 @@ public class ProcessoMBean implements Serializable {
         return findProcessosFindos;
     }
 
-    private Integer indexTabela;
+    
+    
 
     
-    public Integer getIndexTabela() {
-        for (int i = 1; i <= processos.size(); i++) {
-            indexTabela = i;
-        }
-        return indexTabela;
-    }
+   
 
-    public void setIndexTabela(Integer indexTabela) {
-        this.indexTabela = indexTabela;
-    }
-
+    
 }
