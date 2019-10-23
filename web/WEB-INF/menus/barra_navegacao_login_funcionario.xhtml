@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>conteudo</title>
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+
+
+    </h:head>
+
+
+    <h:body style="padding-top: 10px ">
+
+
+
+        <b:navBar brand="" brandHref="/reservado/admin/processos.jsf" inverse="true" fixed="top">
+            <b:navBar brand="" brandHref="/area_administrativa_1.jsf" inverse="true" fixed="top">
+                <b:navbarLinks pull="left" styleClass="hidden-xs">
+                    <b:navLink outcome="/area_administrativa_1">
+                        <h:graphicImage style="margin-top: 1%" library="imagens" name="house.png" height="30" width="30"/>
+                    </b:navLink>
+                </b:navbarLinks>
+                <b:navbarLinks pull="right" styleClass="hidden-xs">
+                    <b:navLink style="color: white; " value="Logout" outcome="/login" icon="log-out"></b:navLink>
+                </b:navbarLinks>
+                <b:navbarLinks pull="right" styleClass="hidden-xs">
+                    <b:navLink style="color: white; " value="Bem Vindo  #{loginMBean.usuario}" icon-awesome="fa-user"></b:navLink>
+                </b:navbarLinks>
+
+            </b:navBar>
+
+        </b:navBar>
+
+
+
+
+
+        <!--<h:graphicImage name="clientes.png" library="imagens" width="100%"/>-->
+    </h:body>
+</html>
+

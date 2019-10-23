@@ -17,6 +17,7 @@ import fenix.iure.entities.EstadoProcesso;
 import fenix.iure.entities.Processo;
 import fenix.iure.entities.TipoDecisao;
 import fenix.iure.entities.Tramitacao;
+import fenix.iure.util.DateUtil;
 import fenix.iure.util.GestorImpressao;
 import fenix.iure.util.JSFUtil;
 import java.io.IOException;
@@ -36,6 +37,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
+import org.apache.jasper.tagplugins.jstl.If;
 
 /**
  *
@@ -63,7 +66,6 @@ public class TramitacaoMBean implements Serializable {
     private int idEspecie;
     private int idDecisao = 0;
     private Date dataInicio, dataFim;
-    private String dataInicio1, dataFim1;
 
     // Listas das pesquisas paramentrizadas
     private List<Tramitacao> findByProcesso;
@@ -82,6 +84,10 @@ public class TramitacaoMBean implements Serializable {
 
     // Variavel para a actualizacao do campo dataT+ermino via ajax
     private String tipoEstado;
+
+    // Variavel para carregar o processo da tramitacao
+    private Processo processo;
+    private List<Tramitacao> tramitacaoDoProcesso;
 
     //  Ingeçao so EntitiesManager
     @Inject
@@ -107,6 +113,7 @@ public class TramitacaoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         tramitacao = new Tramitacao();
+        tramitacao.setDataConclusaoTramitacao(DateUtil.getDataActual());
         tramitacoes = new ArrayList<>();
         processos = new ArrayList<>();
         decisoes = new ArrayList<>();
@@ -172,7 +179,6 @@ public class TramitacaoMBean implements Serializable {
             return controlo;
         }
     }*/
-
     // Metodo para verificar processos findos
     public List<Tramitacao> getProcessosFindosPorNumero() {
         processosFindosPorNumero = tramitacaoFacade.findByIdProcessoFindosPorNumero(tramitacao);
@@ -233,6 +239,7 @@ public class TramitacaoMBean implements Serializable {
 
     public List<Tramitacao> getFindByProcesso() {
         findByProcesso = tramitacaoFacade.findByIdProcesso(idProcesso);
+        //processo = processoFacade.findById(idProcesso);
         return findByProcesso;
     }
 
@@ -244,24 +251,8 @@ public class TramitacaoMBean implements Serializable {
         this.idEstado = idEstado;
     }
 
-    public Date getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
-    }
-
     public List<Tramitacao> getFindByEstadoIntervaloDatas() {
-        findByEstadoIntervaloDatas = tramitacaoFacade.findByIdEstadoDatas(idEstado, dataInicio, dataFim);
+        //findByEstadoIntervaloDatas = tramitacaoFacade.findByIdEstadoDatas(idEstado, dataInicio, dataFim);
         return findByEstadoIntervaloDatas;
     }
 
@@ -290,7 +281,7 @@ public class TramitacaoMBean implements Serializable {
     }
 
     public List<Tramitacao> getFindByEspecieIntervaloDatas() {
-        findByEspecieIntervaloDatas = tramitacaoFacade.findByIdEspecieDatas(idEspecie, dataInicio, dataFim);
+        // findByEspecieIntervaloDatas = tramitacaoFacade.findByIdEspecieDatas(idEspecie, dataInicio, dataFim);
         return findByEspecieIntervaloDatas;
     }
 
@@ -300,27 +291,31 @@ public class TramitacaoMBean implements Serializable {
     }
 
     public List<Tramitacao> getFindByEspecieEstadoIntervaloDatas() {
-        findByEspecieEstadoIntervaloDatas = tramitacaoFacade.findByIdEspecieEstadoDatas(idEspecie, idEstado, dataInicio, dataFim);
+        //findByEspecieEstadoIntervaloDatas = tramitacaoFacade.findByIdEspecieEstadoDatas(idEspecie, idEstado, dataInicio, dataFim);
         return findByEspecieEstadoIntervaloDatas;
     }
 
     public List<Tramitacao> getFindByDecisaoEstadoIntervaloDatas() {
-        findByDecisaoEstadoIntervaloDatas = tramitacaoFacade.findByIdDecisaoEstadoDatas(idEstado, idDecisao, dataInicio, dataFim);
+        //findByDecisaoEstadoIntervaloDatas = tramitacaoFacade.findByIdDecisaoEstadoDatas(idEstado, idDecisao, dataInicio, dataFim);
         return findByDecisaoEstadoIntervaloDatas;
     }
 
+    /*public List<Tramitacao> getFindByProcessosFindos() {
+        FindByProcessosFindos = tramitacaoFacade.findByIdProcessoFindos();
+        return FindByProcessosFindos;
+    }*/
     public List<Tramitacao> getFindByProcessosFindos() {
         FindByProcessosFindos = tramitacaoFacade.findByIdProcessoFindos();
         return FindByProcessosFindos;
     }
 
     public List<Tramitacao> getFindByProcessosFindosIntervaloTempo() {
-        FindByProcessosFindosIntervaloTempo = tramitacaoFacade.findByIdProcessoFindosIntervaloTempo(dataInicio, dataFim);
+        //FindByProcessosFindosIntervaloTempo = tramitacaoFacade.findByIdProcessoFindosIntervaloTempo(dataInicio, dataFim);
         return FindByProcessosFindosIntervaloTempo;
     }
 
     public List<Tramitacao> getFindByProcessosFindosDecisaoIntervaloTempo() {
-        FindByProcessosFindosDecisaoIntervaloTempo = tramitacaoFacade.findByIdProcessoFindosDecisaoIntervaloTempo(idDecisao, dataInicio, dataFim);
+        //FindByProcessosFindosDecisaoIntervaloTempo = tramitacaoFacade.findByIdProcessoFindosDecisaoIntervaloTempo(idDecisao, dataInicio, dataFim);
         return FindByProcessosFindosDecisaoIntervaloTempo;
     }
 
@@ -333,12 +328,20 @@ public class TramitacaoMBean implements Serializable {
 
     }
 
+    // OBS.: A busca por datas não retorna valores
     public List<Tramitacao> getResultados() {
-        resultados = tramitacaoFacade.findByIdProcessoFindosJDBC();
-        if (idDecisao != 0 && dataInicio != null && dataFim != null) {
-            resultados = tramitacaoFacade.findByIdProcessoFindosDecisaoIntervaloTempo(idDecisao, dataInicio, dataFim);
-        } else if (idDecisao == 0 && dataInicio != null && dataFim != null) {
-            resultados = tramitacaoDAO.buscarProcessosFindosPorDatas(dataInicio1, dataFim1);
+        //Retorna processos findos
+        resultados = tramitacaoDAO.buscarProcessosFindos();
+        //Retorna busca por decisão e datas 
+        if (idDecisao == 0 && dataInicio != null && dataFim != null) {
+            resultados = tramitacaoDAO.buscarProcessosFindosPorDatas(dataInicio, dataFim);
+            //Retorna Decisao
+        } else if (idDecisao != 0 && dataInicio == null && dataFim == null) {
+            resultados = tramitacaoDAO.buscarProcessosFindosPorDecisao(idDecisao);
+
+        } else if (idDecisao != 0 && dataInicio != null && dataFim != null) {
+            resultados = tramitacaoDAO.buscarProcessosFindosPorDatasDecisão(dataInicio, dataFim, idDecisao);
+
         }
         return resultados;
     }
@@ -371,24 +374,8 @@ public class TramitacaoMBean implements Serializable {
         return processosNaoFindos;
     }
 
-    public String getDataInicio1() {
-        return dataInicio1;
-    }
-
-    public void setDataInicio1(String dataInicio1) {
-        this.dataInicio1 = dataInicio1;
-    }
-
-    public String getDataFim1() {
-        return dataFim1;
-    }
-
-    public void setDataFim1(String dataFim1) {
-        this.dataFim1 = dataFim1;
-    }
-
     public String imprimirListaArtigo() {
-        String relatorio = "processos_findos.jasper";
+        String relatorio = "tramites_do_processo_horizontal.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
         gestorImpressao.imprimirPDF(relatorio, parametros);
@@ -398,15 +385,94 @@ public class TramitacaoMBean implements Serializable {
 
     public String imprimirTramitacoesDoProcesso() {
         int parametro = idProcesso;
-        String relatorio = "trametes_por_processo_com_parametro.jasper";
+        String relatorio = "tramites_do_processo_horizontal.jasper";
         HashMap parametros = new HashMap();
         parametros.put("id_processo", parametro);
         gestorImpressao = new GestorImpressao();
         gestorImpressao.imprimirPDF(relatorio, parametros);
-        
-       
+
         return null;
 
+    }
+
+    public String imprimirProcessosFindos() {
+        String relatorio = "processos_findos.jasper";
+        HashMap parametros = new HashMap();
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+    }
+    Integer controleImpressaoRelatorio = 0;
+
+    public String imprimirRelatorio2() {
+        if (idDecisao != 0 && dataInicio == null && dataFim == null) {
+            int parametro = idDecisao;
+            String relatorio = "processos_findos_por_decisao.jasper";
+            HashMap parametros = new HashMap();
+            parametros.put("idDecisao", parametro);
+            gestorImpressao = new GestorImpressao();
+            gestorImpressao.imprimirPDF(relatorio, parametros);
+
+            return null;
+
+        }else if (idDecisao != 0 && dataInicio != null && dataFim != null) {
+            int parametro = idDecisao;
+            Date parametro2 = dataInicio;
+            Date parametro3 = dataFim;
+            String relatorio = "processos_findos_por_decisao_datas.jasper";
+            HashMap parametros = new HashMap();
+            parametros.put("idDecisao", parametro);
+            parametros.put("dataInicio", parametro2);
+            parametros.put("dataFim", parametro3);
+            gestorImpressao = new GestorImpressao();
+            gestorImpressao.imprimirPDF(relatorio, parametros);
+
+            return null;
+
+        }
+        
+        return null;
+    }
+
+   
+
+    public String imprimirProcessosFindosPorDecisao() {
+        int parametro = idDecisao;
+        String relatorio = "processos_findos_por_decisao.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("idDecisao", parametro);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public Processo getProcesso() {
+        //  processo = processoFacade.findById(idProcesso);
+        return processo;
+    }
+
+    public void setProcesso(Processo processo) {
+        this.processo = processo;
     }
 
 }

@@ -8,134 +8,148 @@
       xmlns:b="http://bootsfaces.net/ui">
 
     <body>
-
         <ui:composition template="./../../WEB-INF/templates/dashboard.xhtml">
+            <ui:define name="top">
+                <ui:include src="../../WEB-INF/menus/barra_navegacao_login_juiz.xhtml" />
+                <br/>
+            </ui:define>
             <ui:define name="content">
                 <p:growl autoUpdate="true" showDetail="true"/>
                 <f:view>
-                    <b:panel collapsible="false" look="info">
-                        <h:form>
-                            <h:dataTable value="#">
-                                <p:column>
-                                    <p:menubar style="margin-left: 3px; height: 35px;">
-                                        <p:submenu label="Procurar por">
-                                            <p:menuitem value="Decisão" url="/reservado/tramitacao/processos_findos_decisao_intervalo_tempo.jsf"/>
+                    <b:panel collapsible="false">
+                        <f:facet name="heading" >
+                            <h1 style="text-align: left;">PROCESSOS FINDOS</h1>
+                        </f:facet>
 
-                                        </p:submenu>
-                                    </p:menubar>
+                        <b:column  style="margin-left: 0px">
+                            <b:row style="float: right; margin-left: 0px ">
+                                <b:column col-sm="9" col-md="12" styleClass="main">
 
-                                </p:column>
-                                <p:column>
-                                    <h:panelGrid columns="6"  cellspacing="10%">
+                                    <h:form id="formCercaFrate" styleClass="navbar-form navbar-right">
+                                        <div class="form-group">
+                                            <b:commandButton id="btnPrintListaFiltrada" title="Imprimir Lista Filtrada" style="margin-left: 0px; height: 33px; width: 100px; margin-right: 10px;" icon="print" action="#{tramitacaoMBean.imprimirRelatorio2()}" ajax="false" immediate="true" >
+                                                <p:tooltip for="btnPrintListaFiltrada"/>
+                                            </b:commandButton>
+                                            <b:commandButton id="btnFechar" title="Fechar" style="margin-left: 0px; height: 33px; background-color: #DD0000" value="X" action="/area_administrativa_1" ajax="false" immediate="true" >
+                                                <p:tooltip for="btnFechar"/>
+                                            </b:commandButton> 
 
-                                        <p:calendar placeholder="Data Início" effect="slide" style="margin-left: 15px; width: 10px" value="#{tramitacaoMBean.dataInicio}" pattern="dd/MM/yyyy" locale="pt"  />
+                                        </div> 
+                                    </h:form>
+                                    <h:form id="formCarregaEspecie"  styleClass="navbar-form navbar-right">
+                                        <h:messages/>
+                                        <h:panelGrid columns="6"  cellspacing="10%">
+                                            <b:commandButton id="btnPrintListaGeral" title="Imprimir Lista Geral" style="margin-left: 0px; height: 33px; width: 100px; margin-right: 10px;" icon="print" action="#{tramitacaoMBean.imprimirProcessosFindos()}" ajax="false" immediate="true" >
+                                                <p:tooltip for="btnPrintListaGeral"/>
+                                            </b:commandButton>
 
-                                        <p:calendar placeholder="Data Fim" effect="slide" style="margin-left: 15px" value="#{tramitacaoMBean.dataFim}" pattern="dd/MM/yyyy" locale="pt"  />
+                                            <p:outputLabel value="Selecione a Decisão: " style="margin-right: 10px"/>
+                                            <p:selectOneMenu onchange="submit();" effect="slide" style="width:150px; height: 35px; margin-left:0px" id="decisoes" filter="true" filterMatchMode="startsWith" label="Decisao" value="#{tramitacaoMBean.idDecisao}">
+                                                <f:selectItem  itemLabel="Selecione"/>
+                                                <f:selectItems  value="#{tramitacaoMBean.decisoes}" var="decisao" itemValue="#{decisao.idTipoDecisao}" itemLabel="#{decisao.tipoDecisao}"/>
+                                            </p:selectOneMenu>
+                                            <p:calendar disabled="false" placeholder="Início" effect="slide" style="margin-left: 15px; width: 10px" value="#{tramitacaoMBean.dataInicio}" pattern="dd/MM/yyyy" locale="pt"  />
 
-                                        <b:commandButton style="margin-left:10px" icon="ui-icon-zoomin"  value="Pesquisar" />
-                                    </h:panelGrid>
-                                </p:column>
+                                            <p:calendar disabled="false" placeholder="Fim" effect="slide" style="margin-left: 15px" value="#{tramitacaoMBean.dataFim}" pattern="dd/MM/yyyy" locale="pt"/>
 
+                                            <b:commandButton style="margin-left:10px; width: 100px; height: 33px; " icon="ui-icon-zoomin"  value="Pesquisar" />
 
-                                <p:column>
-                                    <!-- <p:commandButton style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#/*{tramitacaoMBean.imprimirProcessos()}*/" ajax="false" immediate="true" />  -->                  
-                                </p:column>
-                                 <p:column>
-                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#{tramitacaoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" />                   
-                                </p:column>
-                                <p:column>
-                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 100px"  value="Fechar" action="/area_administrativa" ajax="false" immediate="true" />                   
-                                </p:column>
-
-                            </h:dataTable>
-
-                            <br></br>
-
-
-                            <!--inicio Datatable-->
-                            <p:dataTable value="#{tramitacaoMBean.resultados}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Número"/>
-                                    </f:facet>
-
-                                    <h:outputText value="#{item.idProcesso.numeroProcesso}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Espécie"/>
-                                    </f:facet>
-
-                                    <h:outputText value="#{item.idProcesso.idEspecieProcesso.especieProcesso}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Autor"/>
-                                    </f:facet>
-
-                                    <h:outputText value="#{item.idProcesso.idRequente.nomeRequente}"/>
-                                </p:column>
-                                <p:column >
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Reu"/>
-                                    </f:facet>
-
-                                    <h:outputText value="#{item.idProcesso.idRequerido.nomeRequerido}"/>
-                                </p:column>
-                                
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Data Término"/>
-                                    </f:facet>
-                                    <p:outputLabel id="data_conclusao"  value="#{item.dataTermino}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </p:outputLabel>
-
-                                </p:column>
-                                 <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Data Entrada"/>
-                                    </f:facet>
-                                     <p:outputLabel id="data_entrada3"  value="#{item.idProcesso.dataEntrada}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </p:outputLabel>
-
-                                </p:column>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </b:column>
+                            </b:row>
+                        </b:column>
 
 
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Decisão"/>
-                                    </f:facet>
+                        <b:panel collapsible="false">
+                            <f:facet name="heading" >
+                                <h3 style="text-align: left;">Findos Mais Recentes</h3>
+                            </f:facet>
+                            <h:form>
+                                <!--inicio Datatable-->
+                                <b:dataTable page-length-menu="5,10,20" 
+                                             searching="true"
+                                             value="#{tramitacaoMBean.resultados}"
+                                             var="item"
+                                             copy="true"
+                                             pdf="true"
+                                             excel="true"
+                                             style="width:100%; text-align: left"
+                                             custom-options="dom: 'lfrtiBp',buttons: ['colvis','copy','csv',{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},'print']" > 
 
-                                    <h:outputText value="#{item.idTipoDecisao.tipoDecisao}"/>
-                                </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Número"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{item.idProcesso.numeroProcesso}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Espécie"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{item.idProcesso.idEspecieProcesso.especieProcesso}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Autor"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{item.idProcesso.idRequente.nomeRequente}"/>
+                                    </p:column>
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Reu"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{item.idProcesso.idRequerido.nomeRequerido}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Data Entrada"/>
+                                        </f:facet>
+                                        <p:outputLabel id="data_entrada3"  value="#{item.idProcesso.dataEntrada}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </p:outputLabel>
+
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Data Término"/>
+                                        </f:facet>
+                                        <p:outputLabel id="data_conclusao"  value="#{item.dataTermino}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </p:outputLabel>
+
+                                    </p:column>
 
 
 
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Decisão"/>
+                                        </f:facet>
+
+                                        <h:outputText value="#{item.idTipoDecisao.tipoDecisao}"/>
+                                    </p:column>
+
+                                    <p:column style="text-align: center" width="5%">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Operações"/>
+                                        </f:facet>                   
+                                        <b:commandButton icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                            <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
+                                        </b:commandButton>
+
+                                    </p:column>
 
 
-                                <p:column style="width: 100px; text-align: center" width="160">
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Operações"/>
-                                    </f:facet>
-                                    <!-- <p:commandButton  icon="ui-icon-trash" action="#//{tramitacaoMBean.delete()}">
-                                        <f:setPropertyActionListener target="#//{tramitacaoMBean.tramitacao}" value="#//{item}"/>
-                                    </p:commandButton> -->
-                                    <!-- <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
-                                        <f:setPropertyActionListener target="#/*{tramitacaoMBean.tramitacao}" value="#/*{item}"/>
-                                    </p:commandButton> -->
-                                    <p:commandButton icon="ui-icon-zoomin" update=":ver" oncomplete="PF('dialogoVer').show();">
-                                        <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
-                                    </p:commandButton>
+                                </b:dataTable>
 
-                                </p:column>
-
-
-                            </p:dataTable>
-
-                            <!--Fim Datatable-->                         
-                        </h:form>
+                                <!--Fim Datatable-->                         
+                            </h:form>
+                        </b:panel>
 
                     </b:panel>
                     <p:outputLabel>

@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+        <ui:composition template="./../../WEB-INF/templates/dashboard.xhtml">
+            <ui:define name="top">
+                <ui:include src="../../WEB-INF/menus/barra_navegacao_login_funcionario.xhtml" />
+                <br/>
+            </ui:define>
+            <ui:define name="content">
+                <f:view>
+                    <b:panel collapsible="false"  style="text-align: left;">
+                        <f:facet name="heading" >
+                            <h1 style="text-align: left;">ÁREA RESERVADA</h1>
+                        </f:facet>
+                        <ui:include src="../../WEB-INF/menus/menu_gestao_admin.xhtml" />
+                        <b:column  style="margin-left: 0px">
+                            <b:row style="float: right; margin-left: 0px; margin-right: 20px ">
+                                <b:column col-sm="9" col-md="12" styleClass="main">
+                                    <h:form id="formCercaFrate" styleClass="navbar-form navbar-right">
+                                        <div class="form-group">
+                                            <b:commandButton id="btnPrintLista" title="Imprimir Lista de Processos" style="margin-left: 0px; height: 40px;" icon="print" action="#{processoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" >
+                                                <p:tooltip for="btnPrintLista"/>
+                                            </b:commandButton> 
+
+                                        </div> 
+                                    </h:form>
+
+                                </b:column>
+                            </b:row>
+                        </b:column>
+
+                        <b:panel  collapsible="true" collapsed="true"  style="text-align: left;">
+
+                            <f:facet name="heading" >
+                                <h3 style="text-align: left;">Nova Espécie</h3>
+                            </f:facet>
+                            <div style="margin-left: 0%">
+                                <h:form enctype="multipart/form-data">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="Espécie: "/>
+                                        <p:inputText size="30" value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
+                                    </h:panelGrid>
+                                    <br></br>
+                                    <p:commandButton value="Guardar" action="#{especieProcessoMBean.guardar(evt)}" ajax="false"/>
+                                </h:form>
+                            </div>
+                        </b:panel>
+
+
+
+                        <b:panel collapsible="false"  style="text-align: left;">
+                            <f:facet name="heading" >
+                                <h3 style="text-align: left;">Lista de Espécies</h3>
+                            </f:facet>
+
+                            <h:form>
+
+                                <!--inicio Datatable-->
+                                <b:dataTable searching="true" value="#{especieProcessoMBean.especieProcessos}"  var="processo">
+                                    <p:column style="text-align: left" width="100">
+                                        <f:facet name="header">
+                                            <h:outputText value="TIPO"/>
+                                        </f:facet>
+                                        <h:outputText value="#{processo.especieProcesso}"/>
+                                    </p:column>
+
+
+                                    <p:column width="15%" style="text-align: center">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Operações"/>
+                                        </f:facet>
+                                        <b:growl id="messages" />
+                                        <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                            <f:setPropertyActionListener target="#{especieProcessoMBean.especieProcesso}" value="#{processo}"/>
+                                        </p:commandButton>
+
+                                    </p:column>
+
+                                    <f:facet name="footer">
+                                        Total Processos  (#{especieProcessoMBean.especieProcessos.size()})
+                                    </f:facet>                           
+                                </b:dataTable>
+
+                                <!--Fim Datatable-->                         
+                            </h:form>
+                        </b:panel>
+
+
+                    </b:panel>
+
+
+
+
+                    <!--inicio do dialogo editar-->
+
+                    <p:dialog header="Alterar dados de Espécie" id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" style="width: 400px; height: 150px" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{especieProcessoMBean.especieProcesso.idEspecieProcesso}"/>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Estado Processo: "/>
+                                <p:inputText size="30" value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
+                            </h:panelGrid>
+                            <br></br>
+                            <p:commandButton value="Alterar" action="#{especieProcessoMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar-->
+
+                    <!--Inicio do dialog ver-->
+                    <p:dialog id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false">
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Espécie: "/>
+                                <h:outputText value="#{especieProcessoMBean.especieProcesso.especieProcesso}"/>
+                            </p:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

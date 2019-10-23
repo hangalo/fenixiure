@@ -5,6 +5,7 @@
  */
 package fenix.iure.ejbs;
 
+import fenix.iure.entities.EspecieProcesso;
 import fenix.iure.entities.Processo;
 import java.util.Date;
 import java.util.List;
@@ -39,10 +40,25 @@ public class ProcessoFacade extends AbstractFacade<Processo> {
         return query.getResultList();
         
     }
-    public List<Processo> findRecentes() {
+    public Processo findById(Integer idProcesso) {
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p WHERE p.idProcesso like :idProcesso");
+        query.setParameter("idProcesso", idProcesso);
+        return (Processo) query.getSingleResult();
+        
+    }
+    
+    public List<Processo> findAllDorderByDataDesc() {
         Query query;
         query = em.createQuery("SELECT p FROM Processo p ORDER BY p.dataEntrada DESC");
         query.setMaxResults(5);
+        return query.getResultList();
+        
+    }
+    public List<Processo> findRecentes() {
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p ORDER BY p.dataEntrada DESC");
+        query.setMaxResults(6);
         return query.getResultList();
         
     }
@@ -51,6 +67,14 @@ public class ProcessoFacade extends AbstractFacade<Processo> {
         Query query;
         query = em.createQuery("SELECT p FROM Processo p WHERE p.dataEntrada =:dataEntrada ORDER BY p.dataEntrada");
         query.setParameter("dataEntrada", dataEntrada);
+        return query.getResultList();
+        
+    }public List<Processo> findByIntervaloDataEntrada(Date dataInicio, Date dataFim) {
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p WHERE p.dataEntrada BETWEEN :dataInicio AND :dataFim ORDER BY p.dataEntrada");
+        query.setParameter("dataInicio", dataInicio);
+        query.setParameter("dataFim", dataFim);
+        
         return query.getResultList();
         
     }
@@ -69,6 +93,14 @@ public class ProcessoFacade extends AbstractFacade<Processo> {
         query.setParameter("idEspecieProcesso", id);
         return query.getResultList();
     }
+    
+    public List<Processo> findByEspecie(EspecieProcesso especieProcesso) {
+        Query query;
+        query = em.createQuery("SELECT p FROM Processo p WHERE p.idEspecieProcesso = :especieProcesso ORDER BY p.dataEntrada");
+        query.setParameter("especieProcesso", especieProcesso);
+        return query.getResultList();
+    }
+    
     
     public List<Processo> findByIdEstado(int id) {
         Query query;

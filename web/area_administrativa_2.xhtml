@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"           
+      xmlns:b="http://bootsfaces.net/ui">
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/dashboard.xhtml">
+            <ui:define name="content">
+
+                <center>
+                    <h:form>
+                        <p:dock itemWidth="140" proximity="90" class="" position="top">
+                           
+                            <p:menuitem value="Processos" icon="/resources/imagens/proces_1.png" url="/reservado/processo/processo_lsta_por_especie.jsf" />
+                            <p:menuitem value="Processos/Findos" icon="/resources/imagens/pf.png" url="/reservado/tramitacao/processos_findos.jsf"/>
+                            <p:menuitem value="Despachos/Decisão" icon="/resources/imagens/historico.png" url="/reservado/tramitacao/tramitacao_lstar.jsf" />
+                            
+                        </p:dock>
+
+
+
+                    </h:form>
+
+
+
+                    <br></br>
+
+
+                    <!--     <p:graphicImage class="img-responsive img-rounded" width="95%" library="imagens" name="martelo3.png" />
+                    -->
+                </center>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

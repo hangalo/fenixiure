@@ -32,12 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "requerido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Requerido.findAll", query = "SELECT r FROM Requerido r"),
-    @NamedQuery(name = "Requerido.findByIdRequerido", query = "SELECT r FROM Requerido r WHERE r.idRequerido = :idRequerido"),
-    @NamedQuery(name = "Requerido.findByNomeRequerido", query = "SELECT r FROM Requerido r WHERE r.nomeRequerido = :nomeRequerido"),
-    @NamedQuery(name = "Requerido.findByCasaRequerido", query = "SELECT r FROM Requerido r WHERE r.casaRequerido = :casaRequerido"),
-    @NamedQuery(name = "Requerido.findByRuaRequerido", query = "SELECT r FROM Requerido r WHERE r.ruaRequerido = :ruaRequerido"),
-    @NamedQuery(name = "Requerido.findByBairroRequerido", query = "SELECT r FROM Requerido r WHERE r.bairroRequerido = :bairroRequerido")})
+    @NamedQuery(name = "Requerido.findAll", query = "SELECT r FROM Requerido r")
+    , @NamedQuery(name = "Requerido.findByIdRequerido", query = "SELECT r FROM Requerido r WHERE r.idRequerido = :idRequerido")
+    , @NamedQuery(name = "Requerido.findByNomeRequerido", query = "SELECT r FROM Requerido r WHERE r.nomeRequerido = :nomeRequerido")
+    , @NamedQuery(name = "Requerido.findByCasaRequerido", query = "SELECT r FROM Requerido r WHERE r.casaRequerido = :casaRequerido")
+    , @NamedQuery(name = "Requerido.findByRuaRequerido", query = "SELECT r FROM Requerido r WHERE r.ruaRequerido = :ruaRequerido")
+    , @NamedQuery(name = "Requerido.findByBairroRequerido", query = "SELECT r FROM Requerido r WHERE r.bairroRequerido = :bairroRequerido")})
 public class Requerido implements Serializable {
 
     private static final long serialVersionUID = 1L;

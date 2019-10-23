@@ -73,7 +73,7 @@ public class TipoPessoaMBean implements Serializable {
     }
 
     public String startEdit() {
-        return "pessoas_lstar?faces-redirect=true";
+        return "tipo_pessoas?faces-redirect=true";
     }
 
     public void edit(javafx.event.ActionEvent event) {
@@ -82,7 +82,7 @@ public class TipoPessoaMBean implements Serializable {
             tipoPessoas = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("pessoas_lstar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("tipo_pessoas.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(TipoDecisaoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -93,7 +93,7 @@ public class TipoPessoaMBean implements Serializable {
            tipoPessoaFacade.remove(tipoPessoa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             tipoPessoas = null;
-            return "pessoas_lstar?faces-redirect=true";
+            return "tipo_pessoas?faces-redirect=true";
         
     }
 

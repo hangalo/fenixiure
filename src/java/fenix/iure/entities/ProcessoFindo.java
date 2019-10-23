@@ -31,9 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "processo_findo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ProcessoFindo.findAll", query = "SELECT p FROM ProcessoFindo p"),
-    @NamedQuery(name = "ProcessoFindo.findByDataTermino", query = "SELECT p FROM ProcessoFindo p WHERE p.dataTermino = :dataTermino"),
-    @NamedQuery(name = "ProcessoFindo.findByIdProcessoFindo", query = "SELECT p FROM ProcessoFindo p WHERE p.idProcessoFindo = :idProcessoFindo")})
+    @NamedQuery(name = "ProcessoFindo.findAll", query = "SELECT p FROM ProcessoFindo p")
+    , @NamedQuery(name = "ProcessoFindo.findByDataTermino", query = "SELECT p FROM ProcessoFindo p WHERE p.dataTermino = :dataTermino")
+    , @NamedQuery(name = "ProcessoFindo.findByIdProcessoFindo", query = "SELECT p FROM ProcessoFindo p WHERE p.idProcessoFindo = :idProcessoFindo")})
 public class ProcessoFindo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,12 +47,12 @@ public class ProcessoFindo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_processo_findo")
     private Integer idProcessoFindo;
-    @JoinColumn(name = "id_tipo_decisao", referencedColumnName = "id_tipo_decisao")
-    @ManyToOne(optional = false)
-    private TipoDecisao idTipoDecisao;
     @JoinColumn(name = "id_processo", referencedColumnName = "id_processo")
     @ManyToOne(optional = false)
     private Processo idProcesso;
+    @JoinColumn(name = "id_tipo_decisao", referencedColumnName = "id_tipo_decisao")
+    @ManyToOne(optional = false)
+    private TipoDecisao idTipoDecisao;
 
     public ProcessoFindo() {
     }
@@ -82,20 +82,20 @@ public class ProcessoFindo implements Serializable {
         this.idProcessoFindo = idProcessoFindo;
     }
 
-    public TipoDecisao getIdTipoDecisao() {
-        return idTipoDecisao;
-    }
-
-    public void setIdTipoDecisao(TipoDecisao idTipoDecisao) {
-        this.idTipoDecisao = idTipoDecisao;
-    }
-
     public Processo getIdProcesso() {
         return idProcesso;
     }
 
     public void setIdProcesso(Processo idProcesso) {
         this.idProcesso = idProcesso;
+    }
+
+    public TipoDecisao getIdTipoDecisao() {
+        return idTipoDecisao;
+    }
+
+    public void setIdTipoDecisao(TipoDecisao idTipoDecisao) {
+        this.idTipoDecisao = idTipoDecisao;
     }
 
     @Override

@@ -33,11 +33,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "juiz")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Juiz.findAll", query = "SELECT j FROM Juiz j"),
-    @NamedQuery(name = "Juiz.findByIdJuiz", query = "SELECT j FROM Juiz j WHERE j.idJuiz = :idJuiz"),
-    @NamedQuery(name = "Juiz.findByNomeJuiz", query = "SELECT j FROM Juiz j WHERE j.nomeJuiz = :nomeJuiz"),
-    @NamedQuery(name = "Juiz.findBySobrenomeJuiz", query = "SELECT j FROM Juiz j WHERE j.sobrenomeJuiz = :sobrenomeJuiz"),
-    @NamedQuery(name = "Juiz.findByDataInicioFuncoes", query = "SELECT j FROM Juiz j WHERE j.dataInicioFuncoes = :dataInicioFuncoes")})
+    @NamedQuery(name = "Juiz.findAll", query = "SELECT j FROM Juiz j")
+    , @NamedQuery(name = "Juiz.findByIdJuiz", query = "SELECT j FROM Juiz j WHERE j.idJuiz = :idJuiz")
+    , @NamedQuery(name = "Juiz.findByNomeJuiz", query = "SELECT j FROM Juiz j WHERE j.nomeJuiz = :nomeJuiz")
+    , @NamedQuery(name = "Juiz.findBySobrenomeJuiz", query = "SELECT j FROM Juiz j WHERE j.sobrenomeJuiz = :sobrenomeJuiz")
+    , @NamedQuery(name = "Juiz.findByDataInicioFuncoes", query = "SELECT j FROM Juiz j WHERE j.dataInicioFuncoes = :dataInicioFuncoes")
+    , @NamedQuery(name = "Juiz.findByUsuarioJuiz", query = "SELECT j FROM Juiz j WHERE j.usuarioJuiz = :usuarioJuiz")
+    , @NamedQuery(name = "Juiz.findBySenhaJuiz", query = "SELECT j FROM Juiz j WHERE j.senhaJuiz = :senhaJuiz")
+    , @NamedQuery(name = "Juiz.findByTipoUsuario", query = "SELECT j FROM Juiz j WHERE j.tipoUsuario = :tipoUsuario")})
 public class Juiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +58,17 @@ public class Juiz implements Serializable {
     @Column(name = "data_inicio_funcoes")
     @Temporal(TemporalType.DATE)
     private Date dataInicioFuncoes;
+    @Size(max = 125)
+    @Column(name = "usuario_juiz")
+    private String usuarioJuiz;
+    @Size(max = 125)
+    @Column(name = "senha_juiz")
+    private String senhaJuiz;
+    @Size(max = 5)
+    @Column(name = "tipo_usuario")
+    private String tipoUsuario;
+    @OneToMany(mappedBy = "idJuiz")
+    private Collection<AcessoSistema> acessoSistemaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJuiz")
     private Collection<Processo> processoCollection;
 
@@ -95,6 +109,39 @@ public class Juiz implements Serializable {
 
     public void setDataInicioFuncoes(Date dataInicioFuncoes) {
         this.dataInicioFuncoes = dataInicioFuncoes;
+    }
+
+    public String getUsuarioJuiz() {
+        return usuarioJuiz;
+    }
+
+    public void setUsuarioJuiz(String usuarioJuiz) {
+        this.usuarioJuiz = usuarioJuiz;
+    }
+
+    public String getSenhaJuiz() {
+        return senhaJuiz;
+    }
+
+    public void setSenhaJuiz(String senhaJuiz) {
+        this.senhaJuiz = senhaJuiz;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    @XmlTransient
+    public Collection<AcessoSistema> getAcessoSistemaCollection() {
+        return acessoSistemaCollection;
+    }
+
+    public void setAcessoSistemaCollection(Collection<AcessoSistema> acessoSistemaCollection) {
+        this.acessoSistemaCollection = acessoSistemaCollection;
     }
 
     @XmlTransient

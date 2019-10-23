@@ -48,7 +48,7 @@ public class TramitacaoFacade extends AbstractFacade<Tramitacao> {
         query.setParameter("idProcesso", id);
         return query.getResultList();
     }
-
+    
     public List<Tramitacao> findByIdProcessoEstado(int id) {
         String estadoProcesso = "Findo";
         Query query;
@@ -166,6 +166,14 @@ public class TramitacaoFacade extends AbstractFacade<Tramitacao> {
         query.setParameter("dataFim", dataFim);
 
         return query.getResultList();
+    }
+    
+    public List<Tramitacao> findByIdTramitacaoDoProcesso(Tramitacao tramitacao) {
+        String numeroProcesso = tramitacao.getIdProcesso().getNumeroProcesso();
+        Query query;
+        query = em.createQuery("SELECT t FROM Tramitacao t WHERE t.idProcesso.numeroProcesso = :numeroProcesso");
+        query.setParameter("numeroProcesso", numeroProcesso);
+        return (List<Tramitacao>) query.getParameter(0);
     }
 
 }

@@ -6,9 +6,11 @@
 package fenix.iure.ejbs;
 
 import fenix.iure.entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,24 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
+    
+    public boolean buscarUsuario(String loginUsuario, String senhaUsuario){
+        boolean retorno = false;
+        Query query;
+        query = em.createQuery("SELECT u FROM Usuario u WHERE u.loginUsuario = :loginUsuario AND u.senhaUsuario = :senhaUsuario");
+        query.setParameter("loginUsuario", loginUsuario);
+        query.setParameter("senhaUsuario", senhaUsuario);
+        query.getResultList();
+        if (query.getResultList().size() > 0) {
+            retorno = true;
+            return  retorno;
+        }else{
+            retorno = false;
+            return  retorno;
+        }
+    }
+    
+    
+    
     
 }

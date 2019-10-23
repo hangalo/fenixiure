@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>conteudo</title>
+        <h:outputStylesheet library="css" name="sb-admin-2.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+
+
+    </h:head>
+
+
+    <h:body style="padding-top: 10px ">
+
+
+
+        <b:navBar brand="" brandHref="/area_administrativa_1.jsf" inverse="true" fixed="top">
+            <h:link outcome="/area_administrativa_1">
+                <h:graphicImage style="margin-top: 1%" library="imagens" name="house.png" height="30" width="30"/>
+            </h:link>
+            <h:form id="frmLogar" styleClass="navbar-form navbar-right">
+
+                <div class="form-group">
+                    <b:commandButton style="height: 22px; padding-top: 0px" ajax="true" disabled="true"  size="sm" look="info" icon="user" iconAlign="right"/>
+                </div> 
+                <div class="form-group" style="color: white">
+                    <p:outputLabel  value="#{loginMBean.usuario}"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                
+                <div class="form-group">
+                    <b:commandButton id="btnLogout" title="Terminar Sessão de:  #{loginMBean.usuario}" style="height: 22px; padding-top: 0px" action="#{loginMBean.logout()}"  size="sm" value="Logout" look="danger" icon="chevron-right" iconAlign="right">
+                        <p:tooltip for="btnLogout" style="background-color: #ffcccc"/>
+                    </b:commandButton>
+                </div> 
+               
+
+            </h:form>
+
+
+        </b:navBar>
+        <b:jumbotron>
+            <b:container>
+                <h1>Fenix Iure</h1>
+                <p>Automação de Processo Judiciais...
+                </p>
+            </b:container>
+        </b:jumbotron>
+
+        
+       
+
+        <!--<h:graphicImage name="clientes.png" library="imagens" width="100%"/>-->
+    </h:body>
+</html>
+

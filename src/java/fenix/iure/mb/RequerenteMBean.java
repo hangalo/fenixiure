@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -88,9 +87,7 @@ public class RequerenteMBean implements Serializable {
         requenteFacade.create(requerente);
         requerente = new Requente();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        /*} else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }*/
+        
     }
 
     public List<Requente> getRequerentes() {
@@ -99,7 +96,7 @@ public class RequerenteMBean implements Serializable {
     }
 
     public String startEdit() {
-        return "requerente_lstar?faces-redirect=true";
+        return "requerentes?faces-redirect=true";
     }
 
     public void edit(javafx.event.ActionEvent event) {
@@ -108,7 +105,7 @@ public class RequerenteMBean implements Serializable {
         requerentes = null;
 
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("requerentes.jsf");
         } catch (IOException ex) {
             Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,7 +117,7 @@ public class RequerenteMBean implements Serializable {
         requerentes = null;
 
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("requerente_lstar_p.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("requerentes.jsf");
         } catch (IOException ex) {
             Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,7 +127,7 @@ public class RequerenteMBean implements Serializable {
         requenteFacade.remove(requerente);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
         requerentes = null;
-        return "requerente_lstar?faces-redirect=true";
+        return "requerentes?faces-redirect=true";
        
     }
 

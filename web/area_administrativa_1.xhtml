@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"           
+      xmlns:b="http://bootsfaces.net/ui">
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/dashboard.xhtml">
+            <ui:define name="content">
+                
+                <center>
+                        <h:form>
+                            <h:dataTable value="#">
+                                <p:column >
+                                    <b:commandButton  action="/reservado/processo/processo_lsta_por_especie" style="margin-top: 10%; margin-left: 10%; background: #DDDDDD" class="btn img-circle">
+                                        <h:graphicImage class="img-responsive img-circle" library="imagens" name="proces2.png" />
+                                        <b>Processos</b>
+                                    </b:commandButton>
+                                </p:column>
+                                <p:column >
+                                    <b:commandButton  action="/reservado/tramitacao/tramitacao_lstar" style="margin-top: 10%; margin-left: 10%; background: #DDDDDD" class="btn btn-default">
+                                        <h:graphicImage class="img-responsive img-circle" library="imagens" name="historico.png" />
+
+                                        <b>Despachos/Decisões</b>
+                                    </b:commandButton>
+                                </p:column>
+                                <p:column >
+                                    <b:commandButton  action="/reservado/tramitacao/processos_findos" style="margin-top: 10%; margin-left: 10%; background: #DDDDDD" class="btn btn-default">
+                                        <h:graphicImage class="img-responsive img-circle" library="imagens" name="proces2.png" />
+                                        <b>Processos Findos</b>
+                                    </b:commandButton>
+                                </p:column>
+                            </h:dataTable>
+
+
+                        </h:form>
+
+
+                   
+                    <br></br>
+
+
+                    <!--     <p:graphicImage class="img-responsive img-rounded" width="95%" library="imagens" name="martelo3.png" />
+                    -->
+                </center>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -33,11 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "advogado")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Advogado.findAll", query = "SELECT a FROM Advogado a"),
-    @NamedQuery(name = "Advogado.findByIdAdvogado", query = "SELECT a FROM Advogado a WHERE a.idAdvogado = :idAdvogado"),
-    @NamedQuery(name = "Advogado.findByNomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.nomeAdvogado = :nomeAdvogado"),
-    @NamedQuery(name = "Advogado.findBySobrenomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.sobrenomeAdvogado = :sobrenomeAdvogado"),
-    @NamedQuery(name = "Advogado.findByDataInicioFuncoes", query = "SELECT a FROM Advogado a WHERE a.dataInicioFuncoes = :dataInicioFuncoes")})
+    @NamedQuery(name = "Advogado.findAll", query = "SELECT a FROM Advogado a")
+    , @NamedQuery(name = "Advogado.findByIdAdvogado", query = "SELECT a FROM Advogado a WHERE a.idAdvogado = :idAdvogado")
+    , @NamedQuery(name = "Advogado.findByNomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.nomeAdvogado = :nomeAdvogado")
+    , @NamedQuery(name = "Advogado.findBySobrenomeAdvogado", query = "SELECT a FROM Advogado a WHERE a.sobrenomeAdvogado = :sobrenomeAdvogado")
+    , @NamedQuery(name = "Advogado.findByDataInicioFuncoes", query = "SELECT a FROM Advogado a WHERE a.dataInicioFuncoes = :dataInicioFuncoes")})
 public class Advogado implements Serializable {
 
     private static final long serialVersionUID = 1L;

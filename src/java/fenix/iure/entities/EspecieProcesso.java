@@ -30,9 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "especie_processo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EspecieProcesso.findAll", query = "SELECT e FROM EspecieProcesso e"),
-    @NamedQuery(name = "EspecieProcesso.findByIdEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.idEspecieProcesso = :idEspecieProcesso"),
-    @NamedQuery(name = "EspecieProcesso.findByEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.especieProcesso = :especieProcesso")})
+    @NamedQuery(name = "EspecieProcesso.findAll", query = "SELECT e FROM EspecieProcesso e")
+    , @NamedQuery(name = "EspecieProcesso.findByIdEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.idEspecieProcesso = :idEspecieProcesso")
+    , @NamedQuery(name = "EspecieProcesso.findByEspecieProcesso", query = "SELECT e FROM EspecieProcesso e WHERE e.especieProcesso = :especieProcesso")})
 public class EspecieProcesso implements Serializable {
 
     private static final long serialVersionUID = 1L;

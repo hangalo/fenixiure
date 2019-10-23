@@ -6,9 +6,11 @@
 package fenix.iure.ejbs;
 
 import fenix.iure.entities.EspecieProcesso;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,13 @@ public class EspecieProcessoFacade extends AbstractFacade<EspecieProcesso> {
     public EspecieProcessoFacade() {
         super(EspecieProcesso.class);
     }
+    
+     public List<EspecieProcesso> findEspecieByNome(String nomeEspecie) {
+        Query query;
+        query = em.createQuery("SELECT a FROM EspecieProcesso a WHERE a.especieProcesso LIKE  :nomeEspecie ORDER BY a.nomeEspecie");
+        query.setParameter("nomeEspecie", "%"+nomeEspecie+"%");
+        return query.getResultList();
+    }
+      
     
 }

@@ -17,17 +17,14 @@ import java.util.List;
  */
 public class Testes {
     public static void main(String[] args) {
-        String dataInicio = "16/04/2009";
-        String dataFim = "03/05/2010";
-        
-        java.util.Date inicioIntervalo = DateUtil.strToDate(dataInicio);
-        java.util.Date fimIntervalo = DateUtil.strToDate(dataFim);
-        
+        String dataInicio = "2019/07/09";
+        String dataFim = "2019/07/24";
+        Integer idDecisao = 4;
+
         TramitacaoDAO tramitacaoDAO = new TramitacaoDAO();
         List<Tramitacao> tramitacaos = null;
        
-        tramitacaos = tramitacaoDAO.buscarProcessosFindosPorDatas(dataInicio, dataFim);
-       // tramitacaos = tramitacaoDAO.buscarProcessosFindos();
+        tramitacaos = tramitacaoDAO.buscarProcessosFindosPorDatasDecisão(DateUtil.strToDate(dataInicio), DateUtil.strToDate(dataFim),idDecisao);
         for (Tramitacao tramitacao : tramitacaos) {
             
             System.out.println("Numero: " + tramitacao.getIdProcesso().getNumeroProcesso());

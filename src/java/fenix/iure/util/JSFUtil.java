@@ -1,7 +1,10 @@
 
 package fenix.iure.util;
 
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
@@ -25,4 +28,14 @@ public class JSFUtil {
     // É necessário passar o grow no template
     //<p:growl id="msgGlobal" life="5000" sticky="true"/>
     // Para ser referenciado na propriedade update="msgGlobal" dos botões onde o metodo for chamado
+    
+      public static void refresh() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Application application = context.getApplication();
+        ViewHandler viewHandler = application.getViewHandler();
+        UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+        context.setViewRoot(viewRoot);
+        context.renderResponse();
+    }
+
 }

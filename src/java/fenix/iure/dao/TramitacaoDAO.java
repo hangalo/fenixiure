@@ -40,7 +40,19 @@ public class TramitacaoDAO implements GenericoDAO<Tramitacao> {
             + " WHERE t.estado_processo = 'FINDO'"
             + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC;";
 
-    private static final String SELECT_PROCESSO_FINDO_POR_DATAS = "SELECT MAX(data_termino) AS data_termino, t.id_tramitacao, t.data_conclusao_tramitacao, t.dispacho_tramitacao, p.numero_processo,p.id_processo, p.data_entrada, r.nome_requente, r.id_requente, re.nome_requerido,re.id_requerido, ep.especie_processo, ep.id_especie_processo, td.id_tipo_decisao, td.tipo_decisao, t.estado_processo, j.id_juiz, j.nome_juiz "
+    private static final String SELECT_PROCESSO_FINDO_POR_DECISAO = "SELECT MAX(data_termino) AS data_termino, t.id_tramitacao, t.data_conclusao_tramitacao, t.dispacho_tramitacao, p.numero_processo,p.id_processo, p.data_entrada, r.nome_requente, r.id_requente, re.nome_requerido,re.id_requerido, ep.especie_processo, ep.id_especie_processo, td.id_tipo_decisao, td.tipo_decisao, t.estado_processo, j.id_juiz, j.nome_juiz "
+            + " FROM tramitacao t"
+            + " INNER JOIN processo p ON p.id_processo = t.id_processo "
+            + " INNER JOIN requente r ON p.id_requente = r.id_requente "
+            + " INNER JOIN requerido re ON p.id_requerido = re.id_requerido "
+            + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao "
+            + " INNER JOIN juiz j ON j.id_juiz = p.id_juiz "
+            + " INNER JOIN especie_processo ep ON p.id_especie_processo = ep.id_especie_processo "
+            + " WHERE t.estado_processo = 'FINDO' AND t.id_tipo_decisao = ?"
+            + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC;";
+
+    
+    private static final String SELECT_PROCESSO_FINDO_POR_DATAS = "SELECT MAX(data_termino) AS data_termino, t.id_tramitacao, t.data_conclusao_tramitacao, t.dispacho_tramitacao, p.numero_processo,p.id_processo, p.data_entrada, r.nome_requente, r.id_requente, re.nome_requerido,re.id_requerido, ep.especie_processo, ep.id_especie_processo, td.id_tipo_decisao, td.tipo_decisao, t.estado_processo, j.id_juiz, j.nome_juiz  "
             + " FROM tramitacao t "
             + " INNER JOIN processo p ON p.id_processo = t.id_processo "
             + " INNER JOIN requente r ON p.id_requente = r.id_requente "
@@ -48,9 +60,19 @@ public class TramitacaoDAO implements GenericoDAO<Tramitacao> {
             + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao "
             + " INNER JOIN juiz j ON j.id_juiz = p.id_juiz "
             + " INNER JOIN especie_processo ep ON p.id_especie_processo = ep.id_especie_processo "
-            
-            + " WHERE t.estado_processo = 'FINDO' AND p.data_entrada >= ? AND p.data_entrada <= ? "
-            + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC;";
+            + " WHERE t.estado_processo = 'FINDO' AND t.data_termino BETWEEN ? AND ? "
+            + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC ";
+
+    private static final String SELECT_PROCESSO_FINDO_POR_DATAS_DECISAO = "SELECT MAX(data_termino) AS data_termino, t.id_tramitacao, t.data_conclusao_tramitacao, t.dispacho_tramitacao, p.numero_processo,p.id_processo, p.data_entrada, r.nome_requente, r.id_requente, re.nome_requerido,re.id_requerido, ep.especie_processo, ep.id_especie_processo, td.id_tipo_decisao, td.tipo_decisao, t.estado_processo, j.id_juiz, j.nome_juiz  "
+            + " FROM tramitacao t "
+            + " INNER JOIN processo p ON p.id_processo = t.id_processo "
+            + " INNER JOIN requente r ON p.id_requente = r.id_requente "
+            + " INNER JOIN requerido re ON p.id_requerido = re.id_requerido "
+            + " INNER JOIN tipo_decisao td ON t.id_tipo_decisao = td.id_tipo_decisao "
+            + " INNER JOIN juiz j ON j.id_juiz = p.id_juiz "
+            + " INNER JOIN especie_processo ep ON p.id_especie_processo = ep.id_especie_processo "
+            + " WHERE t.estado_processo = 'FINDO' AND t.data_termino BETWEEN ? AND ? AND t.id_tipo_decisao = ?  "
+            + " GROUP BY p.numero_processo ORDER BY t.data_termino DESC ";
 
     @Override
     public void save(Tramitacao t) {
@@ -80,7 +102,6 @@ public class TramitacaoDAO implements GenericoDAO<Tramitacao> {
 
     public List<Tramitacao> buscarProcessosFindos() {
         // Buscar a lista de processos Findos
-
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -105,7 +126,7 @@ public class TramitacaoDAO implements GenericoDAO<Tramitacao> {
     }
 
     // Buscar a lista de processos Findos por datas
-    public List<Tramitacao> buscarProcessosFindosPorDatas(String dataInicio, String dataFim) {
+    public List<Tramitacao> buscarProcessosFindosPorDatas(Date dataInicio, Date dataFim) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -113,8 +134,60 @@ public class TramitacaoDAO implements GenericoDAO<Tramitacao> {
         try {
             conn = (Connection) Conexao.getConnection();
             ps = conn.prepareStatement(SELECT_PROCESSO_FINDO_POR_DATAS);
-            ps.setString(1, dataInicio);
-            ps.setString(2, dataFim);
+            ps.setDate(1, new java.sql.Date(dataInicio.getTime()));
+            ps.setDate(2, new java.sql.Date(dataFim.getTime()));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Tramitacao tramitacao = new Tramitacao();
+                popularComDados(tramitacao, rs);
+                tramitacaos.add(tramitacao);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler os dados: " + ex.getLocalizedMessage() + ""
+                    + "" + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection((java.sql.Connection) conn);
+        }
+        return tramitacaos;
+    }
+    
+    // Buscar a lista de processos Findos por datas
+    public List<Tramitacao> buscarProcessosFindosPorDecisao(Integer idDecisao) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Tramitacao> tramitacaos = new ArrayList<>();
+        try {
+            conn = (Connection) Conexao.getConnection();
+            ps = conn.prepareStatement(SELECT_PROCESSO_FINDO_POR_DECISAO);
+            ps.setInt(1, idDecisao);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Tramitacao tramitacao = new Tramitacao();
+                popularComDados(tramitacao, rs);
+                tramitacaos.add(tramitacao);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro ao ler os dados: " + ex.getLocalizedMessage() + ""
+                    + "" + ex.getLocalizedMessage());
+        } finally {
+            Conexao.closeConnection((java.sql.Connection) conn);
+        }
+        return tramitacaos;
+    }
+    
+    // Buscar a lista de processos Findos por datas
+    public List<Tramitacao> buscarProcessosFindosPorDatasDecisão(Date dataInicio, Date dataFim, Integer idDecisao) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Tramitacao> tramitacaos = new ArrayList<>();
+        try {
+            conn = (Connection) Conexao.getConnection();
+            ps = conn.prepareStatement(SELECT_PROCESSO_FINDO_POR_DATAS_DECISAO);
+            ps.setDate(1, new java.sql.Date(dataInicio.getTime()));
+            ps.setDate(2, new java.sql.Date(dataFim.getTime()));
+            ps.setInt(3, idDecisao);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Tramitacao tramitacao = new Tramitacao();

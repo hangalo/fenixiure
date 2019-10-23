@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <b:column col-sm="9" col-md="12" >
+            <b:row>
+                <b:column col-sm="9" col-md="12" styleClass="main">
+                    <h:form>
+                        <p:tabMenu style="float: right" activeIndex="#{param.i}">
+                            
+                            <p:menuitem style="background-color: green; color: white" id="btnNew" title="Adicionar Novo Processo" value="NOVO PROCESSO" onclick="PF('dialogoGuardar').show();">
+                                <f:param name="i" value="0" />
+                            </p:menuitem>
+                            <p:menuitem value="Procurar por Número" outcome="/reservado/processo/processo_lsta_por_numero" style="color: #0066CC;">
+                                <f:param name="i" value="1" />
+                            </p:menuitem>
+                            <p:menuitem value="Procurar por Espécie" outcome="/reservado/processo/processo_lsta_por_especie" style="color: #0066CC;">
+                                <f:param name="i" value="2" />
+                            </p:menuitem>
+                            <p:menuitem value="Procurar por Datas" outcome="/reservado/processo/processo_lsta_por_datas" style="color: #0066CC;">
+                                <f:param name="i" value="3" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Procurar por Autor" outcome="/reservado/processo/processo_lsta_por_requerente" style="color: #0066CC;">
+                                <f:param name="i" value="4" />
+                            </p:menuitem>
+                            <p:menuitem value="Procurar por Réu" outcome="/reservado/processo/processo_lsta_por_requerido" style="color: #0066CC;">
+                                <f:param name="i" value="5" />
+                            </p:menuitem>
+                            <p:menuitem title="Fechar" style="background-color: #DD0000; color: white;" value="X" outcome="/area_administrativa_1">
+                                <f:param name="i" value="6" />
+                                
+                            </p:menuitem>
+                        </p:tabMenu>
+
+                    </h:form>
+                </b:column>
+            </b:row>
+        </b:column>
+    </h:body>
+</html>
+

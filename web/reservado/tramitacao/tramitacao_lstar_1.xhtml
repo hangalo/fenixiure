@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/dashboard.xhtml">
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <f:view>
+                    <b:panel collapsible="false" look="normal">
+
+                        <h:form>
+
+                            <h:dataTable value="#" var="item" >
+
+                                <p:column>
+                                    <h:panelGrid columns="7"  cellspacing="10%">
+                                        <p:selectOneMenu onchange="submit();" effect="slide" style="width:250px; height: 35px; margin-left:10px" id="processos" filter="true" filterMatchMode="startsWith" label="Processo" value="#{tramitacaoMBean.idProcesso}" required="true">
+                                            <f:selectItem itemLabel="Introduza o Número do Processo" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{tramitacaoMBean.processos}" var="processo" itemValue="#{processo.idProcesso}" itemLabel="#{processo.numeroProcesso}; Autor:#{processo.idRequente.nomeRequente}; Reu:#{processo.idRequerido.nomeRequerido} "/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 100px" value="Nova" type="button" onclick="PF('dialogoGuardar').show();"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:commandButton id="habilitar" disabled="false" style="margin-left: 20px; height: 35px; width: 150px"  value="Imprimir lista" action="#{tramitacaoMBean.imprimirTramitacoesDoProcesso()}" ajax="false" immediate="true" />                   
+                                </p:column>
+
+                                <p:column>
+                                    <p:commandButton style="margin-left: 20px; height: 35px; width: 100px"  value="Fechar" action="/area_administrativa_1" ajax="false" immediate="true" />                   
+                                </p:column>
+
+                            </h:dataTable>
+
+                            <br></br>
+
+
+                            <!--inicio Datatable-->
+                            <p:dataTable value="#{tramitacaoMBean.findByProcesso}" var="item" paginator="true" cellSeparator="true" rows="6" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Número"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{item.idProcesso.numeroProcesso}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Espécie"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{item.idProcesso.idEspecieProcesso.especieProcesso}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Autor"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{item.idProcesso.idRequente.nomeRequente}"/>
+                                </p:column>
+                                <p:column >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Reu"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{item.idProcesso.idRequerido.nomeRequerido}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Decisão"/>
+                                    </f:facet>
+
+                                    <h:outputText value="#{item.idTipoDecisao.tipoDecisao}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Data Despacho"/>
+                                    </f:facet>
+                                    <p:outputLabel id="data_conclusao"  value="#{item.dataConclusaoTramitacao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Data Término"/>
+                                    </f:facet>
+                                    <p:outputLabel id="data_termino"  value="#{item.dataTermino}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+                                </p:column>
+
+
+                                <p:column style="width: 100px; text-align: center" width="160">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Operações"/>
+                                    </f:facet>
+                                    <b:commandButton icon="trash"  action="#{tramitacaoMBean.delete()}" update="messages">
+                                        <p:confirm header="Confirmation" message="Tem a certeza que dezeja eliminar?" icon="ui-icon-alert"/>
+                                        <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
+                                    </b:commandButton>
+                                    <p:confirmDialog global="true">
+                                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                                         icon="ui-icon-check">
+                                        </p:commandButton>
+                                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                                         icon="ui-icon-close"/>
+                                    </p:confirmDialog>
+                                    <b:commandButton style="margin-left: 5px"  icon="pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
+                                    </b:commandButton>
+                                    <b:commandButton style="margin-left: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
+                                    </b:commandButton>
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    Total: (#{tramitacaoMBean.findByProcesso.size()})
+                                </f:facet>                           
+                            </p:dataTable>
+
+                            <!--Fim Datatable-->                         
+                        </h:form>
+                    </b:panel>
+
+                    <!--Inicio do dialogo guardar-->
+
+                    <!--Fim do dialogo guardar-->
+
+
+                    <!--inicio do dialogo guardar-->
+                    <p:dialog  header="Nova Tramitação" id="guardar" widgetVar="dialogoGuardar" showEffect="clip" hideEffect="blind" resizable="false" width="700" height="400">
+                        <h:form enctype="multipart/form-data">
+                            <h:panelGrid  columns="2" >
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 0%" value="PROCESSO"/>
+                                        <p:selectOneMenu id="especies" effect="slide" style="width:213px; margin-left:0% "  filter="true" filterMatchMode="startsWith" label="Especie" value="#{tramitacaoMBean.tramitacao.idProcesso}" required="true" converter="processoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{tramitacaoMBean.processos}" var="processo" itemValue="#{processo}" itemLabel="#{processo.numeroProcesso}; Autor:#{processo.idRequente.nomeRequente}; Reu:#{processo.idRequerido.nomeRequerido} Espécie:#{processo.idEspecieProcesso.especieProcesso} "/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+
+
+
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 0%" value="DATA TRAMITAÇÃO"/>
+                                        <p:calendar effect ="slide" style="margin-left: 0%"  value="#{tramitacaoMBean.tramitacao.dataConclusaoTramitacao}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 0%" value="DECISÃO"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:0%" id="tipos_decisao" effect="slide"   filter="true" filterMatchMode="startsWith" label="TipoDecisao" value="#{tramitacaoMBean.tramitacao.idTipoDecisao}" required="true" converter="tipoDecisaoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{tramitacaoMBean.decisoes}" var="tipoDecisao" itemValue="#{tipoDecisao}" itemLabel="#{tipoDecisao.tipoDecisao}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1"  id="consulta">
+                                        <p:outputLabel value="DATA TÉRMINO"/>
+                                        <p:calendar disabled="#{tramitacaoMBean.tramitacao.estadoProcesso != 'FINDO'}" effect ="slide"  value="#{tramitacaoMBean.tramitacao.dataTermino}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+
+
+                                <h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel style="margin-left: 0px"  value="ESTADO:"/>
+                                        <p:selectOneRadio style="margin-left: 30px;" id="estado" value="#{tramitacaoMBean.tramitacao.estadoProcesso}">                                            
+                                            <f:selectItems value="#{tramitacaoMBean.opEstados}" />
+                                            <f:ajax render="consulta" ></f:ajax>
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Observação"/>
+                                    <p:inputTextarea id="nome" value="#{tramitacaoMBean.tramitacao.dispachoTramitacao}" rows="5" cols="70"/>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <br></br>
+
+                            <p:commandButton update=":msgGlobal" value="Guardar" action="#{tramitacaoMBean.guardar(evt)}" ajax="false">
+
+                            </p:commandButton>
+
+
+
+                        </h:form>
+                    </p:dialog>
+
+                    <!--fim do dialogo guardar-->
+
+                    <!--inicio do dialogo editar-->
+
+                    <p:dialog id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" width="700" height="350" resizable="false">
+                        <h:form enctype="multipart/form-data">
+                            <h:inputHidden value="#{tramitacaoMBean.tramitacao.idTramitacao}"/>
+                            <h:panelGrid  columns="2" >
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 0%" value="PROCESSO"/>
+                                        <p:selectOneMenu id="especies" effect="slide" style="width:213px; margin-left:0% "  filter="true" filterMatchMode="startsWith" label="Especie" value="#{tramitacaoMBean.tramitacao.idProcesso}" required="true" converter="processoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{tramitacaoMBean.processos}" var="processo" itemValue="#{processo}" itemLabel="#{processo.numeroProcesso}; Autor:#{processo.idRequente.nomeRequente}; Reu:#{processo.idRequerido.nomeRequerido} Espécie:#{processo.idEspecieProcesso.especieProcesso} "/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 0%" value="DATA TRAMITAÇÃO"/>
+                                        <p:calendar effect ="slide" style="margin-left: 0%"  value="#{tramitacaoMBean.tramitacao.dataConclusaoTramitacao}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 0%" value="DECISÃO"/>
+                                        <p:selectOneMenu style="width:220px; margin-left:0%" id="tipos_decisao" effect="slide"   filter="true" filterMatchMode="startsWith" label="TipoDecisao" value="#{tramitacaoMBean.tramitacao.idTipoDecisao}" required="true" converter="tipoDecisaoConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems  value="#{tramitacaoMBean.decisoes}" var="tipoDecisao" itemValue="#{tipoDecisao}" itemLabel="#{tipoDecisao.tipoDecisao}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1"  id="consulta">
+                                        <p:outputLabel value="DATA TÉRMINO"/>
+                                        <p:calendar disabled="#{tramitacaoMBean.tramitacao.estadoProcesso != 'FINDO'}" effect ="slide"  value="#{tramitacaoMBean.tramitacao.dataTermino}" pattern="dd/MM/yyyy" locale="pt"  />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+
+
+                                <h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel style="margin-left: 0px"  value="ESTADO:"/>
+                                        <p:selectOneRadio style="margin-left: 30px;" id="estado" value="#{tramitacaoMBean.tramitacao.estadoProcesso}">                                            
+                                            <f:selectItems value="#{tramitacaoMBean.opEstados}" />
+                                            <f:ajax render="consulta" ></f:ajax>
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Observação"/>
+                                    <p:inputTextarea id="nome" value="#{tramitacaoMBean.tramitacao.dispachoTramitacao}" rows="5" cols="70"/>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <br></br>
+
+
+
+                            <p:commandButton value="Alterar" action="#{tramitacaoMBean.edit(event)}" ajax="false"/>
+                        </h:form>
+                    </p:dialog>
+                    <!--fim do dialogo editar-->
+
+                    <!--Inicio do dialog ver-->
+                    <p:dialog header="Dados de Tramitação" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="auto" height="auto">
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Número: "/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.numeroProcesso}"/>
+                                <p:outputLabel value="Data Entrada: "/>
+                                <p:outputLabel id="data_entrada"  value="#{tramitacaoMBean.tramitacao.idProcesso.dataEntrada}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+                                <p:outputLabel value="Especie Processo: "/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.idEspecieProcesso.especieProcesso}"/>
+                                <p:outputLabel value="Autor: "/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.idRequente.nomeRequente}"/>
+                                <p:outputLabel value="Reu:"/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idProcesso.idRequerido.nomeRequerido}"/>
+                                <p:outputLabel value="Estado:"/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.estadoProcesso}"/>
+                                <p:outputLabel value="Decisão: "/>
+                                <p:outputLabel value="#{tramitacaoMBean.tramitacao.idTipoDecisao.tipoDecisao}"/>
+                                <p:outputLabel value="Data Conclusão:"/>
+                                <p:outputLabel id="data_conclusao"  value="#{tramitacaoMBean.tramitacao.dataConclusaoTramitacao}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+
+
+
+
+
+
+                            </p:panelGrid>
+                        </h:form>
+
+                    </p:dialog>
+
+                    <!--Fim do dialog ver-->
+
+
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

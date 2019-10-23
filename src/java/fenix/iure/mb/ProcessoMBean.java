@@ -5,7 +5,6 @@
  */
 package fenix.iure.mb;
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import fenix.iure.ejbs.AdvogadoFacade;
 import fenix.iure.ejbs.EspecieProcessoFacade;
 import fenix.iure.ejbs.EstadoProcessoFacade;
@@ -22,6 +21,7 @@ import fenix.iure.entities.Processo;
 import fenix.iure.entities.Requente;
 import fenix.iure.entities.Requerido;
 import fenix.iure.entities.TipoDecisao;
+import fenix.iure.util.DateUtil;
 import fenix.iure.util.GestorImpressao;
 import fenix.iure.util.JSFUtil;
 import java.io.IOException;
@@ -40,6 +40,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 
 /**
@@ -74,6 +75,8 @@ public class ProcessoMBean implements Serializable {
     private int idAdvogado;
     private int idTipoDecisao;
     private int idJuiz;
+    private Date dataInicio;
+    private Date dataFim;
 
     // Listas das pesquisas paramentrizadas
     private List<Processo> findByNumero;
@@ -86,12 +89,18 @@ public class ProcessoMBean implements Serializable {
     private List<Processo> findByAdvogado;
     private List<Processo> findByTipoDecisao;
     private List<Processo> findByJuiz;
+    private List<Processo> findByIntervaloDatas;
 
     // Buscar processos recentes
     private List<Processo> findRecentes;
 
     // Buscar processos findos
     private List<Processo> findProcessosFindos;
+    
+    // Variaveis para os metodos load
+    private EspecieProcesso especieProcesso;
+    private List<Processo> processosPorEspecie;
+    
 
     @Inject
     ProcessoFacade processoFacade;
@@ -120,6 +129,7 @@ public class ProcessoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         processo = new Processo();
+        processo.setDataEntrada(DateUtil.getDataActual());
         processos = new ArrayList<>();
 
         especies = new ArrayList<>();
@@ -141,7 +151,7 @@ public class ProcessoMBean implements Serializable {
     }
 
     public List<Processo> getProcessos() {
-        processos = processoFacade.findAll();
+        processos = processoFacade.findRecentes();
         return processos;
     }
 
@@ -165,25 +175,29 @@ public class ProcessoMBean implements Serializable {
 
         } else {
             newSave();
+            JSFUtil.refresh();
 
         }
 
     }
 
     public String startEdit() {
+        JSFUtil.refresh();
         return "processo_lsta?faces-redirect=true";
+        
     }
 
-    public String edit(javafx.event.ActionEvent event) {
+    public String edit(ActionEvent event) {
         String controlo = null;
         try {
+            
             processoFacade.edit(processo);
             processo = new Processo();
             controlo = null;
             JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
-
+           
             return controlo;
-
+            
         } catch (javax.ejb.EJBException | java.lang.NumberFormatException ex) {
             controlo = null;
             JSFUtil.adicionarMensagemDeErro("Número do processo ja existe!");
@@ -192,7 +206,7 @@ public class ProcessoMBean implements Serializable {
 
     }
 
-    public void editPublico(javafx.event.ActionEvent event) {
+    public void editPublico(ActionEvent event) {
         processoFacade.edit(processo);
         JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
         requerentes = null;
@@ -403,7 +417,7 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String imprimirListaArtigo() {
-        String relatorio = "processos_lista_com_borda.jasper";
+        String relatorio = "processos_lista.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao(); // Analisar essa instrução. 
         gestorImpressao.imprimirPDF(relatorio, parametros);
@@ -421,12 +435,111 @@ public class ProcessoMBean implements Serializable {
         return null;
 
     }
+     public String imprimirProcessosPorEspecie(String parametro) {
+        String relatorio = "processos_por_especie.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("idEspecie", parametro);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+    }
+     
+     public String imprimirProcessosPorDatas(Date dataInicio, Date dataFim) {
+        String relatorio = "processos_por_datas_util.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("dataInicio", dataInicio);
+        parametros.put("dataFim", dataInicio);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+
+    }
+     
+      public String imprimirProcessosPorAutor(String parametro) {
+        String relatorio = "processos_por_autor.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("idReu", parametro);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+    }
+      public String imprimirProcessosPorReu(String parametro) {
+        String relatorio = "processos_por_reu.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("idReu", parametro);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+    }
+     
+
 
     public List<Processo> getFindProcessosFindos() {
         findProcessosFindos = processoFacade.findProcessosFindos();
         return findProcessosFindos;
     }
 
+    
+    public void loadEspecies(ValueChangeEvent event) {
+        especieProcesso = (EspecieProcesso) event.getNewValue();
+        System.out.println("Cliente" + especieProcesso.getEspecieProcesso());
+
+         //vendasAoCliente = vendaFacade.findClienteByCliente(cliente);
+
+         findByEspecieProcesso = processoFacade.findByIdEspecie(idEspecieProcesso);
+
+    }
+
+    public EspecieProcesso getEspecieProcesso() {
+        return especieProcesso;
+    }
+
+    public void setEspecieProcesso(EspecieProcesso especieProcesso) {
+        this.especieProcesso = especieProcesso;
+    }
+
+    public List<Processo> getProcessosPorEspecie() {
+        return processosPorEspecie;
+    }
+
+    public void setProcessosPorEspecie(List<Processo> processosPorEspecie) {
+        this.processosPorEspecie = processosPorEspecie;
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public List<Processo> getFindByIntervaloDatas() {
+        findByIntervaloDatas = processoFacade.findByIntervaloDataEntrada(dataInicio, dataFim);
+        
+        for (Processo processo2 : findByIntervaloDatas) {
+            System.out.println("Numero: " + processo2.getNumeroProcesso());
+            System.out.println("Data Entrada: " + processo2.getDataEntrada());
+            
+        }
+        return findByIntervaloDatas;
+    }
     
     
 

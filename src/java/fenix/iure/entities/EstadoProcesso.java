@@ -26,9 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "estado_processo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoProcesso.findAll", query = "SELECT e FROM EstadoProcesso e"),
-    @NamedQuery(name = "EstadoProcesso.findByIdEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.idEstadoProcesso = :idEstadoProcesso"),
-    @NamedQuery(name = "EstadoProcesso.findByEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.estadoProcesso = :estadoProcesso")})
+    @NamedQuery(name = "EstadoProcesso.findAll", query = "SELECT e FROM EstadoProcesso e")
+    , @NamedQuery(name = "EstadoProcesso.findByIdEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.idEstadoProcesso = :idEstadoProcesso")
+    , @NamedQuery(name = "EstadoProcesso.findByEstadoProcesso", query = "SELECT e FROM EstadoProcesso e WHERE e.estadoProcesso = :estadoProcesso")})
 public class EstadoProcesso implements Serializable {
 
     private static final long serialVersionUID = 1L;

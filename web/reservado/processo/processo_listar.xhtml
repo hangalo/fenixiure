@@ -47,9 +47,7 @@
                                     <f:facet name="header">
                                         <p:outputLabel value="Operações"/>
                                     </f:facet>
-                                    <p:commandButton  icon="ui-icon-trash" action="#{processoMBean.delete()}">
-                                        <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
-                                    </p:commandButton>
+                                    
                                     <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                         <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                     </p:commandButton>

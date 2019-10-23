@@ -67,7 +67,7 @@ public class EspecieProcessoMBean implements Serializable {
         
     }
     public String startEdit() {
-        return "especie_lstar?faces-redirect=true";
+        return "especies?faces-redirect=true";
     }
     
     
@@ -76,9 +76,8 @@ public class EspecieProcessoMBean implements Serializable {
         especieProcessoFacade.edit(especieProcesso);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             especieProcessos = null;
-
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("especie_lstar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("especies.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(EspecieProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -91,7 +90,7 @@ public class EspecieProcessoMBean implements Serializable {
         especieProcessoFacade.remove(especieProcesso);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              especieProcessos = null;
-             return "especie_lstar?faces-redirect=true";
+             return "especies?faces-redirect=true";
        
     }
 }

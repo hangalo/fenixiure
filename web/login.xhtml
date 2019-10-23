@@ -1,41 +1,58 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Agenda</title>
-        <h:outputStylesheet library="css" name="estilos.css" />
+        <title>Fenix Iure</title>
+        <meta name="author" content="Riccardo Massera"></meta>
+        <style type="text/css">
+            .form-signin {
+                margin: 0 auto;
+                max-width: 330px;
+                padding: 15px;
+            }
+        </style>
     </h:head>
-    <h:body>
+    <h:body style="padding-top: 15px;">
+        <b:container>
 
-        <f:view>
-            <p:panel footer="" header="Fênix Iure 1.0">
-                <div id="login-dialog">
-                    <h1>Login</h1>
-                    <h:form id="frm">
+
+            <b:panel look="primary" collapsible="false">
+
+                <f:facet name="heading" >
+                    <h4 style="text-align: left;">Fenix Iure 1.0  || Sistema de Automação de Processos Jurídicos</h4>
+                </f:facet>
+                <h:form styleClass="form-signin" prependId="false">
+                    <b:growl id="growl" auto-update="true"/>
+                    <br></br>
+                    <b:image style="margin-left: 23%" value="resources/imagens/law.png" width="50%"/>
+                    <br></br>
+                    <br></br>
+
+
+                    <b:panelGrid columns="1" id="hpglogin">
                         
-                        <p:messages autoUpdate="true" />
-                        <h:panelGrid columns="2" styleClass="grid-login">
-                            <p:outputLabel value="Usuário" for="usuario" />
-                            <p:inputText id="usuario" size="20"
-                                         value="#{loginMB.username}" />
-                            <p:outputLabel value="Senha" for="senha" />
-                            <p:password id="senha" size="20"
-                                        value="#{loginMB.password}" />
-                            <p:outputLabel />
-                            <p:commandButton value="Acessar"
-                                             action="#{loginMB.login()}" />
-                            
-                        </h:panelGrid>
-                    </h:form>
-                </div>
+                        <b:inputText value="#{loginMBean.usuario}" id="usuario" placeholder="Usuário" >
+                            <f:facet name="prepend">
+                                <b:icon name="user" />
+                            </f:facet>
+                        </b:inputText>
+                        <b:inputText value="#{loginMBean.senha}" id="senha" placeholder="Senha" type="password">
+                            <f:facet name="prepend">
+                                <b:iconAwesome name="key" />
+                            </f:facet>
+                        </b:inputText>
 
-            </p:panel>
-        </f:view>
+                        <b:commandButton action="#{loginMBean.logar()}" ajax="false" update=" hpglogin, growl" look="primary btn-block" value="Entrar" icon="log-in" size="lg"/>
 
+
+                    </b:panelGrid>
+                </h:form>
+            </b:panel>
+        </b:container>
     </h:body>
 </html>
-

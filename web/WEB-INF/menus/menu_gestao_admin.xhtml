@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <b:column col-sm="9" col-md="12" >
+            <b:row>
+                <b:column col-sm="9" col-md="12" styleClass="main">
+                        <h:form>
+                             <p:tabMenu style="float: right" activeIndex="#{param.i}">
+                                <p:menuitem value="Processos" outcome="/reservado/admin/processos" style="color: #0066CC;">
+                                    <f:param name="i" value="0" />
+                                </p:menuitem>
+                                <p:menuitem value="Autores" outcome="/reservado/admin/requerentes" style="color: #0066CC;">
+                                    <f:param name="i" value="1" />
+                                </p:menuitem>
+
+                                <p:menuitem value="Réus" outcome="/reservado/admin/requeridos" style="color: #0066CC;">
+                                    <f:param name="i" value="2" />
+                                </p:menuitem>
+                                <p:menuitem value="Advogados" outcome="/reservado/admin/advogados" style="color: #0066CC;">
+                                    <f:param name="i" value="3" />
+                                </p:menuitem>
+                                <p:menuitem value="Decisões" outcome="/reservado/admin/tipo_decisoes" style="color: #0066CC;">
+                                    <f:param name="i" value="4" />
+                                </p:menuitem>
+                                <p:menuitem value="Tipo Pessoa" outcome="/reservado/admin/tipo_pessoas" style="color: #0066CC;">
+                                    <f:param name="i" value="5" />
+                                </p:menuitem>
+                                <p:menuitem value="Espécies" outcome="/reservado/admin/especies" style="color: #0066CC;">
+                                    <f:param name="i" value="6" />
+                                </p:menuitem>
+                               
+                            </p:tabMenu>
+
+                        </h:form>
+
+
+                    </b:column>
+            </b:row>
+        </b:column>
+    </h:body>
+</html>
+

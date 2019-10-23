@@ -36,16 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "processo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Processo.findAll", query = "SELECT p FROM Processo p"),
-    @NamedQuery(name = "Processo.findByIdProcesso", query = "SELECT p FROM Processo p WHERE p.idProcesso = :idProcesso"),
-    @NamedQuery(name = "Processo.findByNumeroProcesso", query = "SELECT p FROM Processo p WHERE p.numeroProcesso = :numeroProcesso"),
-    @NamedQuery(name = "Processo.findByDataEntrada", query = "SELECT p FROM Processo p WHERE p.dataEntrada = :dataEntrada")})
+    @NamedQuery(name = "Processo.findAll", query = "SELECT p FROM Processo p")
+    , @NamedQuery(name = "Processo.findByIdProcesso", query = "SELECT p FROM Processo p WHERE p.idProcesso = :idProcesso")
+    , @NamedQuery(name = "Processo.findByNumeroProcesso", query = "SELECT p FROM Processo p WHERE p.numeroProcesso = :numeroProcesso")
+    , @NamedQuery(name = "Processo.findByDataEntrada", query = "SELECT p FROM Processo p WHERE p.dataEntrada = :dataEntrada")})
 public class Processo implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
-    private Collection<ProcessoFindo> processoFindoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
-    private Collection<Tramitacao> tramitacaoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,6 +56,10 @@ public class Processo implements Serializable {
     @Column(name = "data_entrada")
     @Temporal(TemporalType.DATE)
     private Date dataEntrada;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
+    private Collection<ProcessoFindo> processoFindoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
+    private Collection<Tramitacao> tramitacaoCollection;
     @JoinColumn(name = "id_especie_processo", referencedColumnName = "id_especie_processo")
     @ManyToOne(optional = false)
     private EspecieProcesso idEspecieProcesso;
@@ -108,6 +107,24 @@ public class Processo implements Serializable {
 
     public void setDataEntrada(Date dataEntrada) {
         this.dataEntrada = dataEntrada;
+    }
+
+    @XmlTransient
+    public Collection<ProcessoFindo> getProcessoFindoCollection() {
+        return processoFindoCollection;
+    }
+
+    public void setProcessoFindoCollection(Collection<ProcessoFindo> processoFindoCollection) {
+        this.processoFindoCollection = processoFindoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Tramitacao> getTramitacaoCollection() {
+        return tramitacaoCollection;
+    }
+
+    public void setTramitacaoCollection(Collection<Tramitacao> tramitacaoCollection) {
+        this.tramitacaoCollection = tramitacaoCollection;
     }
 
     public EspecieProcesso getIdEspecieProcesso() {
@@ -165,24 +182,6 @@ public class Processo implements Serializable {
     @Override
     public String toString() {
         return "fenix.iure.entities.Processo[ idProcesso=" + idProcesso + " ]";
-    }
-
-    @XmlTransient
-    public Collection<ProcessoFindo> getProcessoFindoCollection() {
-        return processoFindoCollection;
-    }
-
-    public void setProcessoFindoCollection(Collection<ProcessoFindo> processoFindoCollection) {
-        this.processoFindoCollection = processoFindoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Tramitacao> getTramitacaoCollection() {
-        return tramitacaoCollection;
-    }
-
-    public void setTramitacaoCollection(Collection<Tramitacao> tramitacaoCollection) {
-        this.tramitacaoCollection = tramitacaoCollection;
     }
     
 }

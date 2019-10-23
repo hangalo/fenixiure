@@ -31,12 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "tramitacao")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tramitacao.findAll", query = "SELECT t FROM Tramitacao t"),
-    @NamedQuery(name = "Tramitacao.findByIdTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.idTramitacao = :idTramitacao"),
-    @NamedQuery(name = "Tramitacao.findByDataConclusaoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dataConclusaoTramitacao = :dataConclusaoTramitacao"),
-    @NamedQuery(name = "Tramitacao.findByDispachoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dispachoTramitacao = :dispachoTramitacao"),
-    @NamedQuery(name = "Tramitacao.findByEstadoProcesso", query = "SELECT t FROM Tramitacao t WHERE t.estadoProcesso = :estadoProcesso"),
-    @NamedQuery(name = "Tramitacao.findByDataTermino", query = "SELECT t FROM Tramitacao t WHERE t.dataTermino = :dataTermino")})
+    @NamedQuery(name = "Tramitacao.findAll", query = "SELECT t FROM Tramitacao t")
+    , @NamedQuery(name = "Tramitacao.findByIdTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.idTramitacao = :idTramitacao")
+    , @NamedQuery(name = "Tramitacao.findByDataConclusaoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dataConclusaoTramitacao = :dataConclusaoTramitacao")
+    , @NamedQuery(name = "Tramitacao.findByDispachoTramitacao", query = "SELECT t FROM Tramitacao t WHERE t.dispachoTramitacao = :dispachoTramitacao")
+    , @NamedQuery(name = "Tramitacao.findByEstadoProcesso", query = "SELECT t FROM Tramitacao t WHERE t.estadoProcesso = :estadoProcesso")
+    , @NamedQuery(name = "Tramitacao.findByDataTermino", query = "SELECT t FROM Tramitacao t WHERE t.dataTermino = :dataTermino")})
 public class Tramitacao implements Serializable {
 
     private static final long serialVersionUID = 1L;

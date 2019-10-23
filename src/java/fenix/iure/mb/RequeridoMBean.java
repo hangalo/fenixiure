@@ -16,23 +16,25 @@ import fenix.iure.entities.TipoPessoa;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import javax.inject.Named;
+
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author Aisha Lubadika
  */
 @Named(value = "requeridoMBean")
-@SessionScoped
+@RequestScoped
 public class RequeridoMBean implements Serializable {
 
    private static final long serialVersionUID = 1L;
@@ -100,7 +102,7 @@ public class RequeridoMBean implements Serializable {
     }
       
        public String startEdit() {
-        return "requerido_lstar?faces-redirect=true";
+        return "requeridos?faces-redirect=true";
     }
 
     
@@ -111,7 +113,7 @@ public class RequeridoMBean implements Serializable {
             requerido = null;
 
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("requerido_lstar.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("requeridos.jsf");
             } catch (IOException ex) {
                 Logger.getLogger(RequeridoMBean.class.getName()).log(Level.SEVERE, null, ex);
             }

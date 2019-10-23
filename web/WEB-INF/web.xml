@@ -19,7 +19,7 @@
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>blitzer</param-value>
+        <param-value>bootstrap</param-value>
     </context-param>
     <mime-mapping>
         <extension>xhtml</extension>
@@ -41,7 +41,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>area_administrativa.jsf</welcome-file>
+        <welcome-file>area_administrativa_1.jsf</welcome-file>
     </welcome-file-list>
     
 </web-app>
