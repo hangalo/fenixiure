@@ -5,82 +5,88 @@
  */
 package fenix.iure.mb;
 
-import fenix.iure.ejbs.UsuarioFacade;
-import fenix.iure.entities.Usuario;
+import fenix.iure.ejbs.AcessoSistemaFacade;
+import fenix.iure.entities.AcessoSistema;
+import fenix.iure.filters.Util;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Elísio Kavaimunwa
- */
+
+
 @Named(value = "loginMB")
 @SessionScoped
-public class LoginMB {
+public class LoginMB implements Serializable {
 
-    private String username;
+    private String nomeUsuario;
     private String password;
 
-    private Usuario usuario = new Usuario();
-    private List<Usuario> usuarios = new ArrayList<>();
-    @Inject
-    UsuarioFacade usuarioFacade;
+    @EJB
+    AcessoSistemaFacade acessoSistemaFacade;
 
-    public LoginMB() {
+    private AcessoSistema usuarioAutenticado;
+
+    public AcessoSistema getUsuarioAutenticado() {
+        return usuarioAutenticado;
     }
 
-    public void login(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        usuarios = usuarioFacade.findAll();
-        for (Usuario usuario1 : usuarios) {
-            if (usuario1.getLoginUsuario().equals(username) && usuario1.getSenhaUsuario().equals(password)) {
-                context.getExternalContext().getSessionMap().put("user", username);
-                try {
-                    context.getExternalContext().redirect("/fenixiure/area_administrativa.jsf");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                FacesMessage mensagem = new FacesMessage(
-                        "Login Inválido!");
-                mensagem.setSeverity(FacesMessage.SEVERITY_ERROR);
-                FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            }
-        }
+    public void setUsuarioAutenticado(AcessoSistema usuarioAutenticado) {
+        this.usuarioAutenticado = usuarioAutenticado;
     }
 
-
-    public void logout() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().invalidateSession();
-        try {
-            context.getExternalContext().redirect("/fenixiure/index.jsf");
-        } catch (IOException e) {
-            System.out.println("" + e.getMessage());
-        }
+    public String getNomeUsuario() {
+        return nomeUsuario;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.password = Password;
     }
 
+    public LoginMB() {
+    }
+
+    public String autenticar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        usuarioAutenticado = acessoSistemaFacade.encontrarUsuarioLogin(nomeUsuario);
+        if (usuarioAutenticado != null) {
+            context.getExternalContext().getSessionMap().put("login", nomeUsuario);
+            if (usuarioAutenticado.getPasswordJuiz().equals(password)) {
+                HttpSession hs = Util.getSession();
+                hs.setAttribute("login", nomeUsuario);
+                try {
+                    context.getExternalContext().redirect("/fenixiure/area_administrativa_1.jsf");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Senha Inexistente! Tente Novamente.", "A Senha não Existe"));
+            return null;
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Usuário Inexistente! Tente Novamente.", "O Usuário não Existe"));
+        return null;
+    }
+
+    public void logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().invalidateSession();
+        try {
+            context.getExternalContext().redirect("/fenixiure/login.jsf");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

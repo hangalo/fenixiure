@@ -36,18 +36,18 @@
 
                     <b:panelGrid columns="1" id="hpglogin">
                         
-                        <b:inputText value="#{loginMBean.usuario}" id="usuario" placeholder="Usuário" >
+                        <b:inputText value="#{loginMB.nomeUsuario}" id="usuario" placeholder="Usuário" >
                             <f:facet name="prepend">
                                 <b:icon name="user" />
                             </f:facet>
                         </b:inputText>
-                        <b:inputText value="#{loginMBean.senha}" id="senha" placeholder="Senha" type="password">
+                        <b:inputText value="#{loginMB.password}" id="senha" placeholder="Senha" type="password">
                             <f:facet name="prepend">
                                 <b:iconAwesome name="key" />
                             </f:facet>
                         </b:inputText>
 
-                        <b:commandButton action="#{loginMBean.logar()}" ajax="false" update=" hpglogin, growl" look="primary btn-block" value="Entrar" icon="log-in" size="lg"/>
+                        <b:commandButton action="#{loginMB.autenticar()}" ajax="false" update=" hpglogin, growl" look="primary btn-block" value="Entrar" icon="log-in" size="lg"/>
 
 
                     </b:panelGrid>

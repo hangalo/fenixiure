@@ -41,7 +41,7 @@ public class EspecieProcesso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_especie_processo")
     private Integer idEspecieProcesso;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "especie_processo")
     private String especieProcesso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEspecieProcesso")

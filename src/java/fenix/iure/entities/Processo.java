@@ -57,8 +57,6 @@ public class Processo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataEntrada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
-    private Collection<ProcessoFindo> processoFindoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProcesso")
     private Collection<Tramitacao> tramitacaoCollection;
     @JoinColumn(name = "id_especie_processo", referencedColumnName = "id_especie_processo")
     @ManyToOne(optional = false)
@@ -107,15 +105,6 @@ public class Processo implements Serializable {
 
     public void setDataEntrada(Date dataEntrada) {
         this.dataEntrada = dataEntrada;
-    }
-
-    @XmlTransient
-    public Collection<ProcessoFindo> getProcessoFindoCollection() {
-        return processoFindoCollection;
-    }
-
-    public void setProcessoFindoCollection(Collection<ProcessoFindo> processoFindoCollection) {
-        this.processoFindoCollection = processoFindoCollection;
     }
 
     @XmlTransient

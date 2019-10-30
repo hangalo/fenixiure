@@ -41,11 +41,9 @@ public class TipoDecisao implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tipo_decisao")
     private Integer idTipoDecisao;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "tipo_decisao")
     private String tipoDecisao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDecisao")
-    private Collection<ProcessoFindo> processoFindoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDecisao")
     private Collection<Tramitacao> tramitacaoCollection;
 
@@ -70,15 +68,6 @@ public class TipoDecisao implements Serializable {
 
     public void setTipoDecisao(String tipoDecisao) {
         this.tipoDecisao = tipoDecisao;
-    }
-
-    @XmlTransient
-    public Collection<ProcessoFindo> getProcessoFindoCollection() {
-        return processoFindoCollection;
-    }
-
-    public void setProcessoFindoCollection(Collection<ProcessoFindo> processoFindoCollection) {
-        this.processoFindoCollection = processoFindoCollection;
     }
 
     @XmlTransient

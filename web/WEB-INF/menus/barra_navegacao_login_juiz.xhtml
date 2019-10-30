@@ -27,10 +27,14 @@
             <b:navbarLinks pull="right" styleClass="hidden-xs">
                 <b:navLink style="color: white; " value="Logout" outcome="/login" icon="log-out"></b:navLink>
             </b:navbarLinks>
-            
+
             <b:navbarLinks pull="right" styleClass="hidden-xs">
-                <b:navLink style="color: white; " value="Bem Vindo  #{loginMBean.usuario}" icon-awesome="fa-user"></b:navLink>
+                <b:navLink style="color: white; " value="#{loginMB.nomeUsuario}" icon-awesome="fa-user"></b:navLink>
             </b:navbarLinks>
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink style="color: white; " value="Administração" outcome="/reservado/admin/processos" icon="tools"></b:navLink>
+            </b:navbarLinks>
+            
 
         </b:navBar>
 

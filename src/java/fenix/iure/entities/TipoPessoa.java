@@ -41,7 +41,7 @@ public class TipoPessoa implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tipo")
     private Integer idTipo;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_tipo")
     private String nomeTipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")

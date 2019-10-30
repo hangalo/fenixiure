@@ -46,10 +46,10 @@ public class Advogado implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_advogado")
     private Integer idAdvogado;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_advogado")
     private String nomeAdvogado;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "sobrenome_advogado")
     private String sobrenomeAdvogado;
     @Column(name = "data_inicio_funcoes")

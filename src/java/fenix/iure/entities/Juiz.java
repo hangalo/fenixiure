@@ -49,10 +49,10 @@ public class Juiz implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_juiz")
     private Integer idJuiz;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_juiz")
     private String nomeJuiz;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "sobrenome_juiz")
     private String sobrenomeJuiz;
     @Column(name = "data_inicio_funcoes")
@@ -64,7 +64,7 @@ public class Juiz implements Serializable {
     @Size(max = 125)
     @Column(name = "senha_juiz")
     private String senhaJuiz;
-    @Size(max = 5)
+    @Size(max = 125)
     @Column(name = "tipo_usuario")
     private String tipoUsuario;
     @OneToMany(mappedBy = "idJuiz")

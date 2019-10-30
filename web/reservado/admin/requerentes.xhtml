@@ -20,12 +20,12 @@
                             <h1 style="text-align: left;">ÁREA RESERVADA</h1>
                         </f:facet>
                         <ui:include src="../../WEB-INF/menus/menu_gestao_admin.xhtml" />
-                        <b:column  style="margin-left: 0px">
+                        <!-- <b:column  style="margin-left: 0px">
                             <b:row style="float: right; margin-left: 0px; margin-right: 20px ">
                                 <b:column col-sm="9" col-md="12" styleClass="main">
                                     <h:form id="formCercaFrate" styleClass="navbar-form navbar-right">
                                         <div class="form-group">
-                                            <b:commandButton id="btnPrintLista" title="Imprimir Lista de Processos" style="margin-left: 0px; height: 40px;" icon="print" action="#{processoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" >
+                                            <b:commandButton id="btnPrintLista" title="Imprimir Lista de Processos" style="margin-left: 0px; height: 40px;" icon="print" action="#//{processoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" >
                                                 <p:tooltip for="btnPrintLista"/>
                                             </b:commandButton> 
 
@@ -35,11 +35,11 @@
                                 </b:column>
                             </b:row>
                         </b:column>
-
+                        -->
                         <b:panel  collapsible="true" collapsed="true"  style="text-align: left;">
 
                             <f:facet name="heading" >
-                                <h3 style="text-align: left;">Novo Autor</h3>
+                                <h3 style="text-align: left; background-color: #000066; color: white">REGISTAR NOVO AUTOR</h3>
                             </f:facet>
                             <div style="margin-left: 0%">
                                 <h:form enctype="multipart/form-data">

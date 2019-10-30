@@ -436,7 +436,7 @@ public class ProcessoMBean implements Serializable {
 
     }
      public String imprimirProcessosPorEspecie(String parametro) {
-        String relatorio = "processos_por_especie.jasper";
+        String relatorio = "processos_por_especie_horizontal.jasper";
         HashMap parametros = new HashMap();
         parametros.put("idEspecie", parametro);
         gestorImpressao = new GestorImpressao();
@@ -446,7 +446,7 @@ public class ProcessoMBean implements Serializable {
 
     }
      
-     public String imprimirProcessosPorDatas(Date dataInicio, Date dataFim) {
+     public String imprimirProcessosPorDatas() {
         String relatorio = "processos_por_datas_util.jasper";
         HashMap parametros = new HashMap();
         parametros.put("dataInicio", dataInicio);
@@ -532,12 +532,6 @@ public class ProcessoMBean implements Serializable {
 
     public List<Processo> getFindByIntervaloDatas() {
         findByIntervaloDatas = processoFacade.findByIntervaloDataEntrada(dataInicio, dataFim);
-        
-        for (Processo processo2 : findByIntervaloDatas) {
-            System.out.println("Numero: " + processo2.getNumeroProcesso());
-            System.out.println("Data Entrada: " + processo2.getDataEntrada());
-            
-        }
         return findByIntervaloDatas;
     }
     

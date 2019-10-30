@@ -396,7 +396,7 @@ public class TramitacaoMBean implements Serializable {
     }
 
     public String imprimirProcessosFindos() {
-        String relatorio = "processos_findos.jasper";
+        String relatorio = "processos_findos_horizontal.jasper";
         HashMap parametros = new HashMap();
         gestorImpressao = new GestorImpressao();
         gestorImpressao.imprimirPDF(relatorio, parametros);
@@ -409,7 +409,7 @@ public class TramitacaoMBean implements Serializable {
     public String imprimirRelatorio2() {
         if (idDecisao != 0 && dataInicio == null && dataFim == null) {
             int parametro = idDecisao;
-            String relatorio = "processos_findos_por_decisao.jasper";
+            String relatorio = "processos_findos_por_decisao_horizontal.jasper";
             HashMap parametros = new HashMap();
             parametros.put("idDecisao", parametro);
             gestorImpressao = new GestorImpressao();
@@ -421,7 +421,7 @@ public class TramitacaoMBean implements Serializable {
             int parametro = idDecisao;
             Date parametro2 = dataInicio;
             Date parametro3 = dataFim;
-            String relatorio = "processos_findos_por_decisao_datas.jasper";
+            String relatorio = "processos_findos_por_decisao_datas_horizontal.jasper";
             HashMap parametros = new HashMap();
             parametros.put("idDecisao", parametro);
             parametros.put("dataInicio", parametro2);
@@ -430,6 +430,16 @@ public class TramitacaoMBean implements Serializable {
             gestorImpressao.imprimirPDF(relatorio, parametros);
 
             return null;
+
+        }else if (idDecisao == 0 && dataInicio != null && dataFim != null) {
+            Date parametro1 = dataInicio;
+            Date parametro2 = dataFim;
+            String relatorio = "processos_findos_por_datas_horizontal.jasper";
+            HashMap parametros = new HashMap();
+            parametros.put("dataInicio", parametro1);
+            parametros.put("dataFim", parametro2);
+            gestorImpressao = new GestorImpressao();
+            gestorImpressao.imprimirPDF(relatorio, parametros);
 
         }
         

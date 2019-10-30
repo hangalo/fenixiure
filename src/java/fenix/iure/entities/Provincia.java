@@ -41,7 +41,7 @@ public class Provincia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_provincia")
     private Integer idProvincia;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_provincia")
     private String nomeProvincia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProvincia")

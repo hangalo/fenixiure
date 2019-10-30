@@ -37,7 +37,7 @@ public class EstadoProcesso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_estado_processo")
     private Integer idEstadoProcesso;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "estado_processo")
     private String estadoProcesso;
 

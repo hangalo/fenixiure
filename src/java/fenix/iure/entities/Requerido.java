@@ -46,16 +46,16 @@ public class Requerido implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_requerido")
     private Integer idRequerido;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_requerido")
     private String nomeRequerido;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "casa_requerido")
     private String casaRequerido;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "rua_requerido")
     private String ruaRequerido;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "bairro_requerido")
     private String bairroRequerido;
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")

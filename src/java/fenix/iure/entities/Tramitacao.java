@@ -51,7 +51,7 @@ public class Tramitacao implements Serializable {
     @Size(max = 20000)
     @Column(name = "dispacho_tramitacao")
     private String dispachoTramitacao;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "estado_processo")
     private String estadoProcesso;
     @Column(name = "data_termino")

@@ -46,16 +46,16 @@ public class Requente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_requente")
     private Integer idRequente;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_requente")
     private String nomeRequente;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "casa_requerente")
     private String casaRequerente;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "rua_requerente")
     private String ruaRequerente;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "bairro_requerente")
     private String bairroRequerente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRequente")

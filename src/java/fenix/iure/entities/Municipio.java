@@ -43,7 +43,7 @@ public class Municipio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_municipio")
     private Integer idMunicipio;
-    @Size(max = 45)
+    @Size(max = 125)
     @Column(name = "nome_municipio")
     private String nomeMunicipio;
     @JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
