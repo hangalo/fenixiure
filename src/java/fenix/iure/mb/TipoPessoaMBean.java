@@ -43,7 +43,7 @@ public class TipoPessoaMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         tipoPessoa = new TipoPessoa();
-        
+        tipoPessoas = tipoPessoaFacade.findAll();
 
     }
 
@@ -68,7 +68,7 @@ public class TipoPessoaMBean implements Serializable {
     public void guardar(ActionEvent evt) {
         tipoPessoaFacade.create(tipoPessoa);
         tipoPessoa = new TipoPessoa();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+       //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
        
     }
 
@@ -78,7 +78,8 @@ public class TipoPessoaMBean implements Serializable {
 
     public void edit(javafx.event.ActionEvent event) {
         tipoPessoaFacade.edit(tipoPessoa);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        tipoPessoa = new TipoPessoa();
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             tipoPessoas = null;
 
             try {
@@ -91,7 +92,7 @@ public class TipoPessoaMBean implements Serializable {
 
     public String delete() {
            tipoPessoaFacade.remove(tipoPessoa);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+           // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             tipoPessoas = null;
             return "tipo_pessoas?faces-redirect=true";
         

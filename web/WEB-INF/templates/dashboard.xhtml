@@ -17,16 +17,16 @@
 
     <h:body>
         <!-- grow global para as mensagens do formulario -->
-        <p:growl id="msgGlobal" life="3000"/>
 
+       
         <p:layout fullPage="true">
-            
+
             <p:layoutUnit position="north"   resizable="false" closable="false" collapsible="false">
                 <ui:insert name="top">
                     <ui:include src="../menus/barra_navegacao_login.xhtml"></ui:include>   
                 </ui:insert>
             </p:layoutUnit>
-            
+
 
             <p:layoutUnit  position="south" size="50" closable="true" collapsible="true">
                 <ui:insert name="rodape">
@@ -35,7 +35,7 @@
             </p:layoutUnit>
 
 
-            
+
             <p:layoutUnit position="center" style="text-align: center">
                 <ui:insert name="content"> 
 

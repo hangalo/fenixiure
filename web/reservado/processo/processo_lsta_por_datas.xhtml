@@ -115,7 +115,7 @@
                                         <p:commandButton style="margin-left: 5px"  icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </p:commandButton>
-                                        <b:commandButton style="margin-left: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <b:commandButton style="margin-left: 5px; margin-right: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </b:commandButton>
 

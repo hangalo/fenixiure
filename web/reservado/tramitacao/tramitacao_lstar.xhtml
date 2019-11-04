@@ -111,13 +111,13 @@
 
                                         <h:outputText value="#{item.dispachoTramitacao}"/>
                                     </p:column>
-                                    <p:column style="text-align: center" width="150">
+                                    <p:column style="text-align: center" width="3%">
                                         <f:facet name="header">
                                             <p:outputLabel value="Operações"/>
                                         </f:facet>
-                                        <b:commandButton style="margin-right: 10px"  icon="trash" action="#{tramitacaoMBean.delete()}">
-                                            <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
-                                        </b:commandButton>
+                                        <!--<b:commandButton style="margin-right: 10px"  icon="trash" action="#//{tramitacaoMBean.delete()}">
+                                            <f:setPropertyActionListener target="#//{tramitacaoMBean.tramitacao}" value="#//{item}"/>
+                                        </b:commandButton> -->
                                         <p:commandButton style="margin-right: 10px" icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                             <f:setPropertyActionListener target="#{tramitacaoMBean.tramitacao}" value="#{item}"/>
                                         </p:commandButton>

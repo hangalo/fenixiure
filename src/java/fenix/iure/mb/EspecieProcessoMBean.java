@@ -28,22 +28,20 @@ import javax.inject.Inject;
 @SessionScoped
 public class EspecieProcessoMBean implements Serializable {
 
-     private static final long serialVersionUID = 1L;
-     private EspecieProcesso especieProcesso;
-     private List<EspecieProcesso> especieProcessos;
-    
-     @Inject
-     EspecieProcessoFacade especieProcessoFacade;
-     
-     public EspecieProcessoMBean() {
+    private static final long serialVersionUID = 1L;
+    private EspecieProcesso especieProcesso;
+    private List<EspecieProcesso> especieProcessos;
+
+    @Inject
+    EspecieProcessoFacade especieProcessoFacade;
+
+    public EspecieProcessoMBean() {
     }
-     
-     
-    
-    
-   @PostConstruct
-   public void inicializar() {
-        especieProcesso = new EspecieProcesso();   
+
+    @PostConstruct
+    public void inicializar() {
+        especieProcesso = new EspecieProcesso();
+        especieProcessos = especieProcessoFacade.findAll();
     }
 
     public EspecieProcesso getEspecieProcesso() {
@@ -54,43 +52,39 @@ public class EspecieProcessoMBean implements Serializable {
         this.especieProcesso = especieProcesso;
     }
 
-    
     public List<EspecieProcesso> getEspecieProcessos() {
-        especieProcessos= especieProcessoFacade.findAll();
+        especieProcessos = especieProcessoFacade.findAll();
         return especieProcessos;
-    }  
-    
+    }
+
     public void guardar(ActionEvent evt) {
         especieProcessoFacade.create(especieProcesso);
-            especieProcesso = new EspecieProcesso();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        
+        especieProcesso = new EspecieProcesso();
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+
     }
+
     public String startEdit() {
         return "especies?faces-redirect=true";
     }
-    
-    
- 
+
     public void edit(javafx.event.ActionEvent event) {
         especieProcessoFacade.edit(especieProcesso);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-            especieProcessos = null;
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("especies.jsf");
-            } catch (IOException ex) {
-                Logger.getLogger(EspecieProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+       // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        especieProcessos = null;
+        especieProcesso = new EspecieProcesso();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("especies.jsf");
+        } catch (IOException ex) {
+            Logger.getLogger(EspecieProcessoMBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
 
-    
-    
     public String delete() {
         especieProcessoFacade.remove(especieProcesso);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-             especieProcessos = null;
-             return "especies?faces-redirect=true";
-       
+       // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+        especieProcessos = null;
+        return "especies?faces-redirect=true";
+
     }
 }

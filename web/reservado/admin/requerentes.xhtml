@@ -14,35 +14,25 @@
                 <br/>
             </ui:define>
             <ui:define name="content">
-                <f:view>
-                    <b:panel collapsible="false"  style="text-align: left;">
+
+                <b:panel collapsible="false"  style="text-align: left;">
+                    <f:facet name="heading" >
+                        <h1 style="text-align: left;">ÁREA RESERVADA</h1>
+                    </f:facet>
+                    <ui:include src="../../WEB-INF/menus/menu_gestao_admin.xhtml" />
+
+                    <b:panel  collapsible="true" collapsed="true"  style="text-align: left;">
+
                         <f:facet name="heading" >
-                            <h1 style="text-align: left;">ÁREA RESERVADA</h1>
+                            <h3 style="text-align: left; background-color: #000066; color: white">REGISTAR NOVO AUTOR</h3>
                         </f:facet>
-                        <ui:include src="../../WEB-INF/menus/menu_gestao_admin.xhtml" />
-                        <!-- <b:column  style="margin-left: 0px">
-                            <b:row style="float: right; margin-left: 0px; margin-right: 20px ">
-                                <b:column col-sm="9" col-md="12" styleClass="main">
-                                    <h:form id="formCercaFrate" styleClass="navbar-form navbar-right">
-                                        <div class="form-group">
-                                            <b:commandButton id="btnPrintLista" title="Imprimir Lista de Processos" style="margin-left: 0px; height: 40px;" icon="print" action="#//{processoMBean.imprimirListaArtigo()}" ajax="false" immediate="true" >
-                                                <p:tooltip for="btnPrintLista"/>
-                                            </b:commandButton> 
 
-                                        </div> 
-                                    </h:form>
+                        <h:form id="frmNovo">
 
-                                </b:column>
-                            </b:row>
-                        </b:column>
-                        -->
-                        <b:panel  collapsible="true" collapsed="true"  style="text-align: left;">
 
-                            <f:facet name="heading" >
-                                <h3 style="text-align: left; background-color: #000066; color: white">REGISTAR NOVO AUTOR</h3>
-                            </f:facet>
                             <div style="margin-left: 0%">
                                 <h:form enctype="multipart/form-data">
+                                    <b:growl id="msg"/>
                                     <br></br>
                                     <b:panel title="Dados Pessoais" collapsible="false" style="color: black">
 
@@ -111,209 +101,212 @@
                                         </h:panelGrid>
                                     </b:panel>
                                     <br/>
-                                    <p:commandButton value="Guardar" action="#{requerenteMBean.guardar(evt)}" ajax="false"/>
+                                    <p:commandButton value="Guardar" action="#{requerenteMBean.guardar(evt)}" ajax="false" update="msg"/>
                                 </h:form>
 
                             </div>
-                        </b:panel>
 
-
-
-                        <b:panel collapsible="false"  style="text-align: left;">
-                            <f:facet name="heading" >
-                                <h3 style="text-align: left;">Lista de Autores</h3>
-                            </f:facet>
-
-                            <h:form>
-
-                                <!--inicio Datatable-->
-                                <b:dataTable searching="true" value="#{requerenteMBean.requerentes}"  var="processo">
-                                    <p:column width="100">
-                                        <f:facet name="header">
-                                            <h:outputText value="NOME"/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.nomeRequente}"/>
-                                    </p:column>
-
-                                    <p:column width="100">
-                                        <f:facet name="header">
-                                            <p:outputLabel value="MUNICÍPIO "/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.idMunicipio.nomeMunicipio}"/>
-                                    </p:column>
-                                    <p:column width="100">
-                                        <f:facet name="header">
-                                            <p:outputLabel value="BAIRRO "/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.bairroRequerente}"/>
-                                    </p:column>
-                                    <p:column width="100">
-                                        <f:facet name="header">
-                                            <p:outputLabel value="RUA "/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.ruaRequerente}"/>
-                                    </p:column>
-                                    <p:column width="100">
-                                        <f:facet name="header">
-                                            <p:outputLabel value="CASA "/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.casaRequerente}"/>
-                                    </p:column>
-                                    <p:column width="100" >
-                                        <f:facet name="header">
-                                            <p:outputLabel value="TIPO PESSOA "/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.idTipo.nomeTipo}"/>
-                                    </p:column>
-                                    <p:column width="100" >
-                                        <f:facet name="header">
-                                            <p:outputLabel value="ADVOGADO "/>
-                                        </f:facet>
-                                        <h:outputText value="#{processo.idAdvogado.nomeAdvogado}"/>
-                                    </p:column>
-
-                                    <p:column width="15%" style="text-align: center">
-                                        <f:facet name="header">
-                                            <p:outputLabel value="Operações"/>
-                                        </f:facet>
-                                        <b:growl id="messages" />
-                                        <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
-                                            <f:setPropertyActionListener target="#{requerenteMBean.requerente}" value="#{processo}"/>
-                                        </p:commandButton>
-                                        <b:commandButton style="margin-left: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
-                                            <f:setPropertyActionListener target="#{requerenteMBean.requerente}" value="#{processo}"/>
-                                        </b:commandButton>
-
-                                        <!-- <p:commandButton  id="bt_imprimir" icon="ui-icon-print" action="#//{processoMBean.imprimirProcessosPorNumero()}">
-                                            <f:setPropertyActionListener target="#//{processoMBean.processo}" value="#//{processo}"/>
-                                        </p:commandButton> -->
-
-                                        <b:commandButton  ajax="false" icon="print" id="bt_imprimir2">
-                                        </b:commandButton>
-                                    </p:column>
-
-                                    <f:facet name="footer">
-                                        Total Processos  (#{requerenteMBean.requerentes.size()})
-                                    </f:facet>                           
-                                </b:dataTable>
-
-                                <!--Fim Datatable-->                         
-                            </h:form>
-                        </b:panel>
-
-
+                        </h:form>
                     </b:panel>
 
 
 
+                    <b:panel collapsible="false"  style="text-align: left;">
+                        <f:facet name="heading" >
+                            <h3 style="text-align: left;">Lista de Autores</h3>
+                        </f:facet>
 
-                    <p:dialog header="Alterar dados do Autor" style="text-align: left" id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" width="1000" height="360">
-                        <h:form enctype="multipart/form-data">
-                            <br></br>
-                            <b:panel title="Dados Pessoais" collapsible="false" style="color: black">
+                        <h:form>
+
+                            <!--inicio Datatable-->
+                            <b:dataTable searching="true" value="#{requerenteMBean.requerentes}"  var="processo">
+                                <p:column width="100">
+                                    <f:facet name="header">
+                                        <h:outputText value="NOME"/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.nomeRequente}"/>
+                                </p:column>
+
+                                <p:column width="100">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="MUNICÍPIO "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.idMunicipio.nomeMunicipio}"/>
+                                </p:column>
+                                <p:column width="100">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="BAIRRO "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.bairroRequerente}"/>
+                                </p:column>
+                                <p:column width="100">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="RUA "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.ruaRequerente}"/>
+                                </p:column>
+                                <p:column width="100">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="CASA "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.casaRequerente}"/>
+                                </p:column>
+                                <p:column width="100" >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="TIPO PESSOA "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.idTipo.nomeTipo}"/>
+                                </p:column>
+                                <p:column width="100" >
+                                    <f:facet name="header">
+                                        <p:outputLabel value="ADVOGADO "/>
+                                    </f:facet>
+                                    <h:outputText value="#{processo.idAdvogado.nomeAdvogado}"/>
+                                </p:column>
+
+                                <p:column width="15%" style="text-align: center">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="Operações"/>
+                                    </f:facet>
+                                    <b:growl id="messages" />
+                                    <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <f:setPropertyActionListener target="#{requerenteMBean.requerente}" value="#{processo}"/>
+                                    </p:commandButton>
+                                    <b:commandButton style="margin-left: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <f:setPropertyActionListener target="#{requerenteMBean.requerente}" value="#{processo}"/>
+                                    </b:commandButton>
+
+                                    <!-- <p:commandButton  id="bt_imprimir" icon="ui-icon-print" action="#//{processoMBean.imprimirProcessosPorNumero()}">
+                                        <f:setPropertyActionListener target="#//{processoMBean.processo}" value="#//{processo}"/>
+                                    </p:commandButton> -->
+
+                                    <b:commandButton  ajax="false" icon="print" id="bt_imprimir2" action="#{requerenteMBean.imprimirFichaAutor(processo.idRequente)}">
+                                    </b:commandButton> 
+                                </p:column>
+
+                                <f:facet name="footer">
+                                    Total Processos  (#{requerenteMBean.requerentes.size()})
+                                </f:facet>                           
+                            </b:dataTable>
+
+                            <!--Fim Datatable-->                         
+                        </h:form>
+                    </b:panel>
 
 
-                                <h:panelGrid  columns="4">  
-                                    <h:panelGroup>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel value="NOME:"/>
-                                            <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
-                                        </h:panelGrid> 
-                                    </h:panelGroup>
+                </b:panel>
 
 
-                                    <h:panelGroup>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
-                                            <p:selectOneMenu effect="slide" style="width:200px; margin-left:15% " id="tipos" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idTipo}" required="true" converter="tipoPessoaConverter">
-                                                <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                                <f:selectItems value="#{requerenteMBean.tipoPessoas}" var="tipoPessoa" itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.nomeTipo}"/>
-                                            </p:selectOneMenu>
-                                        </h:panelGrid>
-                                    </h:panelGroup>
 
+
+                <p:dialog header="Alterar dados do Autor" style="text-align: left" id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" width="1000" height="360">
+                    <h:form enctype="multipart/form-data">
+                        <b:growl id="msg"/>
+                        <br></br>
+                        <b:panel title="Dados Pessoais" collapsible="false" style="color: black">
+
+
+                            <h:panelGrid  columns="4">  
+                                <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left:30% " value="ADVOGADO:"/>
-                                        <p:selectOneMenu style="width:220px; margin-left:30%" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{requerenteMBean.requerente.idAdvogado}" required="true" converter="advogadoConverter">
+                                        <p:outputLabel value="NOME:"/>
+                                        <p:inputText id="nome" value="#{requerenteMBean.requerente.nomeRequente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+
+
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 15%" value="TIPO:"/>
+                                        <p:selectOneMenu effect="slide" style="width:200px; margin-left:15% " id="tipos" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idTipo}" required="true" converter="tipoPessoaConverter">
                                             <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems  value="#{requerenteMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                            <f:selectItems value="#{requerenteMBean.tipoPessoas}" var="tipoPessoa" itemValue="#{tipoPessoa}" itemLabel="#{tipoPessoa.nomeTipo}"/>
                                         </p:selectOneMenu>
                                     </h:panelGrid>
+                                </h:panelGroup>
 
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel style="margin-left:30% " value="ADVOGADO:"/>
+                                    <p:selectOneMenu style="width:220px; margin-left:30%" id="advogados" effect="slide"   filter="true" filterMatchMode="startsWith" label="Advogado" value="#{requerenteMBean.requerente.idAdvogado}" required="true" converter="advogadoConverter">
+                                        <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems  value="#{requerenteMBean.advogados}" var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.nomeAdvogado}"/>
+                                    </p:selectOneMenu>
                                 </h:panelGrid>
 
-
-                            </b:panel>
-
-                            <b:panel title="Endereço" collapsible="false" style="color: black">
-                                <h:panelGrid  columns="4">
+                            </h:panelGrid>
 
 
-                                    <h:panelGroup>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel value="BAIRRO:"/>
-                                            <p:inputText id="bairro" value="#{requerenteMBean.requerente.bairroRequerente}" size="20"/>
-                                        </h:panelGrid> 
-                                    </h:panelGroup>
-                                    <h:panelGroup>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel style="margin-left: 10%" value="RUA:"/>
-                                            <p:inputText style="margin-left: 10%" id="rua" value="#{requerenteMBean.requerente.ruaRequerente}" size="20"/>
-                                        </h:panelGrid> 
-                                    </h:panelGroup>
-                                    <h:panelGroup>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel style="margin-left: 20%" value="CASA:"/>
-                                            <p:inputText style="margin-left: 20%" id="casa" value="#{requerenteMBean.requerente.casaRequerente}" size="20"/>
-                                        </h:panelGrid> 
-                                    </h:panelGroup>
+                        </b:panel>
 
-                                    <h:panelGroup>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel  style="margin-left: 40%" value="MUNICIPIO:"/>
-                                            <p:selectOneMenu effect="slide" style="width:200px; margin-left:40% " id="municipios" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idMunicipio}" required="true" converter="municipioConverter">
-                                                <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                                <f:selectItems value="#{requerenteMBean.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nomeMunicipio }"/>
-                                            </p:selectOneMenu>
-                                        </h:panelGrid>
-                                    </h:panelGroup>
+                        <b:panel title="Endereço" collapsible="false" style="color: black">
+                            <h:panelGrid  columns="4">
 
 
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel value="BAIRRO:"/>
+                                        <p:inputText id="bairro" value="#{requerenteMBean.requerente.bairroRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 10%" value="RUA:"/>
+                                        <p:inputText style="margin-left: 10%" id="rua" value="#{requerenteMBean.requerente.ruaRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel style="margin-left: 20%" value="CASA:"/>
+                                        <p:inputText style="margin-left: 20%" id="casa" value="#{requerenteMBean.requerente.casaRequerente}" size="20"/>
+                                    </h:panelGrid> 
+                                </h:panelGroup>
 
-
-                                </h:panelGrid>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="1">
+                                        <p:outputLabel  style="margin-left: 40%" value="MUNICIPIO:"/>
+                                        <p:selectOneMenu effect="slide" style="width:200px; margin-left:40% " id="municipios" filter="true" filterMatchMode="startsWith" label="Tipo" value="#{requerenteMBean.requerente.idMunicipio}" required="true" converter="municipioConverter">
+                                            <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                            <f:selectItems value="#{requerenteMBean.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio.nomeMunicipio }"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGroup>
 
 
 
 
-
-                            </b:panel>
-                            <p:commandButton value="Alterar" action="#{requerenteMBean.edit(event)}" ajax="false"/>
-                        </h:form>
-                    </p:dialog>
-                    <!--fim do dialogo editar-->
-
-                    <!--Inicio do dialog ver-->
-                    <p:dialog header="Dados de Requerente" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="310" height="250">
-                        <h:form>                                                       
-                            <p:panelGrid columns="2">
-                                <p:outputLabel value="Nome: "/>
-                                <h:outputText value="#{requerenteMBean.requerente.nomeRequente}"/>
-                                <p:outputLabel value="Municipio "/>
-                                <h:outputText value="#{requerenteMBean.requerente.idMunicipio.nomeMunicipio}"/>
-                                <p:outputLabel value="Tipo "/>
-                                <h:outputText value="#{requerenteMBean.requerente.idTipo.nomeTipo}"/>
-                            </p:panelGrid>
-
-                        </h:form>
-
-                    </p:dialog>
-
-                    <!--Fim do dialog ver-->
+                            </h:panelGrid>
 
 
 
-                </f:view>
+
+
+                        </b:panel>
+                        <p:commandButton value="Alterar" action="#{requerenteMBean.edit(event)}" ajax="false" update="msg"/>
+                    </h:form>
+                </p:dialog>
+                <!--fim do dialogo editar-->
+
+                <!--Inicio do dialog ver-->
+                <p:dialog header="Dados de Requerente" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="310" height="250">
+                    <h:form>                                                       
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nome: "/>
+                            <h:outputText value="#{requerenteMBean.requerente.nomeRequente}"/>
+                            <p:outputLabel value="Municipio "/>
+                            <h:outputText value="#{requerenteMBean.requerente.idMunicipio.nomeMunicipio}"/>
+                            <p:outputLabel value="Tipo "/>
+                            <h:outputText value="#{requerenteMBean.requerente.idTipo.nomeTipo}"/>
+                        </p:panelGrid>
+
+                    </h:form>
+
+                </p:dialog>
+
+                <!--Fim do dialog ver-->
+
+
+
+
             </ui:define>
 
         </ui:composition>

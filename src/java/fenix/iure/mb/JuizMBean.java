@@ -80,7 +80,7 @@ public class JuizMBean implements Serializable {
 
     public String newSave() {
         juiz = new Juiz();
-        return "juiz_lstar?faces-redirect=true";
+        return "juizes?faces-redirect=true";
     }
 
     public void guardar(ActionEvent evt) {
@@ -93,16 +93,17 @@ public class JuizMBean implements Serializable {
     }
 
     public String startEdit() {
-        return "juiz_lstar?faces-redirect=true";
+        return "juizes?faces-redirect=true";
     }
 
     public void edit(javafx.event.ActionEvent event) {
         juizFacade.edit(juiz);
+        juiz = new Juiz();
             if (controleEditar.equalsIgnoreCase("listartodos")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 juizes = null;
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("juiz_lstar.jsf");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("juizes.jsf");
                 } catch (IOException ex) {
                     Logger.getLogger(JuizMBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -163,7 +164,7 @@ public class JuizMBean implements Serializable {
         juizFacade.remove(juiz);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
             juizes = null;
-            return "juiz_lstar?faces-redirect=true";
+            return "juizes?faces-redirect=true";
         /*} else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;

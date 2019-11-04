@@ -8,6 +8,7 @@ package fenix.iure.mb;
 
 import fenix.iure.ejbs.TipoDecisaoFacade;
 import fenix.iure.entities.TipoDecisao;
+import fenix.iure.util.JSFUtil;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.inject.Named;
@@ -43,6 +44,7 @@ public class TipoDecisaoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         tipoDecisao = new TipoDecisao();
+         tipos = tipoDecisaoFacade.findAll();
         
     }
     
@@ -50,10 +52,8 @@ public class TipoDecisaoMBean implements Serializable {
     public void guardar(ActionEvent evt) {
         tipoDecisaoFacade.create(tipoDecisao);
             tipoDecisao = new TipoDecisao();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        /*} else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-        }*/
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+        JSFUtil.refresh();
     }
     
     public String startEdit() {
@@ -62,8 +62,9 @@ public class TipoDecisaoMBean implements Serializable {
     
     public void edit(javafx.event.ActionEvent event) {
         tipoDecisaoFacade.edit(tipoDecisao);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
             tipos = null;
+            tipoDecisao = new TipoDecisao();
 
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("tipo_decisoes.jsf");
@@ -77,7 +78,7 @@ public class TipoDecisaoMBean implements Serializable {
     
     public String delete() {
         tipoDecisaoFacade.remove(tipoDecisao);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
              tipos = null;
              return "tipo_decisoes?faces-redirect=true";
              

@@ -113,7 +113,7 @@
                                             <p:outputLabel value="Operações"/>
                                         </f:facet>
                                         <b:growl id="messages" />
-                                       
+
                                         <p:commandButton style="margin-left: 5px"  icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </p:commandButton>
@@ -149,9 +149,9 @@
                             <h:panelGrid style="text-align: left" columns="2" >
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 0px" value="NÚMERO"/>
-                                        <p:inputText required="true" id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
-                                        <p:tooltip for="numero" value="Apenas números"/>
+                                        <p:outputLabel for="numero" style="margin-left: 0px" value="NÚMERO"/>
+                                        <p:inputText required="true" requiredMessage="Campo Obrigatório"  id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
+                                        <p:tooltip for="numero" value="Este campo não deve estar vazio!"/>
                                     </h:panelGrid>
 
                                 </h:panelGroup>
@@ -159,9 +159,7 @@
                                     <h:panelGrid  columns="1">
                                         <p:outputLabel for="data_entrada" style="margin-left: 15%" value="DATA ENTRADA"/>
                                         <p:calendar size="30" required="true" requiredMessage="Campo Obrigatório" id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt" >
-
                                         </p:calendar>
-
                                     </h:panelGrid>
                                 </h:panelGroup>
 
@@ -221,22 +219,20 @@
                     <p:dialog header="Editar processo"  id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" footer="Fenix Iure"  width="500" height="240">
                         <h:form enctype="multipart/form-data">
                             <h:inputHidden value="#{processoMBean.processo.idProcesso}"/>
-                            <h:panelGrid style="text-align: left; float: left" columns="2" >
+                            <h:panelGrid style="text-align: left" columns="2" >
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 0px" value="NÚMERO"/>
-                                        <p:inputText required="true" id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
-                                        <p:tooltip for="numero" value="Apenas números"/>
+                                        <p:outputLabel for="numero" style="margin-left: 0px" value="NÚMERO"/>
+                                        <p:inputText required="true" requiredMessage="Campo Obrigatório"  id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
+                                        <p:tooltip for="numero" value="Este campo não deve estar vazio!"/>
                                     </h:panelGrid>
 
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid  columns="1">
                                         <p:outputLabel for="data_entrada" style="margin-left: 15%" value="DATA ENTRADA"/>
-                                        <p:calendar size="30" required="true" id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt" >
-
+                                        <p:calendar size="30" required="true" requiredMessage="Campo Obrigatório" id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt" >
                                         </p:calendar>
-
                                     </h:panelGrid>
                                 </h:panelGroup>
 
@@ -282,13 +278,13 @@
 
                             </h:panelGrid>
 
+
                             <br></br>
                             <br></br>
-                            <p:commandButton style="float: left" value="Alterar" action="#{processoMBean.edit(event)}" ajax="false"/>
+                            <p:commandButton style="float: left" value="Alterar" validateClient="true" action="#{processoMBean.edit(event)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
                     <!--fim do dialogo editar-->
-
                     <!--Inicio do dialog ver-->
                     <p:dialog footer="Fenix Iure" header="Dados de estado" id="ver" widgetVar="dialogoVer" showEffect="clip" hideEffect="blind" resizable="false" width="auto" height="auto">
                         <h:form>

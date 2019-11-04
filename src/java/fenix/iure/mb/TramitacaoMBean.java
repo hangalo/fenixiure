@@ -11,6 +11,7 @@ import fenix.iure.ejbs.EstadoProcessoFacade;
 import fenix.iure.ejbs.ProcessoFacade;
 import fenix.iure.ejbs.TipoDecisaoFacade;
 import fenix.iure.ejbs.TramitacaoFacade;
+import fenix.iure.entities.Advogado;
 import fenix.iure.entities.EspecieProcesso;
 import fenix.iure.entities.Estado;
 import fenix.iure.entities.EstadoProcesso;
@@ -113,6 +114,9 @@ public class TramitacaoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         tramitacao = new Tramitacao();
+        tramitacao.setDataTermino(DateUtil.getDataActual());
+        tramitacao.setDataConclusaoTramitacao(DateUtil.getDataActual());
+        
         tramitacao.setDataConclusaoTramitacao(DateUtil.getDataActual());
         tramitacoes = new ArrayList<>();
         processos = new ArrayList<>();
@@ -157,28 +161,15 @@ public class TramitacaoMBean implements Serializable {
         if (tramitacao != null) {
             tramitacaoFacade.create(tramitacao);
             tramitacao = new Tramitacao();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
 
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
+           // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
+           
+            JSFUtil.refresh();
         }
     }
 
-    /* public String guardar(ActionEvent evt) {
-        String controlo = null;
-        tramitacoes =this.getTramitacoes();
-        
-        if (tramitacao != null){
-            tramitacaoFacade.create(tramitacao);
-            tramitacao = new Tramitacao();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-            return controlo;
-
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
-            return controlo;
-        }
-    }*/
     // Metodo para verificar processos findos
     public List<Tramitacao> getProcessosFindosPorNumero() {
         processosFindosPorNumero = tramitacaoFacade.findByIdProcessoFindosPorNumero(tramitacao);
@@ -212,9 +203,9 @@ public class TramitacaoMBean implements Serializable {
      */
     public void edit(javafx.event.ActionEvent event) {
         tramitacaoFacade.edit(tramitacao);
-        JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
+        //JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
         tramitacoes = null;
-
+        tramitacao = new Tramitacao();
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("tramitacao_lstar.jsf");
         } catch (IOException ex) {
@@ -224,7 +215,7 @@ public class TramitacaoMBean implements Serializable {
 
     public String delete() {
         tramitacaoFacade.remove(tramitacao);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
         tramitacoes = null;
         return "tramitacao_lstar?faces-redirect=true";
     }
@@ -369,10 +360,7 @@ public class TramitacaoMBean implements Serializable {
         this.tipoEstado = tipoEstado;
     }
 
-    public List<Processo> getProcessosNãoFindos() {
-        processosNaoFindos = processoFacade.findProcessosNaoFindos();
-        return processosNaoFindos;
-    }
+
 
     public String imprimirListaArtigo() {
         String relatorio = "tramites_do_processo_horizontal.jasper";
@@ -390,7 +378,7 @@ public class TramitacaoMBean implements Serializable {
         parametros.put("id_processo", parametro);
         gestorImpressao = new GestorImpressao();
         gestorImpressao.imprimirPDF(relatorio, parametros);
-
+           
         return null;
 
     }
@@ -441,6 +429,9 @@ public class TramitacaoMBean implements Serializable {
             gestorImpressao = new GestorImpressao();
             gestorImpressao.imprimirPDF(relatorio, parametros);
 
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "","\tDeve fazer uma busca!!!"));
+           
         }
         
         return null;

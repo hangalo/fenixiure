@@ -25,7 +25,7 @@
                         <b:panel  collapsible="true" collapsed="true"  style="text-align: left;">
                             
                             <f:facet name="heading" >
-                                <h3 style="text-align: left; background-color: #000066; color: white">REGISTAR NOVO ADVOGADO</h3>
+                                <h3 style="text-align: left; background-color: #000066; color: white">REGISTAR NOVO JUIZ</h3>
                             </f:facet>
                             
                             <div style="margin-left: 0%">
@@ -35,26 +35,26 @@
                                         <h:panelGroup>
                                             <h:panelGrid columns="1">
                                                 <p:outputLabel value="Nome:"/>
-                                                <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
+                                                <p:inputText id="nome" value="#{juizMBean.juiz.nomeJuiz}" size="20"/>
                                             </h:panelGrid>
                                         </h:panelGroup>
                                         <h:panelGroup>
                                             <h:panelGrid columns="1">
                                                 <p:outputLabel style="margin-left: 10%" value="Sobrenome:"/>
-                                                <p:inputText  style="margin-left: 10%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
+                                                <p:inputText  style="margin-left: 10%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
                                             </h:panelGrid>
                                         </h:panelGroup>
 
                                         <h:panelGroup>
                                             <h:panelGrid columns="1">
                                                 <p:outputLabel style="margin-left: 20%" value="Data Inicio Função"/>
-                                                <p:calendar effect ="slide" style="margin-left: 20%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                                <p:calendar effect ="slide" style="margin-left: 20%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
                                             </h:panelGrid>
                                         </h:panelGroup>
 
                                     </h:panelGrid>
                                     <br></br>
-                                    <p:commandButton value="Guardar" action="#{advoadoMBean.guardar(evt)}" ajax="false"/>
+                                    <p:commandButton value="Guardar" action="#{juizMBean.guardar(evt)}" ajax="false"/>
                                 </h:form>
 
                             </div>
@@ -64,25 +64,25 @@
 
                         <b:panel collapsible="false"  style="text-align: left;">
                             <f:facet name="heading" >
-                                <h3 style="text-align: left;">Lista de Advogados</h3>
+                                <h3 style="text-align: left;">Lista de Juizes</h3>
                             </f:facet>
 
                             <h:form>
 
                                 <!--inicio Datatable-->
-                                <b:dataTable searching="true" value="#{advoadoMBean.advogados}"  var="processo">
+                                <b:dataTable searching="true" value="#{juizMBean.juizes}"  var="processo">
                                     <p:column width="100">
                                         <f:facet name="header">
                                             <h:outputText value="NOME"/>
                                         </f:facet>
-                                        <h:outputText value="#{processo.nomeAdvogado}"/>
+                                        <h:outputText value="#{processo.nomeJuiz}"/>
                                     </p:column>
 
                                     <p:column width="100">
                                         <f:facet name="header">
                                             <p:outputLabel value="SOBRENOME "/>
                                         </f:facet>
-                                        <h:outputText value="#{processo.sobrenomeAdvogado}"/>
+                                        <h:outputText value="#{processo.sobrenomeJuiz}"/>
                                     </p:column>
                                     <p:column width="100" >
                                         <f:facet name="header">
@@ -99,10 +99,10 @@
                                         </f:facet>
                                         <b:growl id="messages" />
                                         <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
-                                            <f:setPropertyActionListener target="#{advoadoMBean.advogado}" value="#{processo}"/>
+                                            <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{processo}"/>
                                         </p:commandButton>
                                         <b:commandButton style="margin-left: 5px; margin-right: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
-                                            <f:setPropertyActionListener target="#{advoadoMBean.advogado}" value="#{processo}"/>
+                                            <f:setPropertyActionListener target="#{juizMBean.juiz}" value="#{processo}"/>
                                         </b:commandButton>
 
 
@@ -111,7 +111,7 @@
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        Total Processos  (#{advoadoMBean.advogados.size()})
+                                        Total Juizes  (#{juizMBean.juizes.size()})
                                     </f:facet>                           
                                 </b:dataTable>
 
@@ -128,32 +128,32 @@
 
                     <p:dialog style="text-align: left" id="editar" header="Alterar Dados de Advogado" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" width="550" height="250" resizable="false">
                         <h:form enctype="multipart/form-data">
-                            <h:inputHidden value="#{advoadoMBean.advogado.idAdvogado}"/>
-                            <h:panelGrid  columns="3" >
+                            <h:inputHidden value="#{juizMBean.juiz.idJuiz}"/>
+                           <h:panelGrid  columns="3" >
 
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel value="Nome:"/>
-                                        <p:inputText id="nome" value="#{advoadoMBean.advogado.nomeAdvogado}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 10%" value="Sobrenome:"/>
-                                        <p:inputText  style="margin-left: 10%" id="sobrenome" value="#{advoadoMBean.advogado.sobrenomeAdvogado}" size="20"/>
-                                    </h:panelGrid>
-                                </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel value="Nome:"/>
+                                                <p:inputText id="nome" value="#{juizMBean.juiz.nomeJuiz}" size="20"/>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel style="margin-left: 10%" value="Sobrenome:"/>
+                                                <p:inputText  style="margin-left: 10%" id="sobrenome" value="#{juizMBean.juiz.sobrenomeJuiz}" size="20"/>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
 
-                                <h:panelGroup>
-                                    <h:panelGrid columns="1">
-                                        <p:outputLabel  style="margin-left: 20%; width: 200px" value="Data Inicio Função"/>
-                                        <p:calendar effect ="slide" style="margin-left: 20%"  value="#{advoadoMBean.advogado.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
-                                    </h:panelGrid>
-                                </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel style="margin-left: 20%" value="Data Inicio Função"/>
+                                                <p:calendar effect ="slide" style="margin-left: 20%"  value="#{juizMBean.juiz.dataInicioFuncoes}" pattern="dd/MM/yyyy" locale="pt"  />
+                                            </h:panelGrid>
+                                        </h:panelGroup>
 
-                            </h:panelGrid>
+                                    </h:panelGrid>
                             <br></br>
-                            <p:commandButton value="Alterar" action="#{advoadoMBean.edit(event)}" ajax="false"/>
+                            <p:commandButton value="Alterar" action="#{juizMBean.edit(event)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
                     <!--fim do dialogo editar-->
@@ -163,12 +163,12 @@
                         <h:form>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Nome: "/>
-                                <p:outputLabel value="#{advoadoMBean.advogado.nomeAdvogado}"/>
+                                <p:outputLabel value="#{juizMBean.juiz.nomeJuiz}"/>
                                 <p:outputLabel value="Sobrenome: "/>
-                                <p:outputLabel value="#{advoadoMBean.advogado.sobrenomeAdvogado}"/>
+                                <p:outputLabel value="#{juizMBean.juiz.sobrenomeJuiz}"/>
 
                                 <p:outputLabel value="Data inicio de Função "/>
-                                <p:outputLabel id="data_inic" value="#{advoadoMBean.advogado.dataInicioFuncoes}">
+                                <p:outputLabel id="data_inic" value="#{juizMBean.juiz.dataInicioFuncoes}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </p:outputLabel>
                             </p:panelGrid>

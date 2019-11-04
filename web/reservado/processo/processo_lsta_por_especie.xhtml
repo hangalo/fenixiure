@@ -14,12 +14,15 @@
                 <br/>
             </ui:define>
             <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+
                 <f:view>
                     <b:panel collapsible="false"  style="text-align: left;">
                         <f:facet name="heading" >
                             <h1 style="text-align: left;">PROCESSOS</h1>
                         </f:facet>
                         <ui:include src="../../WEB-INF/menus/menu_gestao_processo.xhtml" />
+
                         <b:column  style="margin-left: 0px">
                             <b:row style="float: right; margin-left: 0px ">
                                 <b:column col-sm="9" col-md="12" styleClass="main">
@@ -56,16 +59,18 @@
                                 <h3 style="text-align: left;">Lista de Processos Por Espécies</h3>
                             </f:facet>
                             <h:form>
-
                                 <!--inicio Datatable-->
-                                <b:dataTable page-length-menu="5,10,20" 
-                                             searching="true" value="#{processoMBean.findByEspecieProcesso}"
-                                             var="processo"
-                                             copy="true"
-                                             pdf="true"
-                                             excel="true"
-                                             style="width:100%"
-                                             custom-options="dom: 'lfrtiBp',buttons: ['colvis','copy','csv',{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},'print']" > 
+                                <b:dataTable 
+                                    searching="true" 
+                                    value="#{processoMBean.findRecentes}"
+                                    var="processo"
+                                    page-length-menu="5,10,20" 
+                                    copy="true"
+                                    pdf="true"
+                                    excel="true"
+                                    style="width:100%"
+                                    custom-options="dom: 'lfrtiBp',buttons: ['colvis','copy','csv',{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},'print']">
+
                                     <p:column width="100">
                                         <f:facet name="header">
                                             <h:outputText value="NÚMERO"/>
@@ -105,22 +110,19 @@
                                         </p:outputLabel>
                                     </p:column>
 
-                                    <p:column width="17%" style="text-align: center">
+                                    <p:column width="15%" style="text-align: center">
                                         <f:facet name="header">
                                             <p:outputLabel value="Operações"/>
                                         </f:facet>
                                         <b:growl id="messages" />
-                                       
-                                        <p:commandButton style="margin-left: 5px"  icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </p:commandButton>
-                                        <b:commandButton style="margin-left: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <b:commandButton style="margin-left: 5px; margin-right: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </b:commandButton>
 
-                                        <!-- <p:commandButton  id="bt_imprimir" icon="ui-icon-print" action="#//{processoMBean.imprimirProcessosPorNumero()}">
-                                            <f:setPropertyActionListener target="#//{processoMBean.processo}" value="#//{processo}"/>
-                                        </p:commandButton> -->
+
 
                                         <b:commandButton  ajax="false" icon="print" id="bt_imprimir2" action="#{processoMBean.imprimirFichaProcesso(processo.numeroProcesso)}">
                                         </b:commandButton>
@@ -131,7 +133,6 @@
                                     </f:facet>                           
                                 </b:dataTable>
 
-                                <!--Fim Datatable-->                         
                             </h:form>
                         </b:panel>
 
@@ -147,9 +148,9 @@
                             <h:panelGrid style="text-align: left" columns="2" >
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 0px" value="NÚMERO"/>
-                                        <p:inputText required="true" id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
-                                        <p:tooltip for="numero" value="Apenas números"/>
+                                        <p:outputLabel for="numero" style="margin-left: 0px" value="NÚMERO"/>
+                                        <p:inputText required="true" requiredMessage="Campo Obrigatório"  id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
+                                        <p:tooltip for="numero" value="Este campo não deve estar vazio!"/>
                                     </h:panelGrid>
 
                                 </h:panelGroup>
@@ -205,7 +206,7 @@
 
 
                             <hr></hr>
-                            <p:commandButton style="float: left" update=":msgGlobal" value="Guardar" action="#{processoMBean.guardar(evt)}" validateClient="true" ajax="false"/>
+                            <p:commandButton style="float: left" value="Guardar" action="#{processoMBean.guardar(evt)}" validateClient="true" ajax="false"/>
 
                         </h:form>
                     </p:dialog>
@@ -217,23 +218,20 @@
                     <p:dialog header="Editar processo"  id="editar" widgetVar="dialogoEditar" showEffect="clip" hideEffect="blind" resizable="false" footer="Fenix Iure"  width="500" height="240">
                         <h:form enctype="multipart/form-data">
                             <h:inputHidden value="#{processoMBean.processo.idProcesso}"/>
-                            <h:panelGrid style="text-align: left; float: left" columns="2" >
+                            <h:panelGrid style="text-align: left" columns="2" >
                                 <h:panelGroup>
                                     <h:panelGrid columns="1">
-                                        <p:outputLabel style="margin-left: 0px" value="NÚMERO"/>
-                                        <p:inputText required="true" id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
-                                        <p:tooltip for="numero" value="Apenas números"/>
+                                        <p:outputLabel for="numero" style="margin-left: 0px" value="NÚMERO"/>
+                                        <p:inputText required="true" requiredMessage="Campo Obrigatório"  id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
+                                        <p:tooltip for="numero" value="Este campo não deve estar vazio!"/>
                                     </h:panelGrid>
 
                                 </h:panelGroup>
                                 <h:panelGroup>
                                     <h:panelGrid  columns="1">
-                                        <h:panelGrid  columns="1">
-                                            <p:outputLabel for="data_entrada" style="margin-left: 15%" value="DATA ENTRADA"/>
-                                            <p:calendar size="30" required="true" requiredMessage="Campo Obrigatório" id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt" >
-                                            </p:calendar>
-                                        </h:panelGrid>
-
+                                        <p:outputLabel for="data_entrada" style="margin-left: 15%" value="DATA ENTRADA"/>
+                                        <p:calendar size="30" required="true" requiredMessage="Campo Obrigatório" id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt" >
+                                        </p:calendar>
                                     </h:panelGrid>
                                 </h:panelGroup>
 
@@ -278,7 +276,6 @@
                                 </h:panelGroup>
 
                             </h:panelGrid>
-
                             <br></br>
                             <br></br>
                             <p:commandButton style="float: left" value="Alterar" action="#{processoMBean.edit(event)}" ajax="false"/>

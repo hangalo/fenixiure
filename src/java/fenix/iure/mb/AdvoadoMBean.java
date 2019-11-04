@@ -66,12 +66,7 @@ public class AdvoadoMBean implements Serializable {
     @PostConstruct
     public void inicializar() {
         advogado = new Advogado();
-        findByNome = new ArrayList<>();
-        findbySobrenome = new ArrayList<>();
-        findByNomeSobrenome = new ArrayList<>();
-        findbyDatNascimento = new ArrayList<>();
-        findbyDataInicioFuncoes = new ArrayList<>();
-        advogados = new ArrayList<>();
+        advogados = advogadoFacade.findAll();
         
     }
 
@@ -156,9 +151,9 @@ public class AdvoadoMBean implements Serializable {
         if (advogado != null) {
             advogadoFacade.create(advogado);
             advogado = new Advogado();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
+         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Guardar\t", "\tErro ao guardar os dados"));
         }
     }
 
@@ -170,8 +165,9 @@ public class AdvoadoMBean implements Serializable {
 
         if (advogado != null) {
             advogadoFacade.edit(advogado);
+             advogado = new Advogado();
             if (controleEditar.equalsIgnoreCase("listartodos")) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+                //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
                 advogados = null;
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("advogados.jsf");
@@ -229,11 +225,11 @@ public class AdvoadoMBean implements Serializable {
         if (advogado != null) {
             advogadoFacade.remove(advogado);
             advogados = null;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tSucesso ao eliminar os dados"));
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tSucesso ao eliminar os dados"));
             
             return "advogados?faces-redirect=true";
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tErro ao eliminar dados!"));
             return null;
         }
     }

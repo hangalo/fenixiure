@@ -130,23 +130,7 @@ public class ProcessoMBean implements Serializable {
     public void inicializar() {
         processo = new Processo();
         processo.setDataEntrada(DateUtil.getDataActual());
-        processos = new ArrayList<>();
-
-        especies = new ArrayList<>();
-
-        estados = new ArrayList<>();
-
-        tipos = new ArrayList<>();
-
-        requerentes = new ArrayList<>();
-
-        requeridos = new ArrayList<>();
-
-        advogados = new ArrayList<>();
-
-        juizes = new ArrayList<>();
-
-        findRecentes = new ArrayList<>();
+        
 
     }
 
@@ -165,13 +149,13 @@ public class ProcessoMBean implements Serializable {
             try {
                 processoFacade.create(processo);
                 processo = new Processo();
-                JSFUtil.adicionarMensagemDeSucesso("Processo salvo com sucesso!");
-
+               // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "","\tProcesso salvo com sucesso"));
+           
             } catch (javax.ejb.EJBException ex) {
-                JSFUtil.adicionarMensagemDeErro("Número do processo ja existe!");
-            } catch (NumberFormatException ex) {
-                JSFUtil.adicionarMensagemDeErro(ex.getMessage());
-            }
+               // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "","\tJa existe um processo com esse Número"));
+             } catch (java.lang.NumberFormatException ex) {
+               // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "","\tDeve preencher todos os campos"));
+           }
 
         } else {
             newSave();
@@ -182,7 +166,7 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String startEdit() {
-        JSFUtil.refresh();
+        
         return "processo_lsta?faces-redirect=true";
         
     }
@@ -194,7 +178,7 @@ public class ProcessoMBean implements Serializable {
             processoFacade.edit(processo);
             processo = new Processo();
             controlo = null;
-            JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
+            //JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
            
             return controlo;
             
@@ -208,7 +192,7 @@ public class ProcessoMBean implements Serializable {
 
     public void editPublico(ActionEvent event) {
         processoFacade.edit(processo);
-        JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
+       // JSFUtil.adicionarMensagemDeSucesso("Sucesso ao alterar dados!");
         requerentes = null;
 
         try {
@@ -222,9 +206,9 @@ public class ProcessoMBean implements Serializable {
         try {
             processoFacade.remove(processo);
             processos = null;
-            JSFUtil.adicionarMensagemDeErro("Sucesso ao Eliminar dados!");
+          //  JSFUtil.adicionarMensagemDeErro("Sucesso ao Eliminar dados!");
         } catch (Exception e) {
-            JSFUtil.adicionarMensagemDeErro(e.getMessage());
+          //  JSFUtil.adicionarMensagemDeErro(e.getMessage());
         }
 
         return "processo_lsta?faces-redirect=true";
@@ -426,7 +410,7 @@ public class ProcessoMBean implements Serializable {
     }
 
     public String imprimirFichaProcesso(String parametro) {
-        String relatorio = "processos_por_numero.jasper";
+        String relatorio = "processos_ficha_horizontal.jasper";
         HashMap parametros = new HashMap();
         parametros.put("numeroProcesso", parametro);
         gestorImpressao = new GestorImpressao();
@@ -447,7 +431,7 @@ public class ProcessoMBean implements Serializable {
     }
      
      public String imprimirProcessosPorDatas() {
-        String relatorio = "processos_por_datas_util.jasper";
+        String relatorio = "processos_por_datas_horizontal.jasper";
         HashMap parametros = new HashMap();
         parametros.put("dataInicio", dataInicio);
         parametros.put("dataFim", dataInicio);
@@ -460,9 +444,9 @@ public class ProcessoMBean implements Serializable {
     }
      
       public String imprimirProcessosPorAutor(String parametro) {
-        String relatorio = "processos_por_autor.jasper";
+        String relatorio = "processos_por_autor_horizontal.jasper";
         HashMap parametros = new HashMap();
-        parametros.put("idReu", parametro);
+        parametros.put("idAutor", parametro);
         gestorImpressao = new GestorImpressao();
         gestorImpressao.imprimirPDF(relatorio, parametros);
 
@@ -470,7 +454,7 @@ public class ProcessoMBean implements Serializable {
 
     }
       public String imprimirProcessosPorReu(String parametro) {
-        String relatorio = "processos_por_reu.jasper";
+        String relatorio = "processos_por_reu_horizontal.jasper";
         HashMap parametros = new HashMap();
         parametros.put("idReu", parametro);
         gestorImpressao = new GestorImpressao();
@@ -479,14 +463,6 @@ public class ProcessoMBean implements Serializable {
         return null;
 
     }
-     
-
-
-    public List<Processo> getFindProcessosFindos() {
-        findProcessosFindos = processoFacade.findProcessosFindos();
-        return findProcessosFindos;
-    }
-
     
     public void loadEspecies(ValueChangeEvent event) {
         especieProcesso = (EspecieProcesso) event.getNewValue();

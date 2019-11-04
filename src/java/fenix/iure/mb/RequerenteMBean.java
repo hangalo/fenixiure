@@ -13,9 +13,12 @@ import fenix.iure.entities.Advogado;
 import fenix.iure.entities.Municipio;
 import fenix.iure.entities.Requente;
 import fenix.iure.entities.TipoPessoa;
+import fenix.iure.util.GestorImpressao;
+import fenix.iure.util.JSFUtil;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -36,12 +40,6 @@ public class RequerenteMBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Requente requerente;
-    private List<Requente> requerentes;
-    private List<TipoPessoa> tipoPessoas;
-    private List<Municipio> municipios;
-    private List<Advogado> advogados;
-
     @Inject
     MunicipioFacade municipioFacade;
     @Inject
@@ -50,6 +48,12 @@ public class RequerenteMBean implements Serializable {
     RequenteFacade requenteFacade;
     @Inject
     AdvogadoFacade advogadoFacade;
+
+    private Requente requerente;
+    private List<Requente> requerentes;
+    private List<TipoPessoa> tipoPessoas;
+    private List<Municipio> municipios;
+    private List<Advogado> advogados;
 
     // Listas das pesquisas paramentrizadas
     private List<Requente> findByNome;
@@ -69,8 +73,17 @@ public class RequerenteMBean implements Serializable {
     public RequerenteMBean() {
     }
 
+    // Variaveis para os relatorios
+    @ManagedProperty(value = "#{gestorImpressao}")
+    private GestorImpressao gestorImpressao;
+
     @PostConstruct
     public void inicializar() {
+
+        requerentes = requenteFacade.findAll();
+        tipoPessoas = tipoPessoaFacade.findAll();
+        municipios = municipioFacade.findAll();
+        advogados = advogadoFacade.findAll();
         requerente = new Requente();
 
     }
@@ -83,61 +96,13 @@ public class RequerenteMBean implements Serializable {
         this.requerente = requerente;
     }
 
-    public void guardar(ActionEvent evt) {
-        requenteFacade.create(requerente);
-        requerente = new Requente();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar\t", "\tSucesso ao guardar os dados"));
-        
-    }
-
-    public List<Requente> getRequerentes() {
-        requerentes = requenteFacade.findAll();
-        return requerentes;
-    }
-
-    public String startEdit() {
-        return "requerentes?faces-redirect=true";
-    }
-
-    public void edit(javafx.event.ActionEvent event) {
-        requenteFacade.edit(requerente);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-        requerentes = null;
-
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("requerentes.jsf");
-        } catch (IOException ex) {
-            Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void editPublico(javafx.event.ActionEvent event) {
-        requenteFacade.edit(requerente);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
-        requerentes = null;
-
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("requerentes.jsf");
-        } catch (IOException ex) {
-            Logger.getLogger(RequerenteMBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public String delete() {
-        requenteFacade.remove(requerente);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
-        requerentes = null;
-        return "requerentes?faces-redirect=true";
-       
-    }
-
     public List<TipoPessoa> getTipoPessoas() {
-        tipoPessoas = tipoPessoaFacade.findAll();
+
         return tipoPessoas;
     }
 
     public List<Municipio> getMunicipios() {
-        municipios = municipioFacade.findAll();
+
         return municipios;
     }
 
@@ -224,8 +189,61 @@ public class RequerenteMBean implements Serializable {
     }
 
     public List<Advogado> getAdvogados() {
-        advogados = advogadoFacade.findAll();
+
         return advogados;
+    }
+
+    public void setGestorImpressao(GestorImpressao gestorImpressao) {
+        this.gestorImpressao = gestorImpressao;
+    }
+
+    public List<Requente> getRequerentes() {
+        requerentes = requenteFacade.findAll();
+        return requerentes;
+    }
+
+    public String imprimirFichaAutor(String parametro) {
+        String relatorio = "autores_ficha_horizontal.jasper";
+        HashMap parametros = new HashMap();
+        parametros.put("idAutor", parametro);
+        gestorImpressao = new GestorImpressao();
+        gestorImpressao.imprimirPDF(relatorio, parametros);
+
+        return null;
+
+    }
+
+    public GestorImpressao getGestorImpressao() {
+        return gestorImpressao;
+    }
+
+    public void guardar(ActionEvent evt) {
+        requenteFacade.create(requerente);
+        requerente = new Requente();
+      // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, " Cliente registado com sucesso", "Guardar"));
+        JSFUtil.refresh();
+      
+    }
+
+    public String startEdit() {
+        return "requerentes?faces-redirect=true";
+    }
+
+    public void edit(javafx.event.ActionEvent event) throws IOException {
+        requenteFacade.edit(requerente);
+        requerente = new Requente();
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardar:\t", "\tDado alterado com sucesso"));
+        FacesContext.getCurrentInstance().getExternalContext().redirect("requerentes.jsf");
+       
+
+        JSFUtil.refresh();
+    }
+
+    public void delete() {
+        requenteFacade.remove(requerente);
+        requerente = new Requente();
+       // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar\t", "\tDados Eliminados com sucesso!"));
+        JSFUtil.refresh();
     }
 
 }

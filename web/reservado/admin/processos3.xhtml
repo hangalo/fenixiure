@@ -14,58 +14,106 @@
                 <br/>
             </ui:define>
             <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+
                 <f:view>
                     <b:panel collapsible="false"  style="text-align: left;">
                         <f:facet name="heading" >
-                            <h1 style="text-align: left;">PROCESSOS</h1>
+                            <h1 style="text-align: left;">ÁREA RESERVADA</h1>
                         </f:facet>
-                        <ui:include src="../../WEB-INF/menus/menu_gestao_processo.xhtml" />
+                        <ui:include src="../../WEB-INF/menus/menu_gestao_admin.xhtml" />
+
+                        <b:panel  collapsible="true" collapsed="true"  style="text-align: left;">
+                            <f:facet name="heading" >
+                                <h3 style="text-align: left; background-color: #000066; color: white">REGISTAR PROCESSOS</h3>
+                            </f:facet>
+                            <div style="margin-left: 0%">
+                                <h:form enctype="multipart/form-data">
+
+                                    <h:panelGrid style="text-align: left" columns="3" >
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel for="numero" style="margin-left: 0px" value="NÚMERO"/>
+                                                <p:inputText required="true" requiredMessage="Campo Obrigatório"  id="numero" value="#{processoMBean.processo.numeroProcesso}" size="30"/>
+                                                <p:tooltip for="numero" value="Este campo não deve estar vazio!"/>
+                                            </h:panelGrid>
+
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:panelGrid  columns="1">
+                                                <p:outputLabel for="data_entrada" style="margin-left: 15%" value="DATA ENTRADA"/>
+                                                <p:calendar size="30" required="true" requiredMessage="Campo Obrigatório" id="data_entrada" style="margin-left: 15%"  value="#{processoMBean.processo.dataEntrada}" pattern="dd/MM/yyyy" locale="pt" >
+                                                </p:calendar>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel  style="margin-left: 30%" value="ESPÉCIE"/>
+                                                <p:selectOneMenu id="especies" effect="slide" style="width:240px; margin-left:30% "  filter="true" filterMatchMode="startsWith" label="Especie" value="#{processoMBean.processo.idEspecieProcesso}" required="true" converter="especieProcesoConverter">
+                                                    <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{processoMBean.especies}" var="especie" itemValue="#{especie}" itemLabel="#{especie.especieProcesso}"/>
+                                                </p:selectOneMenu>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
 
 
-                        <b:column  style="margin-left: 0px">
-                            <b:row style="float: right; margin-left: 0px ">
-                                <b:column col-sm="9" col-md="12" styleClass="main">
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel style="margin-left: 0%" value="REQUERENTE"/>
+                                                <p:selectOneMenu style="width:240px; margin-left:0%" id="requerentes" effect="slide"   filter="true" filterMatchMode="startsWith" label="Requerente" value="#{processoMBean.processo.idRequente}" required="true" converter="requerenteConverter">
+                                                    <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                                    <f:selectItems  value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente}" itemLabel="#{requerente.nomeRequente}"/>
+                                                </p:selectOneMenu>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel style="margin-left: 15%" value="REQUERIDO"/>
+                                                <p:selectOneMenu style="width:240px; margin-left:15%" id="requeridos" effect="slide"   filter="true" filterMatchMode="startsWith" label="Requerido" value="#{processoMBean.processo.idRequerido}" required="true" converter="requeridoConverter">
+                                                    <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                                    <f:selectItems  value="#{processoMBean.requeridos}" var="requerido" itemValue="#{requerido}" itemLabel="#{requerido.nomeRequerido}"/>
+                                                </p:selectOneMenu>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
 
-                                    <h:form id="formCercaFrate" styleClass="navbar-form navbar-right">
-                                        <div class="form-group">
-                                            <b:commandButton id="btnPrintLista" title="Imprimir Lista de filtrada" style="margin-left: 5px; height: 40px;" icon="print" action="#{processoMBean.imprimirProcessosPorAutor(processoMBean.idRequerente)}" ajax="false" immediate="true" >
-                                                <p:tooltip for="btnPrintLista"/>
-                                            </b:commandButton>                   
-                                        </div> 
-                                    </h:form>
-                                    <h:form id="formCarregaEspecie"  styleClass="navbar-form navbar-right">
-                                        <h:messages/>
-                                        <h:panelGrid columns="6"  cellspacing="10%">
-                                            <p:outputLabel value="Autor: " style="margin-right: 10px"/>
-                                            <p:selectOneMenu effect="slide" style="width:200px;" id="requerentes" filter="true" onchange="submit();" filterMatchMode="startsWith" value="#{processoMBean.idRequerente}" required="true">
-                                                <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
-                                                <f:selectItems  value="#{processoMBean.requerentes}" var="requerente" itemValue="#{requerente.idRequente}" itemLabel="#{requerente.nomeRequente}"/>
-                                            </p:selectOneMenu>
-                                        </h:panelGrid>
-                                    </h:form>
-                                </b:column>
-                            </b:row>
-                        </b:column>
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1">
+                                                <p:outputLabel style="margin-left: 30%" value="JUIZ"/>
+                                                <p:selectOneMenu style="width:240px; margin-left:30%" id="juizes" effect="slide"   filter="true" filterMatchMode="startsWith" label="Juizes" value="#{processoMBean.processo.idJuiz}" required="true" converter="juizConverter">
+                                                    <f:selectItem itemLabel="Seleccione" value="#{null}" noSelectionOption="true"/>
+                                                    <f:selectItems  value="#{processoMBean.juizes}" var="juiz" itemValue="#{juiz}" itemLabel="#{juiz.nomeJuiz}"/>
+                                                </p:selectOneMenu>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </h:panelGrid>
+                                    <hr></hr>
+                                    <p:commandButton style="float: left" value="Guardar" action="#{processoMBean.guardar(evt)}" validateClient="true" ajax="false"/>
+
+                                </h:form>
+                            </div>
+                        </b:panel>
+
 
 
 
 
 
                         <b:panel collapsible="false"  style="text-align: left;">
-                            <f:facet name="heading" >
-                                <h3 style="text-align: left;">Lista de Processos Por Autor</h3>
-                            </f:facet>
-                            <h:form>
 
+                            <h:form>
                                 <!--inicio Datatable-->
-                                <b:dataTable page-length-menu="5,10,20" 
-                                             searching="false" value="#{processoMBean.findByRequerente}"
-                                             var="processo"
-                                             copy="true"
-                                             pdf="true"
-                                             excel="true"
-                                             style="width:100%"
-                                             custom-options="dom: 'lfrtiBp',buttons: ['colvis','copy','csv',{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},'print']" > 
+                                <b:dataTable 
+                                    searching="true" 
+                                    value="#{processoMBean.processos}"
+                                    var="processo"
+                                    page-length-menu="5,10,20" 
+                                    copy="true"
+                                    pdf="true"
+                                    excel="true"
+                                    style="width:100%"
+                                    custom-options="dom: 'lfrtiBp',buttons: ['colvis','copy','csv',{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 5 ]}},'print']">
+
                                     <p:column width="100">
                                         <f:facet name="header">
                                             <h:outputText value="NÚMERO"/>
@@ -105,22 +153,19 @@
                                         </p:outputLabel>
                                     </p:column>
 
-                                    <p:column width="17%" style="text-align: center">
+                                    <p:column width="15%" style="text-align: center">
                                         <f:facet name="header">
                                             <p:outputLabel value="Operações"/>
                                         </f:facet>
                                         <b:growl id="messages" />
-
-                                        <p:commandButton style="margin-left: 5px"  icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
+                                        <p:commandButton icon="ui-icon-pencil" update=":editar" oncomplete="PF('dialogoEditar').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </p:commandButton>
-                                        <b:commandButton style="margin-left: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
+                                        <b:commandButton style="margin-left: 5px; margin-right: 5px"  icon="search" update=":ver" oncomplete="PF('dialogoVer').show();">
                                             <f:setPropertyActionListener target="#{processoMBean.processo}" value="#{processo}"/>
                                         </b:commandButton>
 
-                                        <!-- <p:commandButton  id="bt_imprimir" icon="ui-icon-print" action="#//{processoMBean.imprimirProcessosPorNumero()}">
-                                            <f:setPropertyActionListener target="#//{processoMBean.processo}" value="#//{processo}"/>
-                                        </p:commandButton> -->
+
 
                                         <b:commandButton  ajax="false" icon="print" id="bt_imprimir2" action="#{processoMBean.imprimirFichaProcesso(processo.numeroProcesso)}">
                                         </b:commandButton>
@@ -131,9 +176,10 @@
                                     </f:facet>                           
                                 </b:dataTable>
 
-                                <!--Fim Datatable-->                            
                             </h:form>
                         </b:panel>
+
+
                     </b:panel>
 
 
@@ -203,7 +249,7 @@
 
 
                             <hr></hr>
-                            <p:commandButton style="float: left" update=":msgGlobal" value="Guardar" action="#{processoMBean.guardar(evt)}" validateClient="true" ajax="false"/>
+                            <p:commandButton style="float: left" value="Guardar" action="#{processoMBean.guardar(evt)}" validateClient="true" ajax="false"/>
 
                         </h:form>
                     </p:dialog>
@@ -273,11 +319,9 @@
                                 </h:panelGroup>
 
                             </h:panelGrid>
-
-
                             <br></br>
                             <br></br>
-                            <p:commandButton style="float: left" value="Alterar" validateClient="true" action="#{processoMBean.edit(event)}" ajax="false"/>
+                            <p:commandButton style="float: left" value="Alterar" action="#{processoMBean.edit(event)}" ajax="false"/>
                         </h:form>
                     </p:dialog>
                     <!--fim do dialogo editar-->
@@ -308,6 +352,7 @@
 
                     </p:dialog>
                     <!--Fim do dialog ver-->
+
 
                 </f:view>
             </ui:define>
